@@ -15,7 +15,7 @@ var config = {
   devtool: 'source-map',
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.json', '.css', '.html'],
-    aliax: {
+    alias: {
       'react-openlayer': path.join(__dirname, 'src', 'index.ts')
     },
   },

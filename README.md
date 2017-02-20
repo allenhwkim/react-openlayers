@@ -4,6 +4,8 @@ A minimal [React](https://facebook.github.io/react/)
 wrapper of [OpenLayer 3+](https://openlayers.org/)
 written in [TypeScript](https://www.typescriptlang.org/)
 
+[DEMO](https://rawgit.com/allenhwkim/react-openlayer/master/app/index.html)
+
 The simplese example(Not very useful though)
 ```
 <Map></Map>
