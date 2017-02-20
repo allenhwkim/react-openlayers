@@ -16,7 +16,7 @@ const config = {
   resolve: {
     extensions: ['', '.ts', '.webpack.js', '.js', '.tsx', '.json', '.css', '.html'],
     alias: {
-      'ol-react': path.join(__dirname, '..', 'src', 'index')
+      'react-openlayer': path.join(__dirname, '..', 'src', 'index')
     }
   },
   module: {

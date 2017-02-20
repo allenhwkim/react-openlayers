@@ -1,5 +1,5 @@
 /**
- * This config is to build dist/ol-react.umd.js
+ * This config is to build dist/react-openlayer.umd.js
  */
 var path = require("path");
 var webpack = require('webpack');
@@ -16,7 +16,7 @@ var config = {
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.json', '.css', '.html'],
     aliax: {
-      'ol-react': path.join(__dirname, 'src', 'index.ts')
+      'react-openlayer': path.join(__dirname, 'src', 'index.ts')
     },
   },
   module: {

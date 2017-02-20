@@ -1,11 +1,11 @@
-# ol-react
+# react-openlayer
 
 OpenLayer + Typescript  + React
 
 ### To start
 
-    $ git clone https://github.com/allenhwkim/ol-react.git
-    $ cd ol-react
+    $ git clone https://github.com/allenhwkim/react-openlayer.git
+    $ cd react-openlayer
     $ npm install
     $ npm start
 

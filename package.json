@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "OpenLayer React Components",
   "license": "MIT",
-  "main": "dist/ol-react.umd.js",
+  "main": "dist/react-openlayer.umd.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allenhwkim/ol-react.git"
+    "url": "git+https://github.com/allenhwkim/react-openlayer.git"
   },
   "author": "Allen Kim<allenhwkim@gmail.com>",
   "bugs": {
-    "url": "https://github.com/allenhwkim/ol-react/issues"
+    "url": "https://github.com/allenhwkim/react-openlayer/issues"
   },
-  "homepage": "https://github.com/allenhwkim/ol-react#readme",
+  "homepage": "https://github.com/allenhwkim/react-openlayer#readme",
   "keywords": [
     "openlayer",
     "typescript",

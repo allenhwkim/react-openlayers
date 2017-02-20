@@ -22,7 +22,7 @@
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {
-      "ol-react": ["./index"]
+      "react-openlayer": ["./index"]
     }
   },
   "types": [
