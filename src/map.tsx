@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import { getOptions } from './util';
+import {getOptions} from './util';
+import {Layers, layer} from './layers';
 
 /**
  * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
@@ -68,8 +69,13 @@ export class Map extends React.Component<any, any> {
     return (
       <div>
         <div className="openlayers-map" ref={(el)=> this.mapDiv = el}>
+          {this.props.children}
+          {this.isLayersDefinedByUser() ? '':
+            <Layers>
+              <layer.Tile source={new ol.source.OSM()} />
+            </Layers>
+          }
         </div>
-        {this.props.children}
       </div>
     );
   }
@@ -94,6 +100,19 @@ export class Map extends React.Component<any, any> {
   // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
   getChildContext(): any {
     return { map: this.map }
+  }
+
+  private isLayersDefinedByUser(): boolean {
+    let children = React.Children.toArray(this.props.children);
+    let layers: any ;
+    for (let i=0; i<children.length; i++) {
+      let child: any = children[i];
+      if (child.type.name == 'Layers'){
+        layers = child;
+        break;
+      }
+    }
+    return !!layers;
   }
 }
 

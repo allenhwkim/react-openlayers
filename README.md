@@ -4,6 +4,12 @@ A minimal [React](https://facebook.github.io/react/)
 wrapper of [OpenLayer 3+](https://openlayers.org/)
 written in [TypeScript](https://www.typescriptlang.org/)
 
+The simplese example(Not very useful though)
+```
+<Map></Map>
+```
+
+Example
 ```
 <Map>
   <Layers>      <!-- TODO: layers in lower-case -->
