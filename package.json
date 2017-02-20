@@ -1,0 +1,57 @@
+{
+  "name": "ol-react",
+  "version": "0.1.0",
+  "description": "OpenLayer React Components",
+  "license": "MIT",
+  "main": "dist/ol-react.umd.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "start": "NODE_ENV=dev webpack-dev-server --quiet --port 9001 --content-base app --config app/webpack.config --open",
+    "clean": "rimraf dist",
+    "build": "npm-run-all --serial clean build:umd build:app",
+    "build:umd": "NODE_ENV=prod webpack",
+    "build:app": "NODE_ENV=prod webpack --config app/webpack.config",
+    "upgrade": "npm-check-updates -a/--upgradeAll && npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allenhwkim/ol-react.git"
+  },
+  "author": "Allen Kim<allenhwkim@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/allenhwkim/ol-react/issues"
+  },
+  "homepage": "https://github.com/allenhwkim/ol-react#readme",
+  "keywords": [
+    "openlayer",
+    "typescript",
+    "react",
+    "map"
+  ],
+  "devDependencies": {
+    "@types/node": "^6.0.31",
+    "@types/react": "^15.0.11",
+    "@types/react-dom": "^0.14.23",
+    "awesome-typescript-loader": "^3.0.4",
+    "codelyzer": "^1.0.0-beta.3",
+    "core-js": "^2.4.1",
+    "forever": "^0.15.3",
+    "fs-extra": "^2.0.0",
+    "node-js-marker-clusterer": "^1.0.0",
+    "npm-run-all": "^3.1.2",
+    "raw-loader": "^0.5.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "rimraf": "^2.5.3",
+    "rxjs": "^5.0.0-rc.1",
+    "source-map-loader": "^0.1.6",
+    "strip-loader": "^0.1.2",
+    "ts-loader": "^1.0.0",
+    "typescript": "^2.1.6",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.16.2",
+    "webtest": "^0.3.6",
+    "zone.js": "^0.6.21"
+  }
+}
