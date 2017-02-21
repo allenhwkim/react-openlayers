@@ -5,7 +5,7 @@ var path = require("path");
 var webpack = require('webpack');
 
 var config = {
-  entry: './app/index.tsx',
+  entry: './src/index.ts',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "[name].umd.js",
@@ -28,9 +28,9 @@ var config = {
       //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
     ]
   },
-  //resolveLoader: {
-  //  root: path.join(__dirname, 'node_modules')
-  //},
+  resolveLoader: {
+    root: path.join(__dirname, 'node_modules')
+  },
   externals: {
     "react": "React",
     "react-dom": "ReactDOM"

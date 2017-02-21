@@ -1,19 +1,8 @@
 import {Map} from  './map';
 
-import {Tile} from './layers/tile';
 import {Layers} from './layers/layers';
-import {Vector} from './layers/vector';
-
-import {getIcon} from './defaults/icon';
-
-let layer = {
-  Tile: Tile,
-  Vector: Vector
-};
-
-let defaults = {
-  getIcon: getIcon
-};
+import {layer} from './layers/layer';
+import {defaults} from './defaults/defaults';
 
 export {
   Map,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {defaults} from '../index';
+import {defaults} from '../defaults/defaults';
 import {getOptions} from "../util";
 
 export class Vector extends React.Component<any, any> {

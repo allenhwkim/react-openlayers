@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
 import {getOptions} from './util';
-import {Layers, layer} from './index';
+import {Layers} from './layers/layers';
+import {layer} from './layers/layer';
 
 /**
  * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html

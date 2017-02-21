@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("React"), require("ReactDOM"));
+		module.exports = factory(require("React"));
 	else if(typeof define === 'function' && define.amd)
-		define(["React", "ReactDOM"], factory);
+		define(["React"], factory);
 	else if(typeof exports === 'object')
-		exports["main"] = factory(require("React"), require("ReactDOM"));
+		exports["main"] = factory(require("React"));
 	else
-		root["main"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+		root["main"] = factory(root["React"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -55,18 +55,138 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(2);
-	var react_openlayer_1 = __webpack_require__(3);
-	ReactDOM.render(React.createElement("div", null,
-	    React.createElement(react_openlayer_1.Map, null)), document.getElementById("example"));
+	var map_1 = __webpack_require__(1);
+	exports.Map = map_1.Map;
+	var layers_1 = __webpack_require__(5);
+	exports.Layers = layers_1.Layers;
+	var layer_1 = __webpack_require__(6);
+	exports.layer = layer_1.layer;
+	var defaults_1 = __webpack_require__(9);
+	exports.defaults = defaults_1.defaults;
 
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var layers_1 = __webpack_require__(5);
+	var layer_1 = __webpack_require__(6);
+	/**
+	 * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
+	 *
+	 * example:
+	 * <Map view={{center: [0, 0], zoom: 1}}>
+	 *   <layers>
+	 *     <layer.Tile source={new ol.source.OSM()} />
+	 *     <layer.Vector options={}/>
+	 *   </layers>
+	 *   <controls></controls>
+	 *   <interactions></interactions>
+	 *   <overlays></overlays>
+	 * </Map>
+	 */
+	var Map = (function (_super) {
+	    __extends(Map, _super);
+	    /**
+	     * Component mounting LifeCycle; constructor, componentDidMount, and render
+	     * https://facebook.github.io/react/docs/react-component.html#mounting
+	     */
+	    function Map(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            pixelRation: undefined,
+	            keyboardEventTarget: undefined,
+	            loadTilesWhileAnimation: undefined,
+	            loadTilesWhileInteractiong: undefined,
+	            logo: undefined,
+	            renderer: undefined,
+	            view: new ol.View({ center: [0, 0], zoom: 3 }),
+	            controls: undefined,
+	            interactions: undefined,
+	            layers: undefined,
+	            overlays: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:layerGroup': undefined,
+	            'change:size': undefined,
+	            'change:target': undefined,
+	            'change:view': undefined,
+	            'click': undefined,
+	            'dblclick': undefined,
+	            'moveend': undefined,
+	            'pointerdrag': undefined,
+	            'pointermove': undefined,
+	            'postcompose': undefined,
+	            'postrender': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'singleclick': undefined
+	        };
+	        var options = util_1.getOptions(Object.assign(_this.options, _this.props));
+	        _this.map = new ol.Map(options);
+	        return _this;
+	    }
+	    Map.prototype.componentDidMount = function () {
+	        this.map.setTarget(this.mapDiv);
+	    };
+	    Map.prototype.render = function () {
+	        var _this = this;
+	        return (React.createElement("div", null,
+	            React.createElement("div", { className: "openlayers-map", ref: function (el) { return _this.mapDiv = el; } },
+	                this.props.children,
+	                this.isLayersDefinedByUser() ? '' :
+	                    React.createElement(layers_1.Layers, null,
+	                        React.createElement(layer_1.layer.Tile, { source: new ol.source.OSM() })))));
+	    };
+	    /**
+	     * Component Updating LifeCycle
+	     * https://facebook.github.io/react/docs/react-component.html#updating
+	     */
+	    //componentWillReceiveProps(nextProps)
+	    //shouldComponentUpdate(nextProps, nextState)
+	    //componentWillUpdate(nextProps, nextState)
+	    //componentDidUpdate(prevProps, prevState)
+	    /**
+	     * Component Unmounting LifeCycle
+	     * https://facebook.github.io/react/docs/react-component.html#unmounting
+	     */
+	    Map.prototype.componentWillUnmount = function () {
+	        this.map.setTarget(undefined);
+	    };
+	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
+	    Map.prototype.getChildContext = function () {
+	        return { map: this.map };
+	    };
+	    Map.prototype.isLayersDefinedByUser = function () {
+	        var children = React.Children.toArray(this.props.children);
+	        var layers;
+	        for (var i = 0; i < children.length; i++) {
+	            var child = children[i];
+	            if (child.type.name == 'Layers') {
+	                layers = child;
+	                break;
+	            }
+	        }
+	        return !!layers;
+	    };
+	    return Map;
+	}(React.Component));
+	exports.Map = Map;
+	// Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
+	Map['childContextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
 
 /***/ },
 /* 2 */
@@ -76,95 +196,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var index_1 = __webpack_require__(4);
-	exports.Layers = index_1.Layers;
-	exports.layer = index_1.layer;
-	var map_1 = __webpack_require__(8);
-	exports.Map = map_1.Map;
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var tile_1 = __webpack_require__(5);
-	var layers_1 = __webpack_require__(7);
-	exports.Layers = layers_1.Layers;
-	var layer = {
-	    Tile: tile_1.Tile
-	};
-	exports.layer = layer;
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var ol = __webpack_require__(6);
-	var Tile = (function (_super) {
-	    __extends(Tile, _super);
-	    function Tile(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.options = {
-	            zIndex: undefined,
-	            opacity: undefined,
-	            preload: undefined,
-	            source: new ol.source.OSM(),
-	            visible: undefined,
-	            extent: undefined,
-	            minResolution: undefined,
-	            maxResolution: undefined,
-	            useInterimTilesOnError: undefined
-	        };
-	        _this.events = {
-	            'change': undefined,
-	            'change:extent': undefined,
-	            'change:maxResolution': undefined,
-	            'change:minResolution': undefined,
-	            'change:opacity': undefined,
-	            'change:preload': undefined,
-	            'change:source': undefined,
-	            'change:useInterimTilesOnError': undefined,
-	            'change:visible': undefined,
-	            'change:zIndex': undefined,
-	            'postcompose': undefined,
-	            'precompose': undefined,
-	            'propertychange': undefined,
-	            'render': undefined
-	        };
-	        return _this;
-	    }
-	    Tile.prototype.render = function () {
-	        return null;
-	    };
-	    Tile.prototype.componentDidMount = function () {
-	        this.layer = new ol.layer.Tile(Object.assign(this.options, this.props));
-	        this.context.map.addLayer(this.layer);
-	    };
-	    Tile.prototype.componentWillUnmount = function () {
-	        this.context.map.removeLayer(this.layer);
-	    };
-	    return Tile;
-	}(React.Component));
-	exports.Tile = Tile;
-	Tile['contextTypes'] = {
-	    map: React.PropTypes.instanceOf(ol.Map)
-	};
-
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;var require;var require;var require;var require;var require;var require;/* WEBPACK VAR INJECTION */(function(global) {// OpenLayers. See https://openlayers.org/
@@ -1178,151 +1209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	// I wish I can name it as 'layers', not 'Layers'
-	var Layers = (function (_super) {
-	    __extends(Layers, _super);
-	    function Layers() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    Layers.prototype.render = function () {
-	        return (React.createElement("div", null, this.props.children));
-	    };
-	    return Layers;
-	}(React.Component));
-	exports.Layers = Layers;
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var ol = __webpack_require__(6);
-	var util_1 = __webpack_require__(9);
-	var layers_1 = __webpack_require__(4);
-	/**
-	 * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
-	 *
-	 * example:
-	 * <Map view={{center: [0, 0], zoom: 1}}>
-	 *   <layers>
-	 *     <layer.Tile source={new ol.source.OSM()} />
-	 *     <layer.Vector options={}/>
-	 *   </layers>
-	 *   <controls></controls>
-	 *   <interactions></interactions>
-	 *   <overlays></overlays>
-	 * </Map>
-	 */
-	var Map = (function (_super) {
-	    __extends(Map, _super);
-	    /**
-	     * Component mounting LifeCycle; constructor, componentDidMount, and render
-	     * https://facebook.github.io/react/docs/react-component.html#mounting
-	     */
-	    function Map(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.options = {
-	            pixelRation: undefined,
-	            keyboardEventTarget: undefined,
-	            loadTilesWhileAnimation: undefined,
-	            loadTilesWhileInteractiong: undefined,
-	            logo: undefined,
-	            renderer: undefined,
-	            view: new ol.View({ center: [0, 0], zoom: 1 })
-	        };
-	        _this.events = {
-	            'change': undefined,
-	            'change:layerGroup': undefined,
-	            'change:size': undefined,
-	            'change:target': undefined,
-	            'change:view': undefined,
-	            'click': undefined,
-	            'dblclick': undefined,
-	            'moveend': undefined,
-	            'pointerdrag': undefined,
-	            'pointermove': undefined,
-	            'postcompose': undefined,
-	            'postrender': undefined,
-	            'precompose': undefined,
-	            'propertychange': undefined,
-	            'singleclick': undefined
-	        };
-	        var options = util_1.getOptions(Object.assign(_this.options, _this.props));
-	        console.log('this.props', _this.props, 'options', options);
-	        _this.map = new ol.Map(options);
-	        return _this;
-	    }
-	    Map.prototype.componentDidMount = function () {
-	        this.map.setTarget(this.mapDiv);
-	    };
-	    Map.prototype.render = function () {
-	        var _this = this;
-	        return (React.createElement("div", null,
-	            React.createElement("div", { className: "openlayers-map", ref: function (el) { return _this.mapDiv = el; } },
-	                this.props.children,
-	                this.isLayersDefinedByUser() ? '' :
-	                    React.createElement(layers_1.Layers, null,
-	                        React.createElement(layers_1.layer.Tile, { source: new ol.source.OSM() })))));
-	    };
-	    /**
-	     * Component Updating LifeCycle
-	     * https://facebook.github.io/react/docs/react-component.html#updating
-	     */
-	    //componentWillReceiveProps(nextProps)
-	    //shouldComponentUpdate(nextProps, nextState)
-	    //componentWillUpdate(nextProps, nextState)
-	    //componentDidUpdate(prevProps, prevState)
-	    /**
-	     * Component Unmounting LifeCycle
-	     * https://facebook.github.io/react/docs/react-component.html#unmounting
-	     */
-	    Map.prototype.componentWillUnmount = function () {
-	        this.map.setTarget(undefined);
-	    };
-	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-	    Map.prototype.getChildContext = function () {
-	        return { map: this.map };
-	    };
-	    Map.prototype.isLayersDefinedByUser = function () {
-	        var children = React.Children.toArray(this.props.children);
-	        var layers;
-	        for (var i = 0; i < children.length; i++) {
-	            var child = children[i];
-	            if (child.type.name == 'Layers') {
-	                layers = child;
-	                break;
-	            }
-	        }
-	        return !!layers;
-	    };
-	    return Map;
-	}(React.Component));
-	exports.Map = Map;
-	// Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-	Map['childContextTypes'] = {
-	    map: React.PropTypes.instanceOf(ol.Map)
-	};
-
-
-/***/ },
-/* 9 */
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1350,6 +1237,221 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return events;
 	}
 	exports.getEvents = getEvents;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	// I wish I can name it as 'layers', not 'Layers'
+	var Layers = (function (_super) {
+	    __extends(Layers, _super);
+	    function Layers() {
+	        return _super !== null && _super.apply(this, arguments) || this;
+	    }
+	    Layers.prototype.render = function () {
+	        return (React.createElement("div", null, this.props.children));
+	    };
+	    return Layers;
+	}(React.Component));
+	exports.Layers = Layers;
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var tile_1 = __webpack_require__(7);
+	var vector_1 = __webpack_require__(8);
+	var layer = {
+	    Tile: tile_1.Tile,
+	    Vector: vector_1.Vector
+	};
+	exports.layer = layer;
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var Tile = (function (_super) {
+	    __extends(Tile, _super);
+	    function Tile(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            zIndex: undefined,
+	            opacity: undefined,
+	            preload: undefined,
+	            source: new ol.source.OSM(),
+	            visible: undefined,
+	            extent: undefined,
+	            minResolution: undefined,
+	            maxResolution: undefined,
+	            useInterimTilesOnError: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:extent': undefined,
+	            'change:maxResolution': undefined,
+	            'change:minResolution': undefined,
+	            'change:opacity': undefined,
+	            'change:preload': undefined,
+	            'change:source': undefined,
+	            'change:useInterimTilesOnError': undefined,
+	            'change:visible': undefined,
+	            'change:zIndex': undefined,
+	            'postcompose': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'render': undefined
+	        };
+	        return _this;
+	    }
+	    Tile.prototype.render = function () {
+	        return null;
+	    };
+	    Tile.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object.assign(this.options, this.props));
+	        this.layer = new ol.layer.Tile(options);
+	        this.context.map.addLayer(this.layer);
+	    };
+	    Tile.prototype.componentWillUnmount = function () {
+	        this.context.map.removeLayer(this.layer);
+	    };
+	    return Tile;
+	}(React.Component));
+	exports.Tile = Tile;
+	Tile['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var defaults_1 = __webpack_require__(9);
+	var util_1 = __webpack_require__(4);
+	var Vector = (function (_super) {
+	    __extends(Vector, _super);
+	    function Vector(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            renderOrder: undefined,
+	            extent: undefined,
+	            minResolution: undefined,
+	            maxResolution: undefined,
+	            opacity: undefined,
+	            renderBuffer: undefined,
+	            source: defaults_1.defaults.getIcon(),
+	            style: undefined,
+	            updateWhileAnimating: undefined,
+	            updateWhileInteracting: undefined,
+	            visible: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:extent': undefined,
+	            'change:maxResolution': undefined,
+	            'change:minResolution': undefined,
+	            'change:opacity': undefined,
+	            'change:preload': undefined,
+	            'change:source': undefined,
+	            'change:visible': undefined,
+	            'change:zIndex': undefined,
+	            'postcompose': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'render': undefined
+	        };
+	        return _this;
+	    }
+	    Vector.prototype.render = function () {
+	        return null;
+	    };
+	    Vector.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object.assign(this.options, this.props));
+	        this.layer = new ol.layer.Vector(options);
+	        this.context.map.addLayer(this.layer);
+	    };
+	    Vector.prototype.componentWillUnmount = function () {
+	        this.context.map.removeLayer(this.layer);
+	    };
+	    return Vector;
+	}(React.Component));
+	exports.Vector = Vector;
+	Vector['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var icon_1 = __webpack_require__(10);
+	var defaults = {
+	    getIcon: icon_1.getIcon
+	};
+	exports.defaults = defaults;
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var ol = __webpack_require__(3);
+	/**
+	 * NOTE: Tried to make a class by extending ol.source.Vector, but it did not work
+	 */
+	function getIcon() {
+	    var iconFeature = new ol.Feature({
+	        geometry: new ol.geom.Point([0, 0]),
+	        name: 'Null Island',
+	        population: 4000,
+	        rainfall: 500
+	    });
+	    var iconStyle = new ol.style.Style({
+	        image: new ol.style.Icon({
+	            anchor: [0.5, 46],
+	            anchorXUnits: 'fraction',
+	            anchorYUnits: 'pixels',
+	            opacity: 0.75,
+	            src: 'https://harrywood.co.uk/maps/examples/leaflet/leaflet/images/marker-icon.png'
+	        })
+	    });
+	    iconFeature.setStyle(iconStyle);
+	    var source = new ol.source.Vector({ features: [iconFeature] });
+	    return source;
+	}
+	exports.getIcon = getIcon;
 
 
 /***/ }
