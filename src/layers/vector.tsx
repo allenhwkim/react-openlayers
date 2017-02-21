@@ -1,21 +1,24 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from '../util';
+import {defaults} from '../index';
+import {getOptions} from "../util";
 
-export class Tile extends React.Component<any, any> {
+export class Vector extends React.Component<any, any> {
 
-  layer: ol.layer.Tile;
+  layer: ol.layer.Vector;
 
   options: any = {
-    zIndex: undefined,
-    opacity: undefined,
-    preload: undefined,
-    source: new ol.source.OSM(),
-    visible: undefined,
+    renderOrder: undefined,
     extent: undefined,
     minResolution: undefined,
     maxResolution: undefined,
-    useInterimTilesOnError: undefined
+    opacity: undefined,
+    renderBuffer: undefined,
+    source: defaults.getIcon(),
+    style: undefined,
+    updateWhileAnimating: undefined,
+    updateWhileInteracting: undefined,
+    visible: undefined
   };
 
   events: any = {
@@ -26,7 +29,6 @@ export class Tile extends React.Component<any, any> {
     'change:opacity': undefined,
     'change:preload': undefined,
     'change:source': undefined,
-    'change:useInterimTilesOnError': undefined,
     'change:visible': undefined,
     'change:zIndex': undefined,
     'postcompose': undefined,
@@ -45,7 +47,7 @@ export class Tile extends React.Component<any, any> {
 
   componentDidMount () {
     let options = getOptions(Object.assign(this.options, this.props));
-    this.layer = new ol.layer.Tile(options);
+    this.layer = new ol.layer.Vector(options);
     this.context.map.addLayer(this.layer)
   }
 
@@ -54,6 +56,6 @@ export class Tile extends React.Component<any, any> {
   }
 }
 
-Tile['contextTypes'] = {
+Vector['contextTypes'] = {
   map: React.PropTypes.instanceOf(ol.Map)
 };

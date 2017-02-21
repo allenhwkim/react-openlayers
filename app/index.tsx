@@ -7,11 +7,13 @@ import { Map, Layers, layer } from "react-openlayer";
 ReactDOM.render(
   <div>
     <Map>
-      {/*
-       <Layers>
-       <layer.Tile source={new ol.source.OSM()} />
-       </Layers>
-      */}
+      <Layers>
+        <layer.Tile />
+        <layer.Vector />
+      </Layers>
+      {/*<Controls></Controls>*/}
+      {/*<Interactions></Interactions>*/}
+      {/*<Overlays></Overlays>*/}
     </Map>
   </div>,
   document.getElementById("example")

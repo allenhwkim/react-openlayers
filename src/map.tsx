@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
 import {getOptions} from './util';
-import {Layers, layer} from './layers';
+import {Layers, layer} from './index';
 
 /**
  * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
@@ -29,7 +29,11 @@ export class Map extends React.Component<any, any> {
     loadTilesWhileInteractiong: undefined,
     logo: undefined,
     renderer: undefined,
-    view: new ol.View({center: [0, 0], zoom: 1})
+    view: new ol.View({center: [0, 0], zoom: 3}),
+    controls: undefined,
+    interactions: undefined,
+    layers: undefined,
+    overlays: undefined
   };
 
   events: any = {
@@ -57,7 +61,6 @@ export class Map extends React.Component<any, any> {
   constructor(props) {
     super(props);
     let options = getOptions(Object.assign(this.options, this.props));
-    console.log('this.props', this.props, 'options', options);
     this.map = new ol.Map(options);
   }
 
