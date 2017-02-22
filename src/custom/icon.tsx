@@ -6,7 +6,9 @@ import * as ol from 'openlayers';
 
 /**
  * NOTE: Tried to make a class by extending ol.source.Vector, but it did not work
+ *  e.g. class extends ol.source.Vector { .... }
  */
+
 export function getIcon() {
 
   let iconFeature: ol.Feature =

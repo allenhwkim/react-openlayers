@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {defaults} from '../defaults/defaults';
+import {custom} from '../custom/custom';
 import {getOptions} from "../util";
 
 export class Vector extends React.Component<any, any> {
@@ -14,7 +14,7 @@ export class Vector extends React.Component<any, any> {
     maxResolution: undefined,
     opacity: undefined,
     renderBuffer: undefined,
-    source: defaults.getIcon(),
+    source: undefined,
     style: undefined,
     updateWhileAnimating: undefined,
     updateWhileInteracting: undefined,

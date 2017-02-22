@@ -22,11 +22,11 @@
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {
-      "react-openlayer": ["./index"]
+      "react-openlayers": ["./index"]
     }
   },
   "types": [
-    "openlayer"
+    "openlayers"
   ],
   "files": [
     "src/index.ts",

@@ -1,5 +1,5 @@
 /**
- * This config is to build dist/react-openlayer.umd.js
+ * This config is to build dist/react-openlayers.umd.js
  */
 var path = require("path");
 var webpack = require('webpack');
@@ -8,15 +8,15 @@ var config = {
   entry: './src/index.ts',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "[name].umd.js",
-    library: ["[name]"],
+    filename: "react-openlayers.umd.js",
+    library: ["react-openlayers"],
     libraryTarget: "umd"
   },
   devtool: 'source-map',
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.json', '.css', '.html'],
     alias: {
-      'react-openlayer': path.join(__dirname, 'src', 'index.ts')
+      'react-openlayers': path.join(__dirname, 'src', 'index.ts')
     },
   },
   module: {

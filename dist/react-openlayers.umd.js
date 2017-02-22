@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["React"], factory);
 	else if(typeof exports === 'object')
-		exports["main"] = factory(require("React"));
+		exports["react-openlayers"] = factory(require("React"));
 	else
-		root["main"] = factory(root["React"]);
+		root["react-openlayers"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -61,8 +61,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Layers = layers_1.Layers;
 	var layer_1 = __webpack_require__(6);
 	exports.layer = layer_1.layer;
-	var defaults_1 = __webpack_require__(9);
-	exports.defaults = defaults_1.defaults;
+	var custom_1 = __webpack_require__(9);
+	exports.custom = custom_1.custom;
 
 
 /***/ },
@@ -1299,7 +1299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            zIndex: undefined,
 	            opacity: undefined,
 	            preload: undefined,
-	            source: new ol.source.OSM(),
+	            source: undefined,
 	            visible: undefined,
 	            extent: undefined,
 	            minResolution: undefined,
@@ -1329,6 +1329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    Tile.prototype.componentDidMount = function () {
 	        var options = util_1.getOptions(Object.assign(this.options, this.props));
+	        options.source = options.source || new ol.source.OSM();
 	        this.layer = new ol.layer.Tile(options);
 	        this.context.map.addLayer(this.layer);
 	    };
@@ -1355,7 +1356,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	var React = __webpack_require__(2);
 	var ol = __webpack_require__(3);
-	var defaults_1 = __webpack_require__(9);
 	var util_1 = __webpack_require__(4);
 	var Vector = (function (_super) {
 	    __extends(Vector, _super);
@@ -1368,7 +1368,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            maxResolution: undefined,
 	            opacity: undefined,
 	            renderBuffer: undefined,
-	            source: defaults_1.defaults.getIcon(),
+	            source: undefined,
 	            style: undefined,
 	            updateWhileAnimating: undefined,
 	            updateWhileInteracting: undefined,
@@ -1416,10 +1416,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var icon_1 = __webpack_require__(10);
-	var defaults = {
-	    getIcon: icon_1.getIcon
+	var marker_1 = __webpack_require__(11);
+	var custom = {
+	    getIcon: icon_1.getIcon,
+	    Marker: marker_1.Marker
 	};
-	exports.defaults = defaults;
+	exports.custom = custom;
 
 
 /***/ },
@@ -1430,6 +1432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ol = __webpack_require__(3);
 	/**
 	 * NOTE: Tried to make a class by extending ol.source.Vector, but it did not work
+	 *  e.g. class extends ol.source.Vector { .... }
 	 */
 	function getIcon() {
 	    var iconFeature = new ol.Feature({
@@ -1454,8 +1457,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getIcon = getIcon;
 
 
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var ol = __webpack_require__(3);
+	/**
+	 * Inherits ol.source.Vector to be used as a source of a ol.layer.Vector
+	 * NOTE: this is just for convenience. Do NOT code too much here.
+	 */
+	function Marker(options) {
+	    options = options || {};
+	    var customKeys = ['positions', 'position', 'style', 'features'];
+	    /*
+	     * set style
+	     */
+	    this.style = options.style ||
+	        new ol.style.Style({
+	            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+	                anchor: [0.5, 46],
+	                anchorXUnits: 'fraction',
+	                anchorYUnits: 'pixels',
+	                opacity: 0.75,
+	                src: 'https://harrywood.co.uk/maps/examples/leaflet/leaflet/images/marker-icon.png'
+	            }))
+	        });
+	    /*
+	     * set features
+	     */
+	    options.positions = options.positions || [options.position || [0, 0]];
+	    if (!options.features && options.positions) {
+	        this.features = options.positions.map(function (pos) {
+	            return new ol.Feature({ geometry: new ol.geom.Point(ol.proj.transform(pos, 'EPSG:4326', 'EPSG:3857')) });
+	        });
+	    }
+	    //build ol.source.Vector arguments
+	    var args = Object['assign']({}, options);
+	    //delete custom keys which are not an option of ol.source.Vector
+	    customKeys.forEach(function (key) { return delete args[key]; });
+	    args.features = this.features;
+	    ol.source.Vector.call(this, args);
+	}
+	exports.Marker = Marker;
+	ol.inherits(Marker, ol.source.Vector);
+
+
 /***/ }
 /******/ ])
 });
 ;
-//# sourceMappingURL=main.umd.js.map
+//# sourceMappingURL=react-openlayers.umd.js.map

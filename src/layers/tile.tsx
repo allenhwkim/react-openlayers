@@ -10,7 +10,7 @@ export class Tile extends React.Component<any, any> {
     zIndex: undefined,
     opacity: undefined,
     preload: undefined,
-    source: new ol.source.OSM(),
+    source: undefined,
     visible: undefined,
     extent: undefined,
     minResolution: undefined,
@@ -45,6 +45,7 @@ export class Tile extends React.Component<any, any> {
 
   componentDidMount () {
     let options = getOptions(Object.assign(this.options, this.props));
+    options.source = options.source || new ol.source.OSM();
     this.layer = new ol.layer.Tile(options);
     this.context.map.addLayer(this.layer)
   }

@@ -1,9 +1,9 @@
 {
   "name": "react-openlayers",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "OpenLayer React Components",
   "license": "MIT",
-  "main": "dist/react-openlayer.umd.js",
+  "main": "dist/react-openlayers.umd.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allenhwkim/react-openlayer.git"
+    "url": "git+https://github.com/allenhwkim/react-openlayers.git"
   },
   "author": "Allen Kim<allenhwkim@gmail.com>",
   "bugs": {
-    "url": "https://github.com/allenhwkim/react-openlayer/issues"
+    "url": "https://github.com/allenhwkim/react-openlayers/issues"
   },
-  "homepage": "https://github.com/allenhwkim/react-openlayer#readme",
+  "homepage": "https://github.com/allenhwkim/react-openlayers#readme",
   "keywords": [
     "openlayer",
     "typescript",
