@@ -1,6 +1,6 @@
 {
   "name": "react-openlayers",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "OpenLayer React Components",
   "license": "MIT",
   "main": "dist/react-openlayers.umd.js",
