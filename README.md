@@ -6,11 +6,6 @@ written in [TypeScript](https://www.typescriptlang.org/)
 
 [DEMO](https://rawgit.com/allenhwkim/react-openlayers/master/app/index.html)
 
-The simplese example(Not very useful though)
-```
-<Map></Map>
-```
-
 Example
 ```
   <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
