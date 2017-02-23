@@ -30,7 +30,6 @@ export class Popup extends React.Component<any, any> {
   }
 
   hide() {
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     this.containerEl.style.display = 'none';
   }
 }

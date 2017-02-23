@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ol from 'openlayers';
 
-import {Map, Layers, Overlays, layer, overlay, custom} from "react-openlayers";
+import {Map, Layers, Overlays, Controls, Overlay, layer, custom} from "react-openlayers";
 
 let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
 let markers = new custom.Marker({positions: positions});
@@ -30,11 +30,11 @@ ReactDOM.render(
         <layer.Vector source={markers} style={markers.style} />
       </Layers>
       <Overlays>
-        <overlay.Overlay 
+        <Overlay 
           ref={comp => this.overlayComp = comp}
           element="#popup" />
       </Overlays>
-      {/*<Controls></Controls>*/}
+      <Controls attribution={false} zoom={true}></Controls>
       {/*<Interactions></Interactions>*/}
     </Map>
 

@@ -64,8 +64,16 @@ export class Map extends React.Component<any, any> {
    */
   constructor(props) {
     super(props);
+
     let options = getOptions(Object.assign(this.options, this.props));
     !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
+
+    let controls = this.getControlsComponent();
+    if (controls) {
+      //get controls children and use it to extend it. e.g. defaults().extend([..])
+      // note: https://openlayers.org/workshop/en/controls/scaleline.html
+      options.controls = ol.control.defaults(controls.props);
+    }
     this.map = new ol.Map(options);
   }
 
@@ -117,12 +125,10 @@ export class Map extends React.Component<any, any> {
     for(let key in events) {
       propEventMap[toPropsKey(key)] = key
     }
-    console.log('propEventMap', propEventMap);
 
     for(let prop in events) {
       if (Object.keys(propEventMap).indexOf(prop) !== -1) {
         let eventName = propEventMap[prop];
-        console.log('registering event', eventName, propEvents[prop]);
         this.map.on(eventName, propEvents[prop])
       }
     }
@@ -134,6 +140,19 @@ export class Map extends React.Component<any, any> {
     return { map: this.map }
   }
 
+  private getControlsComponent(): any {
+    let controls: any;
+    let children = React.Children.toArray(this.props.children);
+    let layers: any ;
+    for (let i=0; i<children.length; i++) {
+      let child: any = children[i];
+      if (child.type.name == 'Controls'){
+        controls = child;
+        break;
+      }
+    }
+    return controls;
+  }
 }
 
 // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context

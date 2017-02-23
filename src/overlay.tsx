@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from '../util';
+import {getOptions} from './util';
 
 export class Overlay extends React.Component<any, any> {
 
@@ -41,7 +41,6 @@ export class Overlay extends React.Component<any, any> {
     if (typeof options.element === 'string') {
       options.element = document.querySelector(options.element);
     }
-    console.log('Overlay options', options);
     this.overlay = new ol.Overlay(options);
     this.context.map.addOverlay(this.overlay);
   }
