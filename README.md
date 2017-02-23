@@ -13,14 +13,19 @@ The simplese example(Not very useful though)
 
 Example
 ```
-<Map>
-  <Layers>      <!-- TODO: layers in lower-case -->
-    <layer.Tile source={new ol.source.OSM()} />
-  </Layers>
-  <Controls></Controls>
-  <Interactions></Interactions>
-  <Overlays></Overlays>
-</Map>
+    <Map view={{center: [0, 0], zoom: 2}} onClick={onClick}>
+      <Layers>
+        <layer.Tile/>
+        <layer.Vector source={markers} style={markers.style} />
+      </Layers>
+      <Overlays>
+        <overlay.Overlay 
+          ref={comp => this.overlayComp = comp}
+          element="#popup" />
+      </Overlays>
+      {/*<Controls></Controls>*/}
+      {/*<Interactions></Interactions>*/}
+    </Map>
 ```
 
 It strictly follows [OpenLayer 3+ API documention](https://openlayers.org/en/latest/apidoc/)
