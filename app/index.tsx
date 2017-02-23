@@ -2,22 +2,45 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ol from 'openlayers';
 
-import {Map, Layers, layer, custom} from "react-openlayers";
+import {Map, Layers, Overlays, layer, overlay, custom} from "react-openlayers";
 
 let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
 let markers = new custom.Marker({positions: positions});
 
+let onClick = evt => {
+  let feature = evt.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => feature );
+  let overlayPosition = feature ? 
+    feature.getGeometry().getCoordinates() : evt.coordinate;
+  this.overlayComp.overlay.setPosition(overlayPosition);
+
+  var lonlat = ol.proj.transform(overlayPosition, 'EPSG:3857', 'EPSG:4326');
+
+  this.popupComp.setContents(
+    `<p>You clicked here:</p><code> ${lonlat[0]}, ${lonlat[1]}</code>`
+  );
+  this.popupComp.show(feature);
+}
+
 ReactDOM.render(
   <div>
-    <Map>
+
+    <Map view={{center: [0, 0], zoom: 2}} onClick={onClick}>
       <Layers>
-        <layer.Tile source={new ol.source.OSM()}/>
+        <layer.Tile/>
         <layer.Vector source={markers} style={markers.style} />
       </Layers>
+      <Overlays>
+        <overlay.Overlay 
+          ref={comp => this.overlayComp = comp}
+          element="#popup" />
+      </Overlays>
       {/*<Controls></Controls>*/}
       {/*<Interactions></Interactions>*/}
-      {/*<Overlays></Overlays>*/}
     </Map>
+
+    <custom.Popup ref={comp => this.popupComp = comp}>
+    </custom.Popup>
+    
   </div>,
   document.getElementById("example")
 );

@@ -1,8 +1,11 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from './util';
+import {getOptions, getEvents} from './util';
 import {Layers} from './layers/layers';
-import {layer} from './layers/layer';
+import {layer} from './layers/index';
+
+import './ol.css';
+import './map.css';
 
 /**
  * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
@@ -62,11 +65,13 @@ export class Map extends React.Component<any, any> {
   constructor(props) {
     super(props);
     let options = getOptions(Object.assign(this.options, this.props));
+    !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
     this.map = new ol.Map(options);
   }
 
   componentDidMount() {
     this.map.setTarget(this.mapDiv);
+    this.registerEvents(this.events, this.props);
   }
 
   render() {
@@ -74,11 +79,6 @@ export class Map extends React.Component<any, any> {
       <div>
         <div className="openlayers-map" ref={(el)=> this.mapDiv = el}>
           {this.props.children}
-          {this.isLayersDefinedByUser() ? '':
-            <Layers>
-              <layer.Tile source={new ol.source.OSM()} />
-            </Layers>
-          }
         </div>
       </div>
     );
@@ -101,27 +101,42 @@ export class Map extends React.Component<any, any> {
     this.map.setTarget(undefined)
   }
 
+  /**
+   * functions
+   */
+  private registerEvents(events, props) {
+    let propEvents = getEvents(Object.assign(events, props));
+    let toPropsKey = str => {
+      return 'on' +
+        str.replace(/(\:[a-z])/g, $1 => $1.toUpperCase())
+        .replace(/^[a-z]/, $1 => $1.toUpperCase())
+        .replace(':','')
+    }
+
+    let propEventMap = {};
+    for(let key in events) {
+      propEventMap[toPropsKey(key)] = key
+    }
+    console.log('propEventMap', propEventMap);
+
+    for(let prop in events) {
+      if (Object.keys(propEventMap).indexOf(prop) !== -1) {
+        let eventName = propEventMap[prop];
+        console.log('registering event', eventName, propEvents[prop]);
+        this.map.on(eventName, propEvents[prop])
+      }
+    }
+
+  }
+
   // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
   getChildContext(): any {
     return { map: this.map }
   }
 
-  private isLayersDefinedByUser(): boolean {
-    let children = React.Children.toArray(this.props.children);
-    let layers: any ;
-    for (let i=0; i<children.length; i++) {
-      let child: any = children[i];
-      if (child.type.name == 'Layers'){
-        layers = child;
-        break;
-      }
-    }
-    return !!layers;
-  }
 }
 
 // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
 Map['childContextTypes'] = {
   map: React.PropTypes.instanceOf(ol.Map)
 };
-

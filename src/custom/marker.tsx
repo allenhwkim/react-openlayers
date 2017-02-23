@@ -16,7 +16,7 @@ function Marker(options?: any) {
    */
   this.style = options.style || 
     new ol.style.Style({
-      image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+      image: new ol.style.Icon(/** @type {ol.style.IconOptions} */ ({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',

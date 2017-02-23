@@ -1,12 +1,17 @@
 import {Map} from  './map';
 
 import {Layers} from './layers/layers';
-import {layer} from './layers/layer';
-import {custom} from './custom/custom';
+import {Overlays} from './overlays/overlays';
+
+import {layer} from './layers/index';
+import {custom} from './custom/index';
+import {overlay} from './overlays/index';
 
 export {
   Map,
   Layers,
+  Overlays,
   layer,
-  custom 
+  custom,
+  overlay
 };
