@@ -7,7 +7,7 @@ import {Map, Layers, Overlays, layer, overlay, custom} from "react-openlayers";
 let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
 let markers = new custom.Marker({positions: positions});
 
-let onClick = evt => {
+let showPopup = evt => {
   let feature = evt.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => feature );
   let overlayPosition = feature ? 
     feature.getGeometry().getCoordinates() : evt.coordinate;
@@ -24,7 +24,7 @@ let onClick = evt => {
 ReactDOM.render(
   <div>
 
-    <Map view={{center: [0, 0], zoom: 2}} onClick={onClick}>
+    <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
       <Layers>
         <layer.Tile/>
         <layer.Vector source={markers} style={markers.style} />
