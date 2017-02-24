@@ -4,23 +4,36 @@ A minimal [React](https://facebook.github.io/react/)
 wrapper of [OpenLayer 3+](https://openlayers.org/)
 written in [TypeScript](https://www.typescriptlang.org/)
 
-[DEMO](https://rawgit.com/allenhwkim/react-openlayers/master/app/index.html)
+[![image](https://cloud.githubusercontent.com/assets/1437734/23288537/3735daaa-fa12-11e6-8f4b-9f7f75869f98.png)](https://rawgit.com/allenhwkim/react-openlayers/master/app/index.html)
+
 
 Example
 ```
-  <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
-    <Layers>
-      <layer.Tile/>
-      <layer.Vector source={markers} style={markers.style} />
-    </Layers>
-    <Overlays>
-      <overlay.Overlay 
-        ref={comp => this.overlayComp = comp}
-        element="#popup" />
-    </Overlays>
-    {/*<Controls></Controls>*/}
-    {/*<Interactions></Interactions>*/}
-  </Map>
+
+    <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
+      <Layers>
+        <layer.Tile/>
+        <layer.Vector source={markers} style={markers.style} />
+      </Layers>
+      <Overlays>
+        <Overlay 
+          ref={comp => this.overlayComp = comp}
+          element="#popup" />
+      </Overlays>
+      <Controls attribution={false} zoom={true}>
+        <control.Rotate />
+        <control.ScaleLine />
+        <control.FullScreen />
+        <control.OverviewMap />
+        <control.ZoomSlider />
+        <control.ZoomToExtent />
+        <control.Zoom />
+      </Controls>
+      {/*<Interactions></Interactions>*/}
+    </Map>
+
+    <custom.Popup ref={comp => this.popupComp = comp}>
+    </custom.Popup>
 ```
 
 It strictly follows [OpenLayer 3+ API documention](https://openlayers.org/en/latest/apidoc/)
