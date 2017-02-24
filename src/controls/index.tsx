@@ -7,6 +7,7 @@ import {Rotate} from './rotate';
 import {ZoomSlider} from './zoom-slider';
 import {ZoomToExtent} from './zoom-to-extent';
 import {Zoom} from './zoom';
+import {Controls} from './controls';
 
 let control = {
   ScaleLine: ScaleLine,
@@ -20,4 +21,7 @@ let control = {
   Zoom: Zoom
 };
 
-export { control };
+export { 
+  Controls,
+  control
+};

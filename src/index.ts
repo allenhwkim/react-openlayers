@@ -1,23 +1,25 @@
-import {Map} from  './map';
-
-import {Layers} from './layers/layers';
+import {Controls, control} from './controls/index';
+import {Interactions, interaction} from './interactions/index';
+import {Layers, layer} from './layers/index';
 import {Overlays} from './overlays/overlays';
-import {Controls} from './controls/controls';
-
-import {layer} from './layers/index';
 import {custom} from './custom/index';
-import {control} from './controls/index';
+
+import {Map} from  './map';
 import {Overlay} from './overlay';
 
 export {
   //groups
+  Interactions,
   Layers,
   Overlays,
   Controls,
+
   //name spaces
   layer,
   custom,
   control,
+  interaction,
+
   //Objects
   Map,
   Overlay

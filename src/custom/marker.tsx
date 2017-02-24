@@ -9,6 +9,8 @@ import * as ol from 'openlayers';
  * NOTE: this is just for convenience. Do NOT code too much here.
  */
 function Marker(options?: any) {
+  this.features;
+
   options = options || {};
   let customKeys = ['positions', 'position', 'style', 'features'];
   /*
@@ -30,11 +32,15 @@ function Marker(options?: any) {
    */
   options.positions = options.positions || [options.position || [0,0]];
   if (!options.features && options.positions) {
-    this.features = options.positions.map(pos => {
+    //
+    //TODO. this has to be ol.Collection<ol.Feature>
+    //
+    let featuresArr = options.positions.map(pos => {
       return new ol.Feature({geometry: new ol.geom.Point(
           ol.proj.transform(pos, 'EPSG:4326', 'EPSG:3857')
         )});
     });
+    this.features = new ol.Collection(featuresArr)
   }
 
   //build ol.source.Vector arguments

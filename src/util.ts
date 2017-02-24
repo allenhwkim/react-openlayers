@@ -24,3 +24,22 @@ export function getEvents(props: any): any {
     }
     return events;
   }
+
+let typeOf = function(obj){
+    return ({}).toString.call(obj)
+        .match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+};
+export function cloneObject(obj){
+    var type = typeOf(obj);
+    if (type == 'object' || type == 'array') {
+        if (obj.clone) {
+            return obj.clone();
+        }
+        var clone = type == 'array' ? [] : {};
+        for (var key in obj) {
+            clone[key] = cloneObject(obj[key]);
+        }
+        return clone;
+    }
+    return obj;
+}

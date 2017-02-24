@@ -1,15 +1,18 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ol from 'openlayers';
+import {cloneObject} from '../src/util';
 
 import {
-  layer, custom, control, //name spaces
-  Overlays, Controls,     //group
+  interaction, layer, custom, control, //name spaces
+  Interactions, Overlays, Controls,     //group
   Map, Layers, Overlay    //objects
 } from "react-openlayers";
 
 let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
 let markers = new custom.Marker({positions: positions});
+let selectedMarkerStyle = cloneObject(markers.style);
+selectedMarkerStyle.getImage().setOpacity(1);
 
 let showPopup = evt => {
   let feature = evt.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => feature );
@@ -47,7 +50,11 @@ ReactDOM.render(
         <control.ZoomToExtent />
         <control.Zoom />
       </Controls>
-      {/*<Interactions></Interactions>*/}
+      <Interactions>
+        <interaction.Select style={selectedMarkerStyle} />
+        <interaction.Draw source={markers} type='Point' />
+        <interaction.Modify features={markers.features} />
+      </Interactions>
     </Map>
 
     <custom.Popup ref={comp => this.popupComp = comp}>
