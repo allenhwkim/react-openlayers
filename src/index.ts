@@ -17,6 +17,7 @@ export {
   //name spaces
   layer,
   custom,
+  control,
   //Objects
   Map,
   Overlay
