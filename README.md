@@ -9,7 +9,6 @@ written in [TypeScript](https://www.typescriptlang.org/)
 
 Example
 ```
-
     <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
       <Layers>
         <layer.Tile/>
@@ -29,7 +28,11 @@ Example
         <control.ZoomToExtent />
         <control.Zoom />
       </Controls>
-      {/*<Interactions></Interactions>*/}
+      <Interactions>
+        <interaction.Select style={selectedMarkerStyle} />
+        <interaction.Draw source={markers} type='Point' />
+        <interaction.Modify features={markers.features} />
+      </Interactions>
     </Map>
 
     <custom.Popup ref={comp => this.popupComp = comp}>
