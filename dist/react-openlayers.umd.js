@@ -61,12 +61,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Layers = layers_1.Layers;
 	var overlays_1 = __webpack_require__(12);
 	exports.Overlays = overlays_1.Overlays;
-	var index_1 = __webpack_require__(13);
+	var controls_1 = __webpack_require__(13);
+	exports.Controls = controls_1.Controls;
+	var index_1 = __webpack_require__(14);
 	exports.layer = index_1.layer;
-	var index_2 = __webpack_require__(16);
+	var index_2 = __webpack_require__(17);
 	exports.custom = index_2.custom;
-	var index_3 = __webpack_require__(21);
-	exports.overlay = index_3.overlay;
+	var index_3 = __webpack_require__(22);
+	exports.control = index_3.control;
+	var overlay_1 = __webpack_require__(32);
+	exports.Overlay = overlay_1.Overlay;
 
 
 /***/ },
@@ -138,6 +142,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	        var options = util_1.getOptions(Object.assign(_this.options, _this.props));
 	        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
+	        var controls = _this.getControlsComponent();
+	        if (controls) {
+	            //get controls children and use it to extend it. e.g. defaults().extend([..])
+	            // note: https://openlayers.org/workshop/en/controls/scaleline.html
+	            options.controls = ol.control.defaults(controls.props);
+	        }
 	        _this.map = new ol.Map(options);
 	        return _this;
 	    }
@@ -180,11 +190,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var key in events) {
 	            propEventMap[toPropsKey(key)] = key;
 	        }
-	        console.log('propEventMap', propEventMap);
 	        for (var prop in events) {
 	            if (Object.keys(propEventMap).indexOf(prop) !== -1) {
 	                var eventName = propEventMap[prop];
-	                console.log('registering event', eventName, propEvents[prop]);
 	                this.map.on(eventName, propEvents[prop]);
 	            }
 	        }
@@ -192,6 +200,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
 	    Map.prototype.getChildContext = function () {
 	        return { map: this.map };
+	    };
+	    Map.prototype.getControlsComponent = function () {
+	        var controls;
+	        var children = React.Children.toArray(this.props.children);
+	        var layers;
+	        for (var i = 0; i < children.length; i++) {
+	            var child = children[i];
+	            if (child.type.name == 'Controls') {
+	                controls = child;
+	                break;
+	            }
+	        }
+	        return controls;
 	    };
 	    return Map;
 	}(React.Component));
@@ -1695,8 +1716,50 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var tile_1 = __webpack_require__(14);
-	var vector_1 = __webpack_require__(15);
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	// I wish I can name it as 'layers', not 'Layers'
+	var Controls = (function (_super) {
+	    __extends(Controls, _super);
+	    function Controls(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            attribution: undefined,
+	            attributionOptions: undefined,
+	            rotate: undefined,
+	            rotateOptions: undefined,
+	            zoom: undefined,
+	            zoomOptions: undefined
+	        };
+	        _this.options = util_1.getOptions(Object['assign'](_this.options, _this.props));
+	        return _this;
+	    }
+	    Controls.prototype.render = function () {
+	        return (React.createElement("div", null, this.props.children));
+	    };
+	    Controls.prototype.componentDidMount = function () { };
+	    Controls.prototype.componentWillUnmount = function () { };
+	    return Controls;
+	}(React.Component));
+	exports.Controls = Controls;
+	Controls['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var tile_1 = __webpack_require__(15);
+	var vector_1 = __webpack_require__(16);
 	var layer = {
 	    Tile: tile_1.Tile,
 	    Vector: vector_1.Vector
@@ -1705,7 +1768,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1771,7 +1834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1837,12 +1900,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var marker_1 = __webpack_require__(17);
-	var popup_1 = __webpack_require__(18);
+	var marker_1 = __webpack_require__(18);
+	var popup_1 = __webpack_require__(19);
 	var custom = {
 	    Marker: marker_1.Marker,
 	    Popup: popup_1.Popup
@@ -1851,7 +1914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1897,7 +1960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1907,7 +1970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(2);
-	__webpack_require__(19);
+	__webpack_require__(20);
 	var Popup = (function (_super) {
 	    __extends(Popup, _super);
 	    function Popup() {
@@ -1927,7 +1990,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.containerEl.style.display = 'block';
 	    };
 	    Popup.prototype.hide = function () {
-	        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 	        this.containerEl.style.display = 'none';
 	    };
 	    return Popup;
@@ -1936,13 +1998,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(20);
+	var content = __webpack_require__(21);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(8)(content, {});
@@ -1962,7 +2024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(7)();
@@ -1976,19 +2038,494 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var overlay_1 = __webpack_require__(22);
-	var overlay = {
-	    Overlay: overlay_1.Overlay
+	var scale_line_1 = __webpack_require__(23);
+	var attribution_1 = __webpack_require__(24);
+	var full_screen_1 = __webpack_require__(25);
+	var mouse_position_1 = __webpack_require__(26);
+	var overview_map_1 = __webpack_require__(27);
+	var rotate_1 = __webpack_require__(28);
+	var zoom_slider_1 = __webpack_require__(29);
+	var zoom_to_extent_1 = __webpack_require__(30);
+	var zoom_1 = __webpack_require__(31);
+	var control = {
+	    ScaleLine: scale_line_1.ScaleLine,
+	    Attribution: attribution_1.Attribution,
+	    FullScreen: full_screen_1.FullScreen,
+	    MousePosition: mouse_position_1.MousePosition,
+	    OverviewMap: overview_map_1.OverviewMap,
+	    Rotate: rotate_1.Rotate,
+	    ZoomSlider: zoom_slider_1.ZoomSlider,
+	    ZoomToExtent: zoom_to_extent_1.ZoomToExtent,
+	    Zoom: zoom_1.Zoom
 	};
-	exports.overlay = overlay;
+	exports.control = control;
 
 
 /***/ },
-/* 22 */
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var ScaleLine = (function (_super) {
+	    __extends(ScaleLine, _super);
+	    function ScaleLine(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            minWidth: undefined,
+	            render: undefined,
+	            target: undefined,
+	            units: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:units': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    ScaleLine.prototype.render = function () {
+	        return null;
+	    };
+	    ScaleLine.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object.assign(this.options, this.props));
+	        this.control = new ol.control.ScaleLine(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    ScaleLine.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return ScaleLine;
+	}(React.Component));
+	exports.ScaleLine = ScaleLine;
+	ScaleLine['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var Attribution = (function (_super) {
+	    __extends(Attribution, _super);
+	    function Attribution(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            target: undefined,
+	            collapsible: undefined,
+	            collapsed: undefined,
+	            tipLabel: undefined,
+	            label: undefined,
+	            collapseLabel: undefined,
+	            render: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    Attribution.prototype.render = function () {
+	        return null;
+	    };
+	    Attribution.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.Attribution(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    Attribution.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return Attribution;
+	}(React.Component));
+	exports.Attribution = Attribution;
+	Attribution['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var FullScreen = (function (_super) {
+	    __extends(FullScreen, _super);
+	    function FullScreen(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            label: undefined,
+	            labelActive: undefined,
+	            tipLabel: undefined,
+	            keys: undefined,
+	            target: undefined,
+	            source: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    FullScreen.prototype.render = function () {
+	        return null;
+	    };
+	    FullScreen.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.FullScreen(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    FullScreen.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return FullScreen;
+	}(React.Component));
+	exports.FullScreen = FullScreen;
+	FullScreen['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var MousePosition = (function (_super) {
+	    __extends(MousePosition, _super);
+	    function MousePosition(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            coordinateFormat: undefined,
+	            projection: undefined,
+	            render: undefined,
+	            target: undefined,
+	            undefinedHTML: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:coordinateFormat': undefined,
+	            'change:projection': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    MousePosition.prototype.render = function () {
+	        return null;
+	    };
+	    MousePosition.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.MousePosition(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    MousePosition.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return MousePosition;
+	}(React.Component));
+	exports.MousePosition = MousePosition;
+	MousePosition['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var OverviewMap = (function (_super) {
+	    __extends(OverviewMap, _super);
+	    function OverviewMap(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            collapsed: undefined,
+	            collapseLabel: undefined,
+	            collapsible: undefined,
+	            label: undefined,
+	            layers: undefined,
+	            render: undefined,
+	            target: undefined,
+	            tipLabel: undefined,
+	            view: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    OverviewMap.prototype.render = function () {
+	        return null;
+	    };
+	    OverviewMap.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.OverviewMap(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    OverviewMap.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return OverviewMap;
+	}(React.Component));
+	exports.OverviewMap = OverviewMap;
+	OverviewMap['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var Rotate = (function (_super) {
+	    __extends(Rotate, _super);
+	    function Rotate(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            label: undefined,
+	            tipLabel: undefined,
+	            duration: undefined,
+	            autoHide: undefined,
+	            render: undefined,
+	            resetNorth: undefined,
+	            target: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    Rotate.prototype.render = function () {
+	        return null;
+	    };
+	    Rotate.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.Rotate(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    Rotate.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return Rotate;
+	}(React.Component));
+	exports.Rotate = Rotate;
+	Rotate['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var ZoomSlider = (function (_super) {
+	    __extends(ZoomSlider, _super);
+	    function ZoomSlider(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            duration: undefined,
+	            className: undefined,
+	            maxResolution: undefined,
+	            minResolution: undefined,
+	            render: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    ZoomSlider.prototype.render = function () {
+	        return null;
+	    };
+	    ZoomSlider.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.ZoomSlider(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    ZoomSlider.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return ZoomSlider;
+	}(React.Component));
+	exports.ZoomSlider = ZoomSlider;
+	ZoomSlider['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var ZoomToExtent = (function (_super) {
+	    __extends(ZoomToExtent, _super);
+	    function ZoomToExtent(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            target: undefined,
+	            label: undefined,
+	            tipLabel: undefined,
+	            extent: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    ZoomToExtent.prototype.render = function () {
+	        return null;
+	    };
+	    ZoomToExtent.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.ZoomToExtent(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    ZoomToExtent.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return ZoomToExtent;
+	}(React.Component));
+	exports.ZoomToExtent = ZoomToExtent;
+	ZoomToExtent['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var ol = __webpack_require__(3);
+	var util_1 = __webpack_require__(4);
+	var Zoom = (function (_super) {
+	    __extends(Zoom, _super);
+	    function Zoom(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            duration: undefined,
+	            className: undefined,
+	            zoomInLabel: undefined,
+	            zoomOutLabel: undefined,
+	            zoomInTipLabel: undefined,
+	            zoomOutTipLabel: undefined,
+	            delta: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    Zoom.prototype.render = function () {
+	        return null;
+	    };
+	    Zoom.prototype.componentDidMount = function () {
+	        var options = util_1.getOptions(Object['assign'](this.options, this.props));
+	        this.control = new ol.control.Zoom(options);
+	        this.context.map.addControl(this.control);
+	    };
+	    Zoom.prototype.componentWillUnmount = function () {
+	        this.context.map.removeControl(this.control);
+	    };
+	    return Zoom;
+	}(React.Component));
+	exports.Zoom = Zoom;
+	Zoom['contextTypes'] = {
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2034,7 +2571,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (typeof options.element === 'string') {
 	            options.element = document.querySelector(options.element);
 	        }
-	        console.log('Overlay options', options);
 	        this.overlay = new ol.Overlay(options);
 	        this.context.map.addOverlay(this.overlay);
 	    };
