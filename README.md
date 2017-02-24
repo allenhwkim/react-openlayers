@@ -9,19 +9,31 @@ written in [TypeScript](https://www.typescriptlang.org/)
 
 Example
 ```
-  <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
-    <Layers>
-      <layer.Tile/>
-      <layer.Vector source={markers} style={markers.style} />
-    </Layers>
-    <Overlays>
-      <overlay.Overlay 
-        ref={comp => this.overlayComp = comp}
-        element="#popup" />
-    </Overlays>
-    {/*<Controls></Controls>*/}
-    {/*<Interactions></Interactions>*/}
-  </Map>
+
+    <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
+      <Layers>
+        <layer.Tile/>
+        <layer.Vector source={markers} style={markers.style} />
+      </Layers>
+      <Overlays>
+        <Overlay 
+          ref={comp => this.overlayComp = comp}
+          element="#popup" />
+      </Overlays>
+      <Controls attribution={false} zoom={true}>
+        <control.Rotate />
+        <control.ScaleLine />
+        <control.FullScreen />
+        <control.OverviewMap />
+        <control.ZoomSlider />
+        <control.ZoomToExtent />
+        <control.Zoom />
+      </Controls>
+      {/*<Interactions></Interactions>*/}
+    </Map>
+
+    <custom.Popup ref={comp => this.popupComp = comp}>
+    </custom.Popup>
 ```
 
 It strictly follows [OpenLayer 3+ API documention](https://openlayers.org/en/latest/apidoc/)
