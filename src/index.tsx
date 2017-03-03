@@ -6,6 +6,7 @@ import {custom} from './custom/index';
 
 import {Map} from  './map';
 import {Overlay} from './overlay';
+import {Util} from './util';
 
 export {
   //groups
@@ -22,5 +23,7 @@ export {
 
   //Objects
   Map,
-  Overlay
+  Overlay,
+
+  Util
 };

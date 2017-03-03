@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from '../util';
+import {Util} from '../util';
 
 export class FullScreen extends React.Component<any, any> {
 
@@ -30,7 +30,7 @@ export class FullScreen extends React.Component<any, any> {
   }
 
   componentDidMount () {
-    let options = getOptions(Object['assign'](this.options, this.props));
+    let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.control = new ol.control.FullScreen(options);
     this.context.map.addControl(this.control)
   }

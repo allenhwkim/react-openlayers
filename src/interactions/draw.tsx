@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from "../util";
+import {Util} from "../util";
 
 export class Draw extends React.Component<any, any> {
 
@@ -41,7 +41,7 @@ export class Draw extends React.Component<any, any> {
   }
 
   componentDidMount () {
-    let options = getOptions(Object['assign'](this.options, this.props));
+    let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.interaction = new ol.interaction.Draw(options);
     this.context.map.addInteraction(this.interaction)
   }

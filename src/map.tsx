@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions, getEvents} from './util';
+import {Util} from './util';
 import {Layers} from './layers/layers';
 import {layer} from './layers/index';
 
@@ -65,7 +65,7 @@ export class Map extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
-    let options = getOptions(Object.assign(this.options, this.props));
+    let options = Util.getOptions(Object.assign(this.options, this.props));
     !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
 
     let controls = this.getControlsComponent();
@@ -113,7 +113,7 @@ export class Map extends React.Component<any, any> {
    * functions
    */
   private registerEvents(events, props) {
-    let propEvents = getEvents(Object.assign(events, props));
+    let propEvents = Util.getEvents(Object.assign(events, props));
     let toPropsKey = str => {
       return 'on' +
         str.replace(/(\:[a-z])/g, $1 => $1.toUpperCase())

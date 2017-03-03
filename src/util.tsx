@@ -1,4 +1,4 @@
-export function getOptions(props: any): any {
+function getOptions(props: any): any {
     let options: any = {};
     for(let key in props) {
       if (
@@ -12,7 +12,7 @@ export function getOptions(props: any): any {
     return options;
   }
 
-export function getEvents(props: any): any {
+function getEvents(props: any): any {
     let events: any = {};
     for(let key in props) {
       if (
@@ -29,7 +29,7 @@ let typeOf = function(obj){
     return ({}).toString.call(obj)
         .match(/\s([a-zA-Z]+)/)[1].toLowerCase();
 };
-export function cloneObject(obj){
+function cloneObject(obj){
     var type = typeOf(obj);
     if (type == 'object' || type == 'array') {
         if (obj.clone) {
@@ -42,4 +42,10 @@ export function cloneObject(obj){
         return clone;
     }
     return obj;
+}
+
+export class Util {
+  static getOptions = getOptions;
+  static getEvents = getEvents;
+  static cloneObject = cloneObject;
 }

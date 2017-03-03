@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from "../util";
+import {Util} from "../util";
 
 export class Modify extends React.Component<any, any> {
 
@@ -32,7 +32,7 @@ export class Modify extends React.Component<any, any> {
   }
 
   componentDidMount () {
-    let options = getOptions(Object['assign'](this.options, this.props));
+    let options = Util.getOptions(Object['assign'](this.options, this.props));
     console.log('modify options', options);
     this.interaction = new ol.interaction.Modify(options);
     this.context.map.addInteraction(this.interaction)
