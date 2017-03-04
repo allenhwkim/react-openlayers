@@ -9,10 +9,8 @@ import {
 
 let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
 let markers = new custom.Marker({positions: positions});
-let selectedMarkerStyle = Util.cloneObject(markers.style);
-selectedMarkerStyle.getImage().setOpacity(1);
 
-export class Select extends React.Component<any, any> {
+export class Draw extends React.Component<any, any> {
   constructor(props) {
     super(props)
   }
@@ -26,7 +24,7 @@ export class Select extends React.Component<any, any> {
             <layer.Vector source={markers} style={markers.style} />
           </Layers>
           <Interactions>
-            <interaction.Select style={selectedMarkerStyle} />
+            <interaction.Draw source={markers} type='Point' />
           </Interactions>
         </Map>
         <pre>{`
@@ -36,7 +34,7 @@ export class Select extends React.Component<any, any> {
               <layer.Vector source={markers} style={markers.style} />
             </Layers>
             <Interactions>
-              <interaction.Select style={selectedMarkerStyle} />
+              <interaction.Draw source={markers} type='Point' />
             </Interactions>
           </Map>
         `}</pre>

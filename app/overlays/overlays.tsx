@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Link} from 'react-router';
-import {AppOverlay} from './overlay';
+import {AppOverlay} from './app-overlay';
 
 export class Overlays extends React.Component<any, any> {
   constructor(props) {
@@ -11,11 +11,13 @@ export class Overlays extends React.Component<any, any> {
     return (
       <div>
         <h1>Controls</h1>
-        <ul role="nav">
+        <ul role="nav" className="group-menu">
           <li><Link to="overlays/overlay">Overlay</Link></li>
         </ul>
 
-        {this.props.children}
+        <div className="contents">
+          {this.props.children}
+        </div>
       </div>
     );
   }

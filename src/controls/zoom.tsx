@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
 import {Util} from '../util';
+import {Map} from '../map';
 
 export class Zoom extends React.Component<any, any> {
 
@@ -32,14 +33,12 @@ export class Zoom extends React.Component<any, any> {
   componentDidMount () {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.control = new ol.control.Zoom(options);
-    this.context.map.addControl(this.control)
+    this.context.mapComp.controls.push(this.control)
   }
 
-  componentWillUnmount () {
-    this.context.map.removeControl(this.control)
-  }
 }
 
 Zoom['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

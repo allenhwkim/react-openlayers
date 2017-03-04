@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
 import {Util} from "../util";
+import {Map} from '../map';
 
 export class Draw extends React.Component<any, any> {
 
@@ -32,25 +33,19 @@ export class Draw extends React.Component<any, any> {
     'propertychange': undefined
   };
 
-  constructor(props) {
-    super(props);
-  }
+  constructor(props) { super(props); }
 
-  render() {
-    return null;
-  }
+  render() { return null; }
 
   componentDidMount () {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.interaction = new ol.interaction.Draw(options);
-    this.context.map.addInteraction(this.interaction)
+    this.context.mapComp.interactions.push(this.interaction)
   }
 
-  componentWillUnmount () {
-    this.context.map.removeInteraction(this.interaction)
-  }
 }
 
 Draw['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

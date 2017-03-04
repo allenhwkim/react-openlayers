@@ -22,7 +22,7 @@ function Marker(options?: any) {
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        opacity: 0.75,
+        opacity: 0.5,
         src: 'https://harrywood.co.uk/maps/examples/leaflet/leaflet/images/marker-icon.png'
       }))
     })

@@ -7,7 +7,10 @@ import {
   Map, Layers, Overlay, Util    //objects
 } from "react-openlayers";
 
-export class Tile extends React.Component<any,any> {
+let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
+let markers = new custom.Marker({positions: positions});
+
+export class Vector extends React.Component<any,any> {
   constructor(props) {
     super(props);
   }
@@ -18,12 +21,14 @@ export class Tile extends React.Component<any,any> {
         <Map>
           <Layers>
             <layer.Tile/>
+            <layer.Vector source={markers} style={markers.style} />
           </Layers>
         </Map>
         <pre>{`
           <Map>
             <Layers>
               <layer.Tile/>
+              <layer.Vector source={markers} style={markers.style} />
             </Layers>
           </Map>
         `}</pre>

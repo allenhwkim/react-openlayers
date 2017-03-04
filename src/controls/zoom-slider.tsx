@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
 import {Util} from '../util';
+import {Map} from '../map';
 
 export class ZoomSlider extends React.Component<any, any> {
 
@@ -19,25 +20,19 @@ export class ZoomSlider extends React.Component<any, any> {
     'propertychange': undefined
   };
 
-  constructor(props) {
-    super(props);
-  }
+  constructor(props) { super(props); }
 
-  render() {
-    return null;
-  }
+  render() { return null; }
 
   componentDidMount () {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.control = new ol.control.ZoomSlider(options);
-    this.context.map.addControl(this.control)
+    this.context.mapComp.controls.push(this.control)
   }
 
-  componentWillUnmount () {
-    this.context.map.removeControl(this.control)
-  }
 }
 
 ZoomSlider['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

@@ -14,6 +14,7 @@ export class Attribution extends React.Component<any,any> {
 
   render(){
     return (
+      <div>
       <Map>
         <Layers><layer.Tile/></Layers>
         <Controls
@@ -21,6 +22,16 @@ export class Attribution extends React.Component<any,any> {
           zoom={true}>
         </Controls>
       </Map>
+      <pre>{`
+        <Map>
+          <Layers><layer.Tile/></Layers>
+          <Controls
+            attribution={false}
+            zoom={true}>
+          </Controls>
+        </Map>
+      `}</pre>
+      </div>
     );
   }
 }

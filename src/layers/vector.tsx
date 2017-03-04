@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
 import {Util} from "../util";
+import {Map} from '../map';
 
 export class Vector extends React.Component<any, any> {
 
@@ -47,14 +48,12 @@ export class Vector extends React.Component<any, any> {
   componentDidMount () {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     this.layer = new ol.layer.Vector(options);
-    this.context.map.addLayer(this.layer)
+    this.context.mapComp.layers.push(this.layer);
   }
 
-  componentWillUnmount () {
-    this.context.map.removeLayer(this.layer)
-  }
 }
 
 Vector['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

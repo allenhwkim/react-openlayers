@@ -15,7 +15,7 @@ export class AppOverlay extends React.Component<any,any> {
     super(props);
   } 
 
-  showPopup(evt) {
+  showPopup = (evt) => {
     let feature = evt.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => feature );
     let overlayPosition = feature ? 
       feature.getGeometry().getCoordinates() : evt.coordinate;
@@ -42,6 +42,18 @@ export class AppOverlay extends React.Component<any,any> {
         </Map>
         <custom.Popup ref={comp => this.popupComp = comp}>
         </custom.Popup>
+        <pre>{`
+          <Map onClick={this.showPopup}>
+            <Layers><layer.Tile/></Layers>
+            <Overlays>
+              <Overlay 
+                ref={comp => this.overlayComp = comp}
+                element="#popup" />
+            </Overlays>
+          </Map>
+          <custom.Popup ref={comp => this.popupComp = comp}>
+          </custom.Popup>
+       `}</pre>
       </div>
     );
   }
