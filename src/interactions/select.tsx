@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from "../util";
+import {Util} from "../util";
+import {Map} from '../map';
 
 export class Select extends React.Component<any, any> {
 
@@ -27,25 +28,23 @@ export class Select extends React.Component<any, any> {
     'select': undefined
   };
 
-  constructor(props) {
-    super(props);
-  }
+  constructor(props) { super(props); }
 
-  render() {
-    return null;
-  }
+  render() { return null; }
 
   componentDidMount () {
-    let options = getOptions(Object['assign'](this.options, this.props));
-    this.interaction = new ol.interaction.Select(options);
-    this.context.map.addInteraction(this.interaction)
+    if (this.props.instance) {
+      this.interaction = this.props.instance;
+    } else {
+      let options = Util.getOptions(Object['assign'](this.options, this.props));
+      this.interaction = new ol.interaction.Select(options);
+    }
+    this.context.mapComp.interactions.push(this.interaction)
   }
 
-  componentWillUnmount () {
-    this.context.map.removeInteraction(this.interaction)
-  }
 }
 
 Select['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

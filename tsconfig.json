@@ -3,6 +3,7 @@
     "target": "es5",
     "lib": ["es5", "es6", "dom"],
     "module": "commonjs",
+    "isolatedModules": false,
     "moduleResolution": "node",
     "noEmitHelpers": false,
     "emitDecoratorMetadata": true,
@@ -29,7 +30,7 @@
     "openlayers"
   ],
   "files": [
-    "src/index.ts",
+    "src/index.tsx",
     "node_modules/@types/openlayers/index.d.ts"
   ],
   "exclude": [

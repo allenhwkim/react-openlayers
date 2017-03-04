@@ -24,7 +24,8 @@ const config = {
       {test: /\.ts$/, loader: 'ts' },
       {test: /\.css$/, loader: 'style!css'},
       {test: /\.html/, loader: 'html'},
-      {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
+      {test: /\.tsx?$/, loader: 'ts-loader'},
+      // {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
       //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
     ],
     preLoaders: [

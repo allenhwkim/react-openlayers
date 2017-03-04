@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from '../util';
+import {Util} from '../util';
+import {Map} from '../map';
 
 export class FullScreen extends React.Component<any, any> {
 
@@ -21,25 +22,19 @@ export class FullScreen extends React.Component<any, any> {
     'propertychange': undefined
   };
 
-  constructor(props) {
-    super(props);
-  }
+  constructor(props) { super(props); }
 
-  render() {
-    return null;
-  }
+  render() { return null; }
 
   componentDidMount () {
-    let options = getOptions(Object['assign'](this.options, this.props));
+    let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.control = new ol.control.FullScreen(options);
-    this.context.map.addControl(this.control)
+    this.context.mapComp.controls.push(this.control)
   }
 
-  componentWillUnmount () {
-    this.context.map.removeControl(this.control)
-  }
 }
 
 FullScreen['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

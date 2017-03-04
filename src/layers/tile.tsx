@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from '../util';
+import {Util} from '../util';
+import {Map} from '../map';
 
 export class Tile extends React.Component<any, any> {
 
@@ -37,6 +38,7 @@ export class Tile extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
+    console.log('Tile constructor');
   }
 
   render() {
@@ -44,17 +46,15 @@ export class Tile extends React.Component<any, any> {
   }
 
   componentDidMount () {
-    let options = getOptions(Object.assign(this.options, this.props));
+    let options = Util.getOptions(Object.assign(this.options, this.props));
     options.source = options.source || new ol.source.OSM();
     this.layer = new ol.layer.Tile(options);
-    this.context.map.addLayer(this.layer)
+    this.context.mapComp.layers.push(this.layer)
   }
 
-  componentWillUnmount () {
-    this.context.map.removeLayer(this.layer)
-  }
 }
 
 Tile['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

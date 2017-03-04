@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions, getEvents} from './util';
+import {Util} from './util';
 import {Layers} from './layers/layers';
 import {layer} from './layers/index';
 
@@ -25,6 +25,11 @@ export class Map extends React.Component<any, any> {
 
   map: ol.Map;
   mapDiv: any;
+
+  layers: any[] = [];
+  interactions: any[] = [];
+  controls: any[] = [];
+  overlays: any[] = [];
 
   options: any = {
     pixelRation: undefined,
@@ -64,22 +69,21 @@ export class Map extends React.Component<any, any> {
    */
   constructor(props) {
     super(props);
-
-    let options = getOptions(Object.assign(this.options, this.props));
-    !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
-
-    let controls = this.getControlsComponent();
-    if (controls) {
-      //get controls children and use it to extend it. e.g. defaults().extend([..])
-      // note: https://openlayers.org/workshop/en/controls/scaleline.html
-      options.controls = ol.control.defaults(controls.props);
-    }
-    this.map = new ol.Map(options);
+    console.log('Map constructor');
   }
 
   componentDidMount() {
+    let options = Util.getOptions(Object.assign(this.options, this.props));
+    !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
+
+    options.controls = ol.control.defaults().extend(this.controls);
+    options.interactions = ol.interaction.defaults().extend(this.interactions);
+    options.layers = this.layers;
+
+    this.map = new ol.Map(options);
     this.map.setTarget(this.mapDiv);
     this.registerEvents(this.events, this.props);
+    console.log('Map did mount');
   }
 
   render() {
@@ -113,7 +117,7 @@ export class Map extends React.Component<any, any> {
    * functions
    */
   private registerEvents(events, props) {
-    let propEvents = getEvents(Object.assign(events, props));
+    let propEvents = Util.getEvents(Object.assign(events, props));
     let toPropsKey = str => {
       return 'on' +
         str.replace(/(\:[a-z])/g, $1 => $1.toUpperCase())
@@ -137,25 +141,16 @@ export class Map extends React.Component<any, any> {
 
   // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
   getChildContext(): any {
-    return { map: this.map }
+    return { 
+      mapComp: this,
+      map: this.map 
+    }
   }
 
-  private getControlsComponent(): any {
-    let controls: any;
-    let children = React.Children.toArray(this.props.children);
-    let layers: any ;
-    for (let i=0; i<children.length; i++) {
-      let child: any = children[i];
-      if (child.type.name == 'Controls'){
-        controls = child;
-        break;
-      }
-    }
-    return controls;
-  }
 }
 
 // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
 Map['childContextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };

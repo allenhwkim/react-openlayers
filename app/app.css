@@ -1,0 +1,20 @@
+.menu .groups li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.group-menu, .contents {
+  float: left;
+  padding: 10px;
+}
+
+.group-menu {
+  margin-left: 30px;
+  min-width: 100px;
+}
+
+.contents {
+  width: 80%;
+  min-width: 400px;
+}

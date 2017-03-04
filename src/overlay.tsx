@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {getOptions} from './util';
+import {Util} from './util';
+import {Map} from './Map';
 
 export class Overlay extends React.Component<any, any> {
 
@@ -37,12 +38,12 @@ export class Overlay extends React.Component<any, any> {
   }
 
   componentDidMount () {
-    let options = getOptions( Object['assign'](this.options, this.props));
+    let options = Util.getOptions( Object['assign'](this.options, this.props));
     if (typeof options.element === 'string') {
       options.element = document.querySelector(options.element);
     }
     this.overlay = new ol.Overlay(options);
-    this.context.map.addOverlay(this.overlay);
+    this.context.mapComp.overlays.push(this.overlay);
   }
 
   componentWillUnmount () {
@@ -51,5 +52,6 @@ export class Overlay extends React.Component<any, any> {
 }
 
 Overlay['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
   map: React.PropTypes.instanceOf(ol.Map)
 };
