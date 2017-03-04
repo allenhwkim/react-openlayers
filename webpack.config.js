@@ -5,7 +5,7 @@ var path = require("path");
 var webpack = require('webpack');
 
 var config = {
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "react-openlayers.umd.js",
@@ -24,7 +24,7 @@ var config = {
       {test: /\.ts$/, loader: 'ts' },
       {test: /\.css$/, loader: 'style!css'},
       {test: /\.html/, loader: 'html'},
-      {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
+      {test: /\.tsx?$/, loader: 'ts-loader'},
       //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
     ]
   },
