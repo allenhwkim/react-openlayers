@@ -1,0 +1,53 @@
+import * as React from 'react';
+import * as ol from 'openlayers';
+import {Util} from "../util";
+import {Map} from '../map';
+
+export class Image extends React.Component<any, any> {
+
+  layer: ol.layer.Image;
+
+  options: any = {
+    opacity: undefined,
+    source: undefined,
+    visible: undefined,
+    extent: undefined,
+    minResolution: undefined,
+    maxResolution: undefined
+  };
+
+  events: any = {
+    'change': undefined,
+    'change:extent': undefined,
+    'change:gradient': undefined,
+    'change:maxResolution': undefined,
+    'change:minResolution': undefined,
+    'change:opacity': undefined,
+    'change:source': undefined,
+    'change:visible': undefined,
+    'change:zIndex': undefined,
+    'postcompose': undefined,
+    'precompose': undefined,
+    'propertychange': undefined,
+    'render': undefined
+  };
+
+  constructor(props) { 
+    super(props);
+  }
+
+  render() { return null; }
+
+  componentDidMount () {
+    let options = Util.getOptions(Object['assign'](this.options, this.props));
+    console.log('image options........', options);
+    this.layer = new ol.layer.Image(options);
+    this.context.mapComp.layers.push(this.layer);
+  }
+
+}
+
+Image['contextTypes'] = {
+  mapComp: React.PropTypes.instanceOf(Map),
+  map: React.PropTypes.instanceOf(ol.Map)
+};

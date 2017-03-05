@@ -81,7 +81,7 @@ export class Map extends React.Component<any, any> {
     options.layers = this.layers;
 
     this.map = new ol.Map(options);
-    this.map.setTarget(this.mapDiv);
+    this.map.setTarget(options.target || this.mapDiv);
     this.registerEvents(this.events, this.props);
     console.log('Map did mount');
   }
