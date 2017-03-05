@@ -17,15 +17,15 @@ export class Tile extends React.Component<any,any> {
       <div>
         <Map>
           <Layers>
-            <layer.Tile/>
+            <layer.Tile source={new ol.source.Stamen({ layer: 'watercolor' })}/>
           </Layers>
         </Map>
         <pre>{`
-          <Map>
-            <Layers>
-              <layer.Tile/>
-            </Layers>
-          </Map>
+        <Map>
+          <Layers>
+            <layer.Tile source={new ol.source.Stamen({ layer: 'watercolor' })}/>
+          </Layers>
+        </Map>
         `}</pre>
       </div>
     );

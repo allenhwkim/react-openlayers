@@ -20,6 +20,7 @@ export class Home extends React.Component<any,any> {
   }
 
   render(){
+    let tileSource = new ol.source.Stamen({ layer: 'watercolor' });
     return (
       <div>
         <h1>Map</h1>
@@ -27,17 +28,17 @@ export class Home extends React.Component<any,any> {
         <div className="contents">
           <Map view={{center: [0, 0], zoom: 2}}>
             <Layers>
-              <layer.Tile/>
+              <layer.Tile source={tileSource}/>
               <layer.Vector source={this.markers} style={this.markers.style} />
             </Layers>
           </Map>
           <pre>{`
-            <Map view={{center: [0, 0], zoom: 2}}>
-              <Layers>
-                <layer.Tile/>
-                <layer.Vector source={this.markers} style={this.markers.style} />
-              </Layers>
-            </Map>
+          <Map view={{center: [0, 0], zoom: 2}}>
+            <Layers>
+              <layer.Tile source={tileSource}/>
+              <layer.Vector source={this.markers} style={this.markers.style} />
+            </Layers>
+          </Map>
           `}</pre>
         </div>
       </div>

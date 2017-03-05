@@ -79,11 +79,17 @@ export class Map extends React.Component<any, any> {
     options.controls = ol.control.defaults().extend(this.controls);
     options.interactions = ol.interaction.defaults().extend(this.interactions);
     options.layers = this.layers;
+    options.overlays = this.overlays;
+    console.log('map options', options);
 
     this.map = new ol.Map(options);
     this.map.setTarget(options.target || this.mapDiv);
-    this.registerEvents(this.events, this.props);
-    console.log('Map did mount');
+
+    //regitster events
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.map.on(eventName, olEvents[eventName]);
+    }
   }
 
   render() {
@@ -111,32 +117,6 @@ export class Map extends React.Component<any, any> {
    */
   componentWillUnmount() {
     this.map.setTarget(undefined)
-  }
-
-  /**
-   * functions
-   */
-  private registerEvents(events, props) {
-    let propEvents = Util.getEvents(Object.assign(events, props));
-    let toPropsKey = str => {
-      return 'on' +
-        str.replace(/(\:[a-z])/g, $1 => $1.toUpperCase())
-        .replace(/^[a-z]/, $1 => $1.toUpperCase())
-        .replace(':','')
-    }
-
-    let propEventMap = {};
-    for(let key in events) {
-      propEventMap[toPropsKey(key)] = key
-    }
-
-    for(let prop in events) {
-      if (Object.keys(propEventMap).indexOf(prop) !== -1) {
-        let eventName = propEventMap[prop];
-        this.map.on(eventName, propEvents[prop])
-      }
-    }
-
   }
 
   // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context

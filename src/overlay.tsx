@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as ol from 'openlayers';
 import {Util} from './util';
 import {Map} from './Map';
@@ -6,6 +7,7 @@ import {Map} from './Map';
 export class Overlay extends React.Component<any, any> {
 
   overlay: ol.Overlay;
+  el: HTMLElement;
 
   options: any = {
     id: undefined,
@@ -29,29 +31,24 @@ export class Overlay extends React.Component<any, any> {
     'propertychange': undefined
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    return null;
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    );
   }
 
   componentDidMount () {
     let options = Util.getOptions( Object['assign'](this.options, this.props));
-    if (typeof options.element === 'string') {
-      options.element = document.querySelector(options.element);
-    }
+    options.element = ReactDOM.findDOMNode(this).querySelector('div');
+    // console.log('options.element', options.element);
     this.overlay = new ol.Overlay(options);
     this.context.mapComp.overlays.push(this.overlay);
-  }
-
-  componentWillUnmount () {
-    this.context.map.removeOverlay(this.overlay)
   }
 }
 
 Overlay['contextTypes'] = {
-  mapComp: React.PropTypes.instanceOf(Map),
+  mapComp: React.PropTypes.instanceOf(Object),
   map: React.PropTypes.instanceOf(ol.Map)
 };

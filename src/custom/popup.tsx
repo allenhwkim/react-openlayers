@@ -7,15 +7,19 @@ export class Popup extends React.Component<any, any> {
   containerEl: HTMLElement;
   contentEl: HTMLElement;
 
+  constructor(props) { 
+    console.log(2222222222);
+    super(props);
+  }
+
   render() {
+    console.log(3333333333);
     return (
-      <div id="popup" 
-        className="ol-popup" 
-        ref={el => this.containerEl = el}>
-        <a href="#" id="popup-closer"
-         onClick={this.hide}
-         className="ol-popup-closer"></a>
-        <div id="popup-content" ref={el => this.contentEl = el}></div>
+      <div className="olPopup" ref={el => this.containerEl = el}>
+        <a className="olPopupCloser"
+          href="javascript:void(0)"
+          onClick={this.hide}></a>{/* why this does not work??? */}
+        <div className="olPopupContents" ref={el => this.contentEl = el}></div>
       </div>
     );
   }
@@ -24,12 +28,12 @@ export class Popup extends React.Component<any, any> {
     this.contentEl.innerHTML = html;
   }
 
-  show(feature) {
-    this.containerEl.style.bottom = feature ? '52px' : '12px';
+  show(bottomDistance: string = '12px') {
+    this.containerEl.style.bottom = bottomDistance;
     this.containerEl.style.display = 'block';
   }
 
   hide() {
-    this.containerEl.style.display = 'none';
+    this.containerEl.style.display = 'block';
   }
 }

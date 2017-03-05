@@ -7,6 +7,7 @@ import {
   Map, Layers, Overlay, Util    //objects
 } from "react-openlayers";
 
+//AppOverlay to avoid conflict to Overlay
 export class AppOverlay extends React.Component<any,any> {
   overlayComp: any;
   popupComp: any;
@@ -16,43 +17,41 @@ export class AppOverlay extends React.Component<any,any> {
   } 
 
   showPopup = (evt) => {
-    let feature = evt.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => feature );
-    let overlayPosition = feature ? 
-      feature.getGeometry().getCoordinates() : evt.coordinate;
-    this.overlayComp.overlay.setPosition(overlayPosition);
-
-    var lonlat = ol.proj.transform(overlayPosition, 'EPSG:3857', 'EPSG:4326');
+    this.overlayComp.overlay.setPosition(evt.coordinate);
+    var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
     this.popupComp.setContents(
       `<p>You clicked here:</p><code> ${lonlat[0]}, ${lonlat[1]}</code>`
     );
-    this.popupComp.show(feature);
+    this.popupComp.show();
   }
 
   render(){
     return (
       <div>
         <Map onClick={this.showPopup}>
-          <Layers><layer.Tile/></Layers>
+          <Layers>
+            <layer.Tile source={new ol.source.Stamen({ layer: 'watercolor' })}/>
+          </Layers>
           <Overlays>
-            <Overlay 
-              ref={comp => this.overlayComp = comp}
-              element="#popup" />
+            <Overlay ref={comp => this.overlayComp = comp}>
+              <custom.Popup ref={comp => this.popupComp = comp}>
+              </custom.Popup>
+            </Overlay>
           </Overlays>
         </Map>
-        <custom.Popup ref={comp => this.popupComp = comp}>
-        </custom.Popup>
         <pre>{`
-          <Map onClick={this.showPopup}>
-            <Layers><layer.Tile/></Layers>
-            <Overlays>
-              <Overlay 
-                ref={comp => this.overlayComp = comp}
-                element="#popup" />
-            </Overlays>
-          </Map>
-          <custom.Popup ref={comp => this.popupComp = comp}>
-          </custom.Popup>
+        <Map onClick={this.showPopup}>
+          <Layers>
+            <layer.Tile source={new ol.source.Stamen({ layer: 'watercolor' })}/>
+          </Layers>
+          <Overlays>
+            <Overlay ref={comp => this.overlayComp = comp}>
+              <custom.Popup ref={comp => this.popupComp = comp}>
+              </custom.Popup>
+            </Overlay>
+          </Overlays>
+        </Map>
        `}</pre>
       </div>
     );
