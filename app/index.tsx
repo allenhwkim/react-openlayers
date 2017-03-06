@@ -7,6 +7,14 @@ import {Home} from './home';
 
 import {Controls} from './controls/controls';
 import {Attribution} from './controls/attribution';
+import {FullScreen} from './controls/full-screen';
+import {MousePosition} from './controls/mouse-position';
+import {OverviewMap} from './controls/overview-map';
+import {Rotate} from './controls/rotate';
+import {ScaleLine} from './controls/scale-line';
+import {ZoomSlider} from './controls/zoom-slider';
+import {ZoomToExtent} from './controls/zoom-to-extent';
+import {Zoom} from './controls/zoom';
 
 import {Layers} from './layers/layers';
 import {Tile} from './layers/tile';
@@ -29,6 +37,14 @@ ReactDOM.render((
       <Route path="controls" component={Controls}>
         <IndexRoute component={Attribution} />
         <Route path="attribution" component={Attribution} />
+        <Route path="full-screen" component={FullScreen} />
+        <Route path="mouse-position" component={MousePosition} />
+        <Route path="overview-map" component={OverviewMap} />
+        <Route path="rotate" component={Rotate} />
+        <Route path="scale-line" component={ScaleLine} />
+        <Route path="zoom-slider" component={ZoomSlider} />
+        <Route path="zoom-to-extent" component={ZoomToExtent} />
+        <Route path="zoom" component={Zoom} />
       </Route>
       <Route path="layers" component={Layers}>
         <IndexRoute component={Tile} />

@@ -7,7 +7,7 @@ import {
   Map, Layers, Overlay, Util    //objects
 } from "react-openlayers";
 
-export class Attribution extends React.Component<any,any> {
+export class ZoomSlider extends React.Component<any,any> {
   constructor(props) {
     super(props);
   }
@@ -15,16 +15,20 @@ export class Attribution extends React.Component<any,any> {
   render(){
     return (
       <div>
-      <Map>
-        <Layers><layer.Tile/></Layers>
-        <Controls attribution={false} zoom={false}></Controls>
-      </Map>
-      <pre>{`
-      <Map>
-        <Layers><layer.Tile/></Layers>
-        <Controls attribution={false} zoom={false}></Controls>
-      </Map>
-      `}</pre>
+        <Map>
+          <Layers><layer.Tile/></Layers>
+          <Controls>
+            <control.ZoomSlider />
+          </Controls>
+        </Map>
+        <pre>{`
+        <Map>
+          <Layers><layer.Tile/></Layers>
+          <Controls>
+            <control.ZoomSlider />
+          </Controls>
+        </Map>
+        `}</pre>
       </div>
     );
   }

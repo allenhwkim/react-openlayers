@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 function getOptions(props: any): any {
     let options: any = {};
     for(let key in props) {
@@ -42,22 +44,36 @@ let typeOf = function(obj){
         .match(/\s([a-zA-Z]+)/)[1].toLowerCase();
 };
 function cloneObject(obj){
-    var type = typeOf(obj);
-    if (type == 'object' || type == 'array') {
-        if (obj.clone) {
-            return obj.clone();
-        }
-        var clone = type == 'array' ? [] : {};
-        for (var key in obj) {
-            clone[key] = cloneObject(obj[key]);
-        }
-        return clone;
+  var type = typeOf(obj);
+  if (type == 'object' || type == 'array') {
+    if (obj.clone) {
+      return obj.clone();
     }
-    return obj;
+    var clone = type == 'array' ? [] : {};
+    for (var key in obj) {
+      clone[key] = cloneObject(obj[key]);
+    }
+    return clone;
+  }
+  return obj;
+}
+
+function findChild(children: any[], childType: string) {
+  let found: any;
+  let childrenArr = React.Children.toArray(children);
+  for (let i=0; i<childrenArr.length; i++) {
+    let child: any = childrenArr[i];
+    if (child.type.name == childType){
+      found = child;
+      break;
+    }
+  }
+  return found;
 }
 
 export class Util {
   static getOptions = getOptions;
   static getEvents = getEvents;
   static cloneObject = cloneObject;
+  static findChild = findChild;
 }

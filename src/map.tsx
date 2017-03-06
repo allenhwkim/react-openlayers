@@ -76,8 +76,12 @@ export class Map extends React.Component<any, any> {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
 
-    options.controls = ol.control.defaults().extend(this.controls);
-    options.interactions = ol.interaction.defaults().extend(this.interactions);
+    let controlsCmp = Util.findChild(this.props.children, 'Controls') || {};
+    let interactionsCmp = Util.findChild(this.props.children, 'Interactions') || {};
+
+    options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
+    options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
+
     options.layers = this.layers;
     options.overlays = this.overlays;
     console.log('map options', options);
