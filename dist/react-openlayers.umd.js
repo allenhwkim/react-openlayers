@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("React"));
+		module.exports = factory(require("React"), require("ReactDOM"));
 	else if(typeof define === 'function' && define.amd)
-		define(["React"], factory);
+		define(["React", "ReactDOM"], factory);
 	else if(typeof exports === 'object')
-		exports["react-openlayers"] = factory(require("React"));
+		exports["react-openlayers"] = factory(require("React"), require("ReactDOM"));
 	else
-		root["react-openlayers"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_3__) {
+		root["react-openlayers"] = factory(root["React"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_40__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -64,13 +64,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var index_3 = __webpack_require__(27);
 	exports.Layers = index_3.Layers;
 	exports.layer = index_3.layer;
-	var overlays_1 = __webpack_require__(31);
+	var overlays_1 = __webpack_require__(33);
 	exports.Overlays = overlays_1.Overlays;
-	var index_4 = __webpack_require__(32);
+	var index_4 = __webpack_require__(34);
 	exports.custom = index_4.custom;
 	var map_1 = __webpack_require__(6);
 	exports.Map = map_1.Map;
-	var overlay_1 = __webpack_require__(37);
+	var overlay_1 = __webpack_require__(39);
 	exports.Overlay = overlay_1.Overlay;
 	var util_1 = __webpack_require__(5);
 	exports.Util = util_1.Util;
@@ -1175,9 +1175,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var React = __webpack_require__(3);
 	function getOptions(props) {
 	    var options = {};
 	    for (var key in props) {
@@ -1190,15 +1191,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return options;
 	}
-	function getEvents(props) {
-	    var events = {};
-	    for (var key in props) {
-	        if (typeof props[key] !== 'undefined' &&
-	            key.match(/^on[A-Z]/)) {
-	            events[key] = props[key];
+	function getPropsKey(eventName) {
+	    return 'on' + eventName
+	        .replace(/(\:[a-z])/g, function ($1) { return $1.toUpperCase(); })
+	        .replace(/^[a-z]/, function ($1) { return $1.toUpperCase(); })
+	        .replace(':', '');
+	}
+	function getEvents(events, props) {
+	    if (events === void 0) { events = {}; }
+	    if (props === void 0) { props = {}; }
+	    var prop2EventMap = {};
+	    for (var key in events) {
+	        prop2EventMap[getPropsKey(key)] = key;
+	    }
+	    var ret = {};
+	    for (var propName in props) {
+	        var eventName = prop2EventMap[propName];
+	        var prop = props[propName];
+	        if (typeof prop !== 'undefined' && propName.match(/^on[A-Z]/) && eventName) {
+	            ret[eventName] = prop;
 	        }
 	    }
-	    return events;
+	    return ret;
 	}
 	var typeOf = function (obj) {
 	    return ({}).toString.call(obj)
@@ -1218,6 +1232,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return obj;
 	}
+	function findChild(children, childType) {
+	    var found;
+	    var childrenArr = React.Children.toArray(children);
+	    for (var i = 0; i < childrenArr.length; i++) {
+	        var child = childrenArr[i];
+	        if (child.type.name == childType) {
+	            found = child;
+	            break;
+	        }
+	    }
+	    return found;
+	}
 	var Util = (function () {
 	    function Util() {
 	    }
@@ -1226,6 +1252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Util.getOptions = getOptions;
 	Util.getEvents = getEvents;
 	Util.cloneObject = cloneObject;
+	Util.findChild = findChild;
 	exports.Util = Util;
 
 
@@ -1306,13 +1333,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Map.prototype.componentDidMount = function () {
 	        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
 	        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
-	        options.controls = ol.control.defaults().extend(this.controls);
-	        options.interactions = ol.interaction.defaults().extend(this.interactions);
+	        var controlsCmp = util_1.Util.findChild(this.props.children, 'Controls') || {};
+	        var interactionsCmp = util_1.Util.findChild(this.props.children, 'Interactions') || {};
+	        options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
+	        options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
 	        options.layers = this.layers;
+	        options.overlays = this.overlays;
+	        console.log('map options', options);
 	        this.map = new ol.Map(options);
-	        this.map.setTarget(this.mapDiv);
-	        this.registerEvents(this.events, this.props);
-	        console.log('Map did mount');
+	        this.map.setTarget(options.target || this.mapDiv);
+	        //regitster events
+	        var olEvents = util_1.Util.getEvents(this.events, this.props);
+	        for (var eventName in olEvents) {
+	            this.map.on(eventName, olEvents[eventName]);
+	        }
 	    };
 	    Map.prototype.render = function () {
 	        var _this = this;
@@ -1333,28 +1367,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    Map.prototype.componentWillUnmount = function () {
 	        this.map.setTarget(undefined);
-	    };
-	    /**
-	     * functions
-	     */
-	    Map.prototype.registerEvents = function (events, props) {
-	        var propEvents = util_1.Util.getEvents(Object.assign(events, props));
-	        var toPropsKey = function (str) {
-	            return 'on' +
-	                str.replace(/(\:[a-z])/g, function ($1) { return $1.toUpperCase(); })
-	                    .replace(/^[a-z]/, function ($1) { return $1.toUpperCase(); })
-	                    .replace(':', '');
-	        };
-	        var propEventMap = {};
-	        for (var key in events) {
-	            propEventMap[toPropsKey(key)] = key;
-	        }
-	        for (var prop in events) {
-	            if (Object.keys(propEventMap).indexOf(prop) !== -1) {
-	                var eventName = propEventMap[prop];
-	                this.map.on(eventName, propEvents[prop]);
-	            }
-	        }
 	    };
 	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
 	    Map.prototype.getChildContext = function () {
@@ -2410,9 +2422,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vector_1 = __webpack_require__(29);
 	var layers_1 = __webpack_require__(30);
 	exports.Layers = layers_1.Layers;
+	var heatmap_1 = __webpack_require__(31);
+	exports.Heatmap = heatmap_1.Heatmap;
+	var image_1 = __webpack_require__(32);
+	exports.Image = image_1.Image;
 	var layer = {
 	    Tile: tile_1.Tile,
-	    Vector: vector_1.Vector
+	    Vector: vector_1.Vector,
+	    Heatmap: heatmap_1.Heatmap,
+	    Image: image_1.Image
 	};
 	exports.layer = layer;
 
@@ -2584,6 +2602,130 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(3);
+	var ol = __webpack_require__(4);
+	var util_1 = __webpack_require__(5);
+	var map_1 = __webpack_require__(6);
+	var Heatmap = (function (_super) {
+	    __extends(Heatmap, _super);
+	    function Heatmap(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            gradient: undefined,
+	            radius: undefined,
+	            blur: undefined,
+	            shadow: undefined,
+	            weight: undefined,
+	            extent: undefined,
+	            minResolution: undefined,
+	            maxResolution: undefined,
+	            opacity: undefined,
+	            source: undefined,
+	            visible: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:blur': undefined,
+	            'change:extent': undefined,
+	            'change:gradient': undefined,
+	            'change:maxResolution': undefined,
+	            'change:minResolution': undefined,
+	            'change:opacity': undefined,
+	            'change:radius': undefined,
+	            'change:source': undefined,
+	            'change:visible': undefined,
+	            'change:zIndex': undefined,
+	            'postcompose': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'render': undefined
+	        };
+	        return _this;
+	    }
+	    Heatmap.prototype.render = function () { return null; };
+	    Heatmap.prototype.componentDidMount = function () {
+	        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+	        this.layer = new ol.layer.Heatmap(options);
+	        this.context.mapComp.layers.push(this.layer);
+	    };
+	    return Heatmap;
+	}(React.Component));
+	exports.Heatmap = Heatmap;
+	Heatmap['contextTypes'] = {
+	    mapComp: React.PropTypes.instanceOf(map_1.Map),
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(3);
+	var ol = __webpack_require__(4);
+	var util_1 = __webpack_require__(5);
+	var map_1 = __webpack_require__(6);
+	var Image = (function (_super) {
+	    __extends(Image, _super);
+	    function Image(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            opacity: undefined,
+	            source: undefined,
+	            visible: undefined,
+	            extent: undefined,
+	            minResolution: undefined,
+	            maxResolution: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:extent': undefined,
+	            'change:gradient': undefined,
+	            'change:maxResolution': undefined,
+	            'change:minResolution': undefined,
+	            'change:opacity': undefined,
+	            'change:source': undefined,
+	            'change:visible': undefined,
+	            'change:zIndex': undefined,
+	            'postcompose': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'render': undefined
+	        };
+	        return _this;
+	    }
+	    Image.prototype.render = function () { return null; };
+	    Image.prototype.componentDidMount = function () {
+	        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+	        console.log('image options........', options);
+	        this.layer = new ol.layer.Image(options);
+	        this.context.mapComp.layers.push(this.layer);
+	    };
+	    return Image;
+	}(React.Component));
+	exports.Image = Image;
+	Image['contextTypes'] = {
+	    mapComp: React.PropTypes.instanceOf(map_1.Map),
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(3);
 	var Overlays = (function (_super) {
 	    __extends(Overlays, _super);
 	    function Overlays() {
@@ -2598,12 +2740,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var marker_1 = __webpack_require__(33);
-	var popup_1 = __webpack_require__(34);
+	var marker_1 = __webpack_require__(35);
+	var popup_1 = __webpack_require__(36);
 	var custom = {
 	    Marker: marker_1.Marker,
 	    Popup: popup_1.Popup
@@ -2612,7 +2754,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2663,7 +2805,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2673,27 +2815,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(3);
-	__webpack_require__(35);
+	__webpack_require__(37);
 	var Popup = (function (_super) {
 	    __extends(Popup, _super);
-	    function Popup() {
-	        return _super !== null && _super.apply(this, arguments) || this;
+	    function Popup(props) {
+	        var _this = this;
+	        console.log(2222222222);
+	        _this = _super.call(this, props) || this;
+	        return _this;
 	    }
 	    Popup.prototype.render = function () {
 	        var _this = this;
-	        return (React.createElement("div", { id: "popup", className: "ol-popup", ref: function (el) { return _this.containerEl = el; } },
-	            React.createElement("a", { href: "#", id: "popup-closer", onClick: this.hide, className: "ol-popup-closer" }),
-	            React.createElement("div", { id: "popup-content", ref: function (el) { return _this.contentEl = el; } })));
+	        console.log(3333333333);
+	        return (React.createElement("div", { className: "olPopup", ref: function (el) { return _this.containerEl = el; } },
+	            React.createElement("a", { className: "olPopupCloser", href: "javascript:void(0)", onClick: this.hide }),
+	            React.createElement("div", { className: "olPopupContents", ref: function (el) { return _this.contentEl = el; } })));
 	    };
 	    Popup.prototype.setContents = function (html) {
 	        this.contentEl.innerHTML = html;
 	    };
-	    Popup.prototype.show = function (feature) {
-	        this.containerEl.style.bottom = feature ? '52px' : '12px';
+	    Popup.prototype.show = function (bottomDistance) {
+	        if (bottomDistance === void 0) { bottomDistance = '12px'; }
+	        this.containerEl.style.bottom = bottomDistance;
 	        this.containerEl.style.display = 'block';
 	    };
 	    Popup.prototype.hide = function () {
-	        this.containerEl.style.display = 'none';
+	        this.containerEl.style.display = 'block';
 	    };
 	    return Popup;
 	}(React.Component));
@@ -2701,13 +2848,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(36);
+	var content = __webpack_require__(38);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {});
@@ -2727,7 +2874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 36 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2735,13 +2882,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, ".ol-popup {\n  display: none;\n  position: absolute;\n  background-color: white;\n  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);\n  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  padding: 15px;\n  border-radius: 10px;\n  border: 1px solid #cccccc;\n  bottom: 12px;\n  left: -50px;\n  min-width: 150px;\n}\n.ol-popup:after, .ol-popup:before {\n  top: 100%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.ol-popup:after {\n  border-top-color: white;\n  border-width: 10px;\n  left: 48px;\n  margin-left: -10px;\n}\n.ol-popup:before {\n  border-top-color: #cccccc;\n  border-width: 11px;\n  left: 48px;\n  margin-left: -11px;\n}\n.ol-popup-closer {\n  text-decoration: none;\n  position: absolute;\n  top: 2px;\n  right: 8px;\n}\n.ol-popup-closer:after {\n  content: \"\\2716\";\n}\n", ""]);
+	exports.push([module.id, ".olPopup {\n  display: none;\n  position: absolute;\n  background-color: white;\n  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);\n  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  padding: 15px;\n  border-radius: 10px;\n  border: 1px solid #cccccc;\n  bottom: 12px;\n  left: -50px;\n  min-width: 150px;\n}\n.olPopup:after, .olPopup:before {\n  top: 100%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.olPopup:after {\n  border-top-color: white;\n  border-width: 10px;\n  left: 48px;\n  margin-left: -10px;\n}\n.olPopup:before {\n  border-top-color: #cccccc;\n  border-width: 11px;\n  left: 48px;\n  margin-left: -11px;\n}\n.olPopupCloser {\n  text-decoration: none;\n  position: absolute;\n  top: 2px;\n  right: 8px;\n}\n.olPopupCloser:after {\n  content: \"\\2716\";\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 37 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2751,13 +2898,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(3);
+	var ReactDOM = __webpack_require__(40);
 	var ol = __webpack_require__(4);
 	var util_1 = __webpack_require__(5);
-	var Map_1 = __webpack_require__(38);
 	var Overlay = (function (_super) {
 	    __extends(Overlay, _super);
-	    function Overlay(props) {
-	        var _this = _super.call(this, props) || this;
+	    function Overlay() {
+	        var _this = _super !== null && _super.apply(this, arguments) || this;
 	        _this.options = {
 	            id: undefined,
 	            element: undefined,
@@ -2781,171 +2928,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _this;
 	    }
 	    Overlay.prototype.render = function () {
-	        return null;
+	        return (React.createElement("div", null, this.props.children));
 	    };
 	    Overlay.prototype.componentDidMount = function () {
 	        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
-	        if (typeof options.element === 'string') {
-	            options.element = document.querySelector(options.element);
-	        }
+	        options.element = ReactDOM.findDOMNode(this).querySelector('div');
+	        // console.log('options.element', options.element);
 	        this.overlay = new ol.Overlay(options);
 	        this.context.mapComp.overlays.push(this.overlay);
-	    };
-	    Overlay.prototype.componentWillUnmount = function () {
-	        this.context.map.removeOverlay(this.overlay);
 	    };
 	    return Overlay;
 	}(React.Component));
 	exports.Overlay = Overlay;
 	Overlay['contextTypes'] = {
-	    mapComp: React.PropTypes.instanceOf(Map_1.Map),
+	    mapComp: React.PropTypes.instanceOf(Object),
 	    map: React.PropTypes.instanceOf(ol.Map)
 	};
 
 
 /***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/* 40 */
+/***/ function(module, exports) {
 
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(3);
-	var ol = __webpack_require__(4);
-	var util_1 = __webpack_require__(5);
-	__webpack_require__(7);
-	__webpack_require__(11);
-	/**
-	 * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
-	 *
-	 * example:
-	 * <Map view={{center: [0, 0], zoom: 1}}>
-	 *   <layers>
-	 *     <layer.Tile source={new ol.source.OSM()} />
-	 *     <layer.Vector options={}/>
-	 *   </layers>
-	 *   <controls></controls>
-	 *   <interactions></interactions>
-	 *   <overlays></overlays>
-	 * </Map>
-	 */
-	var Map = (function (_super) {
-	    __extends(Map, _super);
-	    /**
-	     * Component mounting LifeCycle; constructor, componentDidMount, and render
-	     * https://facebook.github.io/react/docs/react-component.html#mounting
-	     */
-	    function Map(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.layers = [];
-	        _this.interactions = [];
-	        _this.controls = [];
-	        _this.overlays = [];
-	        _this.options = {
-	            pixelRation: undefined,
-	            keyboardEventTarget: undefined,
-	            loadTilesWhileAnimation: undefined,
-	            loadTilesWhileInteractiong: undefined,
-	            logo: undefined,
-	            renderer: undefined,
-	            view: new ol.View({ center: [0, 0], zoom: 3 }),
-	            controls: undefined,
-	            interactions: undefined,
-	            layers: undefined,
-	            overlays: undefined
-	        };
-	        _this.events = {
-	            'change': undefined,
-	            'change:layerGroup': undefined,
-	            'change:size': undefined,
-	            'change:target': undefined,
-	            'change:view': undefined,
-	            'click': undefined,
-	            'dblclick': undefined,
-	            'moveend': undefined,
-	            'pointerdrag': undefined,
-	            'pointermove': undefined,
-	            'postcompose': undefined,
-	            'postrender': undefined,
-	            'precompose': undefined,
-	            'propertychange': undefined,
-	            'singleclick': undefined
-	        };
-	        console.log('Map constructor');
-	        return _this;
-	    }
-	    Map.prototype.componentDidMount = function () {
-	        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
-	        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
-	        options.controls = ol.control.defaults().extend(this.controls);
-	        options.interactions = ol.interaction.defaults().extend(this.interactions);
-	        options.layers = this.layers;
-	        this.map = new ol.Map(options);
-	        this.map.setTarget(this.mapDiv);
-	        this.registerEvents(this.events, this.props);
-	        console.log('Map did mount');
-	    };
-	    Map.prototype.render = function () {
-	        var _this = this;
-	        return (React.createElement("div", null,
-	            React.createElement("div", { className: "openlayers-map", ref: function (el) { return _this.mapDiv = el; } }, this.props.children)));
-	    };
-	    /**
-	     * Component Updating LifeCycle
-	     * https://facebook.github.io/react/docs/react-component.html#updating
-	     */
-	    //componentWillReceiveProps(nextProps)
-	    //shouldComponentUpdate(nextProps, nextState)
-	    //componentWillUpdate(nextProps, nextState)
-	    //componentDidUpdate(prevProps, prevState)
-	    /**
-	     * Component Unmounting LifeCycle
-	     * https://facebook.github.io/react/docs/react-component.html#unmounting
-	     */
-	    Map.prototype.componentWillUnmount = function () {
-	        this.map.setTarget(undefined);
-	    };
-	    /**
-	     * functions
-	     */
-	    Map.prototype.registerEvents = function (events, props) {
-	        var propEvents = util_1.Util.getEvents(Object.assign(events, props));
-	        var toPropsKey = function (str) {
-	            return 'on' +
-	                str.replace(/(\:[a-z])/g, function ($1) { return $1.toUpperCase(); })
-	                    .replace(/^[a-z]/, function ($1) { return $1.toUpperCase(); })
-	                    .replace(':', '');
-	        };
-	        var propEventMap = {};
-	        for (var key in events) {
-	            propEventMap[toPropsKey(key)] = key;
-	        }
-	        for (var prop in events) {
-	            if (Object.keys(propEventMap).indexOf(prop) !== -1) {
-	                var eventName = propEventMap[prop];
-	                this.map.on(eventName, propEvents[prop]);
-	            }
-	        }
-	    };
-	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-	    Map.prototype.getChildContext = function () {
-	        return {
-	            mapComp: this,
-	            map: this.map
-	        };
-	    };
-	    return Map;
-	}(React.Component));
-	exports.Map = Map;
-	// Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-	Map['childContextTypes'] = {
-	    mapComp: React.PropTypes.instanceOf(Map),
-	    map: React.PropTypes.instanceOf(ol.Map)
-	};
-
+	module.exports = __WEBPACK_EXTERNAL_MODULE_40__;
 
 /***/ }
 /******/ ])

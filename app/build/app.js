@@ -50,27 +50,47 @@
 	var react_router_1 = __webpack_require__(178);
 	var app_1 = __webpack_require__(233);
 	var home_1 = __webpack_require__(238);
-	var controls_1 = __webpack_require__(275);
-	var attribution_1 = __webpack_require__(276);
-	var layers_1 = __webpack_require__(277);
-	var tile_1 = __webpack_require__(278);
-	var vector_1 = __webpack_require__(279);
-	var interactions_1 = __webpack_require__(280);
-	var select_1 = __webpack_require__(281);
-	var draw_1 = __webpack_require__(282);
-	var modify_1 = __webpack_require__(283);
-	var overlays_1 = __webpack_require__(284);
-	var app_overlay_1 = __webpack_require__(285);
+	var controls_1 = __webpack_require__(276);
+	var attribution_1 = __webpack_require__(277);
+	var full_screen_1 = __webpack_require__(278);
+	var mouse_position_1 = __webpack_require__(279);
+	var overview_map_1 = __webpack_require__(280);
+	var rotate_1 = __webpack_require__(281);
+	var scale_line_1 = __webpack_require__(282);
+	var zoom_slider_1 = __webpack_require__(283);
+	var zoom_to_extent_1 = __webpack_require__(284);
+	var zoom_1 = __webpack_require__(285);
+	var layers_1 = __webpack_require__(286);
+	var tile_1 = __webpack_require__(287);
+	var vector_1 = __webpack_require__(288);
+	var heatmap_1 = __webpack_require__(289);
+	var image_1 = __webpack_require__(290);
+	var interactions_1 = __webpack_require__(291);
+	var select_1 = __webpack_require__(292);
+	var draw_1 = __webpack_require__(293);
+	var modify_1 = __webpack_require__(294);
+	var overlays_1 = __webpack_require__(295);
+	var app_overlay_1 = __webpack_require__(296);
 	ReactDOM.render((React.createElement(react_router_1.Router, { history: react_router_1.hashHistory },
 	    React.createElement(react_router_1.Route, { path: "/", component: app_1.App },
 	        React.createElement(react_router_1.IndexRoute, { component: home_1.Home }),
 	        React.createElement(react_router_1.Route, { path: "controls", component: controls_1.Controls },
 	            React.createElement(react_router_1.IndexRoute, { component: attribution_1.Attribution }),
-	            React.createElement(react_router_1.Route, { path: "attribution", component: attribution_1.Attribution })),
+	            React.createElement(react_router_1.Route, { path: "attribution", component: attribution_1.Attribution }),
+	            React.createElement(react_router_1.Route, { path: "full-screen", component: full_screen_1.FullScreen }),
+	            React.createElement(react_router_1.Route, { path: "mouse-position", component: mouse_position_1.MousePosition }),
+	            React.createElement(react_router_1.Route, { path: "overview-map", component: overview_map_1.OverviewMap }),
+	            React.createElement(react_router_1.Route, { path: "rotate", component: rotate_1.Rotate }),
+	            React.createElement(react_router_1.Route, { path: "scale-line", component: scale_line_1.ScaleLine }),
+	            React.createElement(react_router_1.Route, { path: "zoom-slider", component: zoom_slider_1.ZoomSlider }),
+	            React.createElement(react_router_1.Route, { path: "zoom-to-extent", component: zoom_to_extent_1.ZoomToExtent }),
+	            React.createElement(react_router_1.Route, { path: "zoom", component: zoom_1.Zoom })),
 	        React.createElement(react_router_1.Route, { path: "layers", component: layers_1.Layers },
 	            React.createElement(react_router_1.IndexRoute, { component: tile_1.Tile }),
 	            React.createElement(react_router_1.Route, { path: "tile", component: tile_1.Tile }),
-	            React.createElement(react_router_1.Route, { path: "vector", component: vector_1.Vector })),
+	            React.createElement(react_router_1.Route, { path: "vector", component: vector_1.Vector }),
+	            React.createElement(react_router_1.Route, { path: "heatmap", component: heatmap_1.Heatmap }),
+	            React.createElement(react_router_1.Route, { path: "image", component: image_1.Image })),
 	        React.createElement(react_router_1.Route, { path: "interactions", component: interactions_1.Interactions },
 	            React.createElement(react_router_1.IndexRoute, { component: select_1.Select }),
 	            React.createElement(react_router_1.Route, { path: "select", component: select_1.Select }),
@@ -26948,7 +26968,8 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var react_openlayers_1 = __webpack_require__(239);
+	var ol = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var Home = (function (_super) {
 	    __extends(Home, _super);
 	    function Home(props) {
@@ -26958,15 +26979,16 @@
 	        return _this;
 	    }
 	    Home.prototype.render = function () {
+	        var tileSource = new ol.source.Stamen({ layer: 'watercolor' });
 	        return (React.createElement("div", null,
 	            React.createElement("h1", null, "Map"),
 	            React.createElement("ul", { className: "group-menu" }),
 	            React.createElement("div", { className: "contents" },
 	                React.createElement(react_openlayers_1.Map, { view: { center: [0, 0], zoom: 2 } },
 	                    React.createElement(react_openlayers_1.Layers, null,
-	                        React.createElement(react_openlayers_1.layer.Tile, null),
+	                        React.createElement(react_openlayers_1.layer.Tile, { source: tileSource }),
 	                        React.createElement(react_openlayers_1.layer.Vector, { source: this.markers, style: this.markers.style }))),
-	                React.createElement("pre", null, "\n            <Map view={{center: [0, 0], zoom: 2}}>\n              <Layers>\n                <layer.Tile/>\n                <layer.Vector source={this.markers} style={this.markers.style} />\n              </Layers>\n            </Map>\n          "))));
+	                React.createElement("pre", null, "\n          <Map view={{center: [0, 0], zoom: 2}}>\n            <Layers>\n              <layer.Tile source={tileSource}/>\n              <layer.Vector source={this.markers} style={this.markers.style} />\n            </Layers>\n          </Map>\n          "))));
 	    };
 	    return Home;
 	}(React.Component));
@@ -26975,109 +26997,6 @@
 
 /***/ },
 /* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var index_1 = __webpack_require__(240);
-	exports.Controls = index_1.Controls;
-	exports.control = index_1.control;
-	var index_2 = __webpack_require__(258);
-	exports.Interactions = index_2.Interactions;
-	exports.interaction = index_2.interaction;
-	var index_3 = __webpack_require__(263);
-	exports.Layers = index_3.Layers;
-	exports.layer = index_3.layer;
-	var overlays_1 = __webpack_require__(267);
-	exports.Overlays = overlays_1.Overlays;
-	var index_4 = __webpack_require__(268);
-	exports.custom = index_4.custom;
-	var map_1 = __webpack_require__(244);
-	exports.Map = map_1.Map;
-	var overlay_1 = __webpack_require__(273);
-	exports.Overlay = overlay_1.Overlay;
-	var util_1 = __webpack_require__(243);
-	exports.Util = util_1.Util;
-
-
-/***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var scale_line_1 = __webpack_require__(241);
-	var attribution_1 = __webpack_require__(249);
-	var full_screen_1 = __webpack_require__(250);
-	var mouse_position_1 = __webpack_require__(251);
-	var overview_map_1 = __webpack_require__(252);
-	var rotate_1 = __webpack_require__(253);
-	var zoom_slider_1 = __webpack_require__(254);
-	var zoom_to_extent_1 = __webpack_require__(255);
-	var zoom_1 = __webpack_require__(256);
-	var controls_1 = __webpack_require__(257);
-	exports.Controls = controls_1.Controls;
-	var control = {
-	    ScaleLine: scale_line_1.ScaleLine,
-	    Attribution: attribution_1.Attribution,
-	    FullScreen: full_screen_1.FullScreen,
-	    MousePosition: mouse_position_1.MousePosition,
-	    OverviewMap: overview_map_1.OverviewMap,
-	    Rotate: rotate_1.Rotate,
-	    ZoomSlider: zoom_slider_1.ZoomSlider,
-	    ZoomToExtent: zoom_to_extent_1.ZoomToExtent,
-	    Zoom: zoom_1.Zoom
-	};
-	exports.control = control;
-
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
-	var util_1 = __webpack_require__(243);
-	var map_1 = __webpack_require__(244);
-	var ScaleLine = (function (_super) {
-	    __extends(ScaleLine, _super);
-	    function ScaleLine(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.options = {
-	            className: undefined,
-	            minWidth: undefined,
-	            render: undefined,
-	            target: undefined,
-	            units: undefined
-	        };
-	        _this.events = {
-	            'change': undefined,
-	            'change:units': undefined,
-	            'propertychange': undefined
-	        };
-	        return _this;
-	    }
-	    ScaleLine.prototype.render = function () { return null; };
-	    ScaleLine.prototype.componentDidMount = function () {
-	        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
-	        this.control = new ol.control.ScaleLine(options);
-	        this.context.mapComp.controls.push(this.control);
-	    };
-	    return ScaleLine;
-	}(React.Component));
-	exports.ScaleLine = ScaleLine;
-	ScaleLine['contextTypes'] = {
-	    mapComp: React.PropTypes.instanceOf(map_1.Map),
-	    map: React.PropTypes.instanceOf(ol.Map)
-	};
-
-
-/***/ },
-/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;var require;var require;var require;var require;var require;var require;/* WEBPACK VAR INJECTION */(function(global) {// OpenLayers. See https://openlayers.org/
@@ -28091,10 +28010,114 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 243 */
-/***/ function(module, exports) {
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var index_1 = __webpack_require__(241);
+	exports.Controls = index_1.Controls;
+	exports.control = index_1.control;
+	var index_2 = __webpack_require__(258);
+	exports.Interactions = index_2.Interactions;
+	exports.interaction = index_2.interaction;
+	var index_3 = __webpack_require__(263);
+	exports.Layers = index_3.Layers;
+	exports.layer = index_3.layer;
+	var overlays_1 = __webpack_require__(269);
+	exports.Overlays = overlays_1.Overlays;
+	var index_4 = __webpack_require__(270);
+	exports.custom = index_4.custom;
+	var map_1 = __webpack_require__(244);
+	exports.Map = map_1.Map;
+	var overlay_1 = __webpack_require__(275);
+	exports.Overlay = overlay_1.Overlay;
+	var util_1 = __webpack_require__(243);
+	exports.Util = util_1.Util;
+
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var scale_line_1 = __webpack_require__(242);
+	var attribution_1 = __webpack_require__(249);
+	var full_screen_1 = __webpack_require__(250);
+	var mouse_position_1 = __webpack_require__(251);
+	var overview_map_1 = __webpack_require__(252);
+	var rotate_1 = __webpack_require__(253);
+	var zoom_slider_1 = __webpack_require__(254);
+	var zoom_to_extent_1 = __webpack_require__(255);
+	var zoom_1 = __webpack_require__(256);
+	var controls_1 = __webpack_require__(257);
+	exports.Controls = controls_1.Controls;
+	var control = {
+	    ScaleLine: scale_line_1.ScaleLine,
+	    Attribution: attribution_1.Attribution,
+	    FullScreen: full_screen_1.FullScreen,
+	    MousePosition: mouse_position_1.MousePosition,
+	    OverviewMap: overview_map_1.OverviewMap,
+	    Rotate: rotate_1.Rotate,
+	    ZoomSlider: zoom_slider_1.ZoomSlider,
+	    ZoomToExtent: zoom_to_extent_1.ZoomToExtent,
+	    Zoom: zoom_1.Zoom
+	};
+	exports.control = control;
+
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ol = __webpack_require__(239);
+	var util_1 = __webpack_require__(243);
+	var map_1 = __webpack_require__(244);
+	var ScaleLine = (function (_super) {
+	    __extends(ScaleLine, _super);
+	    function ScaleLine(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            className: undefined,
+	            minWidth: undefined,
+	            render: undefined,
+	            target: undefined,
+	            units: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:units': undefined,
+	            'propertychange': undefined
+	        };
+	        return _this;
+	    }
+	    ScaleLine.prototype.render = function () { return null; };
+	    ScaleLine.prototype.componentDidMount = function () {
+	        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
+	        this.control = new ol.control.ScaleLine(options);
+	        this.context.mapComp.controls.push(this.control);
+	    };
+	    return ScaleLine;
+	}(React.Component));
+	exports.ScaleLine = ScaleLine;
+	ScaleLine['contextTypes'] = {
+	    mapComp: React.PropTypes.instanceOf(map_1.Map),
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var React = __webpack_require__(1);
 	function getOptions(props) {
 	    var options = {};
 	    for (var key in props) {
@@ -28107,15 +28130,28 @@
 	    }
 	    return options;
 	}
-	function getEvents(props) {
-	    var events = {};
-	    for (var key in props) {
-	        if (typeof props[key] !== 'undefined' &&
-	            key.match(/^on[A-Z]/)) {
-	            events[key] = props[key];
+	function getPropsKey(eventName) {
+	    return 'on' + eventName
+	        .replace(/(\:[a-z])/g, function ($1) { return $1.toUpperCase(); })
+	        .replace(/^[a-z]/, function ($1) { return $1.toUpperCase(); })
+	        .replace(':', '');
+	}
+	function getEvents(events, props) {
+	    if (events === void 0) { events = {}; }
+	    if (props === void 0) { props = {}; }
+	    var prop2EventMap = {};
+	    for (var key in events) {
+	        prop2EventMap[getPropsKey(key)] = key;
+	    }
+	    var ret = {};
+	    for (var propName in props) {
+	        var eventName = prop2EventMap[propName];
+	        var prop = props[propName];
+	        if (typeof prop !== 'undefined' && propName.match(/^on[A-Z]/) && eventName) {
+	            ret[eventName] = prop;
 	        }
 	    }
-	    return events;
+	    return ret;
 	}
 	var typeOf = function (obj) {
 	    return ({}).toString.call(obj)
@@ -28135,6 +28171,18 @@
 	    }
 	    return obj;
 	}
+	function findChild(children, childType) {
+	    var found;
+	    var childrenArr = React.Children.toArray(children);
+	    for (var i = 0; i < childrenArr.length; i++) {
+	        var child = childrenArr[i];
+	        if (child.type.name == childType) {
+	            found = child;
+	            break;
+	        }
+	    }
+	    return found;
+	}
 	var Util = (function () {
 	    function Util() {
 	    }
@@ -28143,6 +28191,7 @@
 	Util.getOptions = getOptions;
 	Util.getEvents = getEvents;
 	Util.cloneObject = cloneObject;
+	Util.findChild = findChild;
 	exports.Util = Util;
 
 
@@ -28157,7 +28206,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	__webpack_require__(245);
 	__webpack_require__(247);
@@ -28223,13 +28272,20 @@
 	    Map.prototype.componentDidMount = function () {
 	        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
 	        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
-	        options.controls = ol.control.defaults().extend(this.controls);
-	        options.interactions = ol.interaction.defaults().extend(this.interactions);
+	        var controlsCmp = util_1.Util.findChild(this.props.children, 'Controls') || {};
+	        var interactionsCmp = util_1.Util.findChild(this.props.children, 'Interactions') || {};
+	        options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
+	        options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
 	        options.layers = this.layers;
+	        options.overlays = this.overlays;
+	        console.log('map options', options);
 	        this.map = new ol.Map(options);
-	        this.map.setTarget(this.mapDiv);
-	        this.registerEvents(this.events, this.props);
-	        console.log('Map did mount');
+	        this.map.setTarget(options.target || this.mapDiv);
+	        //regitster events
+	        var olEvents = util_1.Util.getEvents(this.events, this.props);
+	        for (var eventName in olEvents) {
+	            this.map.on(eventName, olEvents[eventName]);
+	        }
 	    };
 	    Map.prototype.render = function () {
 	        var _this = this;
@@ -28250,28 +28306,6 @@
 	     */
 	    Map.prototype.componentWillUnmount = function () {
 	        this.map.setTarget(undefined);
-	    };
-	    /**
-	     * functions
-	     */
-	    Map.prototype.registerEvents = function (events, props) {
-	        var propEvents = util_1.Util.getEvents(Object.assign(events, props));
-	        var toPropsKey = function (str) {
-	            return 'on' +
-	                str.replace(/(\:[a-z])/g, function ($1) { return $1.toUpperCase(); })
-	                    .replace(/^[a-z]/, function ($1) { return $1.toUpperCase(); })
-	                    .replace(':', '');
-	        };
-	        var propEventMap = {};
-	        for (var key in events) {
-	            propEventMap[toPropsKey(key)] = key;
-	        }
-	        for (var prop in events) {
-	            if (Object.keys(propEventMap).indexOf(prop) !== -1) {
-	                var eventName = propEventMap[prop];
-	                this.map.on(eventName, propEvents[prop]);
-	            }
-	        }
 	    };
 	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
 	    Map.prototype.getChildContext = function () {
@@ -28381,7 +28415,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Attribution = (function (_super) {
@@ -28430,7 +28464,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var FullScreen = (function (_super) {
@@ -28478,7 +28512,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var MousePosition = (function (_super) {
@@ -28527,7 +28561,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var OverviewMap = (function (_super) {
@@ -28577,7 +28611,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Rotate = (function (_super) {
@@ -28626,7 +28660,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var ZoomSlider = (function (_super) {
@@ -28672,7 +28706,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var ZoomToExtent = (function (_super) {
@@ -28718,7 +28752,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Zoom = (function (_super) {
@@ -28768,7 +28802,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	// I wish I can name it as 'layers', not 'Layers'
 	var Controls = (function (_super) {
@@ -28852,7 +28886,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Select = (function (_super) {
@@ -28911,7 +28945,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Draw = (function (_super) {
@@ -28970,7 +29004,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Modify = (function (_super) {
@@ -29019,9 +29053,15 @@
 	var vector_1 = __webpack_require__(265);
 	var layers_1 = __webpack_require__(266);
 	exports.Layers = layers_1.Layers;
+	var heatmap_1 = __webpack_require__(267);
+	exports.Heatmap = heatmap_1.Heatmap;
+	var image_1 = __webpack_require__(268);
+	exports.Image = image_1.Image;
 	var layer = {
 	    Tile: tile_1.Tile,
-	    Vector: vector_1.Vector
+	    Vector: vector_1.Vector,
+	    Heatmap: heatmap_1.Heatmap,
+	    Image: image_1.Image
 	};
 	exports.layer = layer;
 
@@ -29037,7 +29077,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Tile = (function (_super) {
@@ -29103,7 +29143,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
 	var map_1 = __webpack_require__(244);
 	var Vector = (function (_super) {
@@ -29193,6 +29233,130 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
+	var ol = __webpack_require__(239);
+	var util_1 = __webpack_require__(243);
+	var map_1 = __webpack_require__(244);
+	var Heatmap = (function (_super) {
+	    __extends(Heatmap, _super);
+	    function Heatmap(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            gradient: undefined,
+	            radius: undefined,
+	            blur: undefined,
+	            shadow: undefined,
+	            weight: undefined,
+	            extent: undefined,
+	            minResolution: undefined,
+	            maxResolution: undefined,
+	            opacity: undefined,
+	            source: undefined,
+	            visible: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:blur': undefined,
+	            'change:extent': undefined,
+	            'change:gradient': undefined,
+	            'change:maxResolution': undefined,
+	            'change:minResolution': undefined,
+	            'change:opacity': undefined,
+	            'change:radius': undefined,
+	            'change:source': undefined,
+	            'change:visible': undefined,
+	            'change:zIndex': undefined,
+	            'postcompose': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'render': undefined
+	        };
+	        return _this;
+	    }
+	    Heatmap.prototype.render = function () { return null; };
+	    Heatmap.prototype.componentDidMount = function () {
+	        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+	        this.layer = new ol.layer.Heatmap(options);
+	        this.context.mapComp.layers.push(this.layer);
+	    };
+	    return Heatmap;
+	}(React.Component));
+	exports.Heatmap = Heatmap;
+	Heatmap['contextTypes'] = {
+	    mapComp: React.PropTypes.instanceOf(map_1.Map),
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ol = __webpack_require__(239);
+	var util_1 = __webpack_require__(243);
+	var map_1 = __webpack_require__(244);
+	var Image = (function (_super) {
+	    __extends(Image, _super);
+	    function Image(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.options = {
+	            opacity: undefined,
+	            source: undefined,
+	            visible: undefined,
+	            extent: undefined,
+	            minResolution: undefined,
+	            maxResolution: undefined
+	        };
+	        _this.events = {
+	            'change': undefined,
+	            'change:extent': undefined,
+	            'change:gradient': undefined,
+	            'change:maxResolution': undefined,
+	            'change:minResolution': undefined,
+	            'change:opacity': undefined,
+	            'change:source': undefined,
+	            'change:visible': undefined,
+	            'change:zIndex': undefined,
+	            'postcompose': undefined,
+	            'precompose': undefined,
+	            'propertychange': undefined,
+	            'render': undefined
+	        };
+	        return _this;
+	    }
+	    Image.prototype.render = function () { return null; };
+	    Image.prototype.componentDidMount = function () {
+	        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+	        console.log('image options........', options);
+	        this.layer = new ol.layer.Image(options);
+	        this.context.mapComp.layers.push(this.layer);
+	    };
+	    return Image;
+	}(React.Component));
+	exports.Image = Image;
+	Image['contextTypes'] = {
+	    mapComp: React.PropTypes.instanceOf(map_1.Map),
+	    map: React.PropTypes.instanceOf(ol.Map)
+	};
+
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
 	var Overlays = (function (_super) {
 	    __extends(Overlays, _super);
 	    function Overlays() {
@@ -29207,12 +29371,12 @@
 
 
 /***/ },
-/* 268 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var marker_1 = __webpack_require__(269);
-	var popup_1 = __webpack_require__(270);
+	var marker_1 = __webpack_require__(271);
+	var popup_1 = __webpack_require__(272);
 	var custom = {
 	    Marker: marker_1.Marker,
 	    Popup: popup_1.Popup
@@ -29221,11 +29385,11 @@
 
 
 /***/ },
-/* 269 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var ol = __webpack_require__(242);
+	var ol = __webpack_require__(239);
 	/**
 	 * Inherits ol.source.Vector to be used as a source of a ol.layer.Vector
 	 * NOTE: this is just for convenience. Do NOT code too much here.
@@ -29272,7 +29436,7 @@
 
 
 /***/ },
-/* 270 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29282,27 +29446,32 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	__webpack_require__(271);
+	__webpack_require__(273);
 	var Popup = (function (_super) {
 	    __extends(Popup, _super);
-	    function Popup() {
-	        return _super !== null && _super.apply(this, arguments) || this;
+	    function Popup(props) {
+	        var _this = this;
+	        console.log(2222222222);
+	        _this = _super.call(this, props) || this;
+	        return _this;
 	    }
 	    Popup.prototype.render = function () {
 	        var _this = this;
-	        return (React.createElement("div", { id: "popup", className: "ol-popup", ref: function (el) { return _this.containerEl = el; } },
-	            React.createElement("a", { href: "#", id: "popup-closer", onClick: this.hide, className: "ol-popup-closer" }),
-	            React.createElement("div", { id: "popup-content", ref: function (el) { return _this.contentEl = el; } })));
+	        console.log(3333333333);
+	        return (React.createElement("div", { className: "olPopup", ref: function (el) { return _this.containerEl = el; } },
+	            React.createElement("a", { className: "olPopupCloser", href: "javascript:void(0)", onClick: this.hide }),
+	            React.createElement("div", { className: "olPopupContents", ref: function (el) { return _this.contentEl = el; } })));
 	    };
 	    Popup.prototype.setContents = function (html) {
 	        this.contentEl.innerHTML = html;
 	    };
-	    Popup.prototype.show = function (feature) {
-	        this.containerEl.style.bottom = feature ? '52px' : '12px';
+	    Popup.prototype.show = function (bottomDistance) {
+	        if (bottomDistance === void 0) { bottomDistance = '12px'; }
+	        this.containerEl.style.bottom = bottomDistance;
 	        this.containerEl.style.display = 'block';
 	    };
 	    Popup.prototype.hide = function () {
-	        this.containerEl.style.display = 'none';
+	        this.containerEl.style.display = 'block';
 	    };
 	    return Popup;
 	}(React.Component));
@@ -29310,13 +29479,13 @@
 
 
 /***/ },
-/* 271 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(272);
+	var content = __webpack_require__(274);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(237)(content, {});
@@ -29336,7 +29505,7 @@
 	}
 
 /***/ },
-/* 272 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(236)();
@@ -29344,13 +29513,13 @@
 	
 	
 	// module
-	exports.push([module.id, ".ol-popup {\n  display: none;\n  position: absolute;\n  background-color: white;\n  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);\n  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  padding: 15px;\n  border-radius: 10px;\n  border: 1px solid #cccccc;\n  bottom: 12px;\n  left: -50px;\n  min-width: 150px;\n}\n.ol-popup:after, .ol-popup:before {\n  top: 100%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.ol-popup:after {\n  border-top-color: white;\n  border-width: 10px;\n  left: 48px;\n  margin-left: -10px;\n}\n.ol-popup:before {\n  border-top-color: #cccccc;\n  border-width: 11px;\n  left: 48px;\n  margin-left: -11px;\n}\n.ol-popup-closer {\n  text-decoration: none;\n  position: absolute;\n  top: 2px;\n  right: 8px;\n}\n.ol-popup-closer:after {\n  content: \"\\2716\";\n}\n", ""]);
+	exports.push([module.id, ".olPopup {\n  display: none;\n  position: absolute;\n  background-color: white;\n  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);\n  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n  padding: 15px;\n  border-radius: 10px;\n  border: 1px solid #cccccc;\n  bottom: 12px;\n  left: -50px;\n  min-width: 150px;\n}\n.olPopup:after, .olPopup:before {\n  top: 100%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.olPopup:after {\n  border-top-color: white;\n  border-width: 10px;\n  left: 48px;\n  margin-left: -10px;\n}\n.olPopup:before {\n  border-top-color: #cccccc;\n  border-width: 11px;\n  left: 48px;\n  margin-left: -11px;\n}\n.olPopupCloser {\n  text-decoration: none;\n  position: absolute;\n  top: 2px;\n  right: 8px;\n}\n.olPopupCloser:after {\n  content: \"\\2716\";\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 273 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29360,13 +29529,13 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
+	var ReactDOM = __webpack_require__(32);
+	var ol = __webpack_require__(239);
 	var util_1 = __webpack_require__(243);
-	var Map_1 = __webpack_require__(274);
 	var Overlay = (function (_super) {
 	    __extends(Overlay, _super);
-	    function Overlay(props) {
-	        var _this = _super.call(this, props) || this;
+	    function Overlay() {
+	        var _this = _super !== null && _super.apply(this, arguments) || this;
 	        _this.options = {
 	            id: undefined,
 	            element: undefined,
@@ -29390,174 +29559,26 @@
 	        return _this;
 	    }
 	    Overlay.prototype.render = function () {
-	        return null;
+	        return (React.createElement("div", null, this.props.children));
 	    };
 	    Overlay.prototype.componentDidMount = function () {
 	        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
-	        if (typeof options.element === 'string') {
-	            options.element = document.querySelector(options.element);
-	        }
+	        options.element = ReactDOM.findDOMNode(this).querySelector('div');
+	        // console.log('options.element', options.element);
 	        this.overlay = new ol.Overlay(options);
 	        this.context.mapComp.overlays.push(this.overlay);
-	    };
-	    Overlay.prototype.componentWillUnmount = function () {
-	        this.context.map.removeOverlay(this.overlay);
 	    };
 	    return Overlay;
 	}(React.Component));
 	exports.Overlay = Overlay;
 	Overlay['contextTypes'] = {
-	    mapComp: React.PropTypes.instanceOf(Map_1.Map),
+	    mapComp: React.PropTypes.instanceOf(Object),
 	    map: React.PropTypes.instanceOf(ol.Map)
 	};
 
 
 /***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
-	var util_1 = __webpack_require__(243);
-	__webpack_require__(245);
-	__webpack_require__(247);
-	/**
-	 * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
-	 *
-	 * example:
-	 * <Map view={{center: [0, 0], zoom: 1}}>
-	 *   <layers>
-	 *     <layer.Tile source={new ol.source.OSM()} />
-	 *     <layer.Vector options={}/>
-	 *   </layers>
-	 *   <controls></controls>
-	 *   <interactions></interactions>
-	 *   <overlays></overlays>
-	 * </Map>
-	 */
-	var Map = (function (_super) {
-	    __extends(Map, _super);
-	    /**
-	     * Component mounting LifeCycle; constructor, componentDidMount, and render
-	     * https://facebook.github.io/react/docs/react-component.html#mounting
-	     */
-	    function Map(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.layers = [];
-	        _this.interactions = [];
-	        _this.controls = [];
-	        _this.overlays = [];
-	        _this.options = {
-	            pixelRation: undefined,
-	            keyboardEventTarget: undefined,
-	            loadTilesWhileAnimation: undefined,
-	            loadTilesWhileInteractiong: undefined,
-	            logo: undefined,
-	            renderer: undefined,
-	            view: new ol.View({ center: [0, 0], zoom: 3 }),
-	            controls: undefined,
-	            interactions: undefined,
-	            layers: undefined,
-	            overlays: undefined
-	        };
-	        _this.events = {
-	            'change': undefined,
-	            'change:layerGroup': undefined,
-	            'change:size': undefined,
-	            'change:target': undefined,
-	            'change:view': undefined,
-	            'click': undefined,
-	            'dblclick': undefined,
-	            'moveend': undefined,
-	            'pointerdrag': undefined,
-	            'pointermove': undefined,
-	            'postcompose': undefined,
-	            'postrender': undefined,
-	            'precompose': undefined,
-	            'propertychange': undefined,
-	            'singleclick': undefined
-	        };
-	        console.log('Map constructor');
-	        return _this;
-	    }
-	    Map.prototype.componentDidMount = function () {
-	        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
-	        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
-	        options.controls = ol.control.defaults().extend(this.controls);
-	        options.interactions = ol.interaction.defaults().extend(this.interactions);
-	        options.layers = this.layers;
-	        this.map = new ol.Map(options);
-	        this.map.setTarget(this.mapDiv);
-	        this.registerEvents(this.events, this.props);
-	        console.log('Map did mount');
-	    };
-	    Map.prototype.render = function () {
-	        var _this = this;
-	        return (React.createElement("div", null,
-	            React.createElement("div", { className: "openlayers-map", ref: function (el) { return _this.mapDiv = el; } }, this.props.children)));
-	    };
-	    /**
-	     * Component Updating LifeCycle
-	     * https://facebook.github.io/react/docs/react-component.html#updating
-	     */
-	    //componentWillReceiveProps(nextProps)
-	    //shouldComponentUpdate(nextProps, nextState)
-	    //componentWillUpdate(nextProps, nextState)
-	    //componentDidUpdate(prevProps, prevState)
-	    /**
-	     * Component Unmounting LifeCycle
-	     * https://facebook.github.io/react/docs/react-component.html#unmounting
-	     */
-	    Map.prototype.componentWillUnmount = function () {
-	        this.map.setTarget(undefined);
-	    };
-	    /**
-	     * functions
-	     */
-	    Map.prototype.registerEvents = function (events, props) {
-	        var propEvents = util_1.Util.getEvents(Object.assign(events, props));
-	        var toPropsKey = function (str) {
-	            return 'on' +
-	                str.replace(/(\:[a-z])/g, function ($1) { return $1.toUpperCase(); })
-	                    .replace(/^[a-z]/, function ($1) { return $1.toUpperCase(); })
-	                    .replace(':', '');
-	        };
-	        var propEventMap = {};
-	        for (var key in events) {
-	            propEventMap[toPropsKey(key)] = key;
-	        }
-	        for (var prop in events) {
-	            if (Object.keys(propEventMap).indexOf(prop) !== -1) {
-	                var eventName = propEventMap[prop];
-	                this.map.on(eventName, propEvents[prop]);
-	            }
-	        }
-	    };
-	    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-	    Map.prototype.getChildContext = function () {
-	        return {
-	            mapComp: this,
-	            map: this.map
-	        };
-	    };
-	    return Map;
-	}(React.Component));
-	exports.Map = Map;
-	// Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-	Map['childContextTypes'] = {
-	    mapComp: React.PropTypes.instanceOf(Map),
-	    map: React.PropTypes.instanceOf(ol.Map)
-	};
-
-
-/***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29578,7 +29599,23 @@
 	            React.createElement("h1", null, "Controls"),
 	            React.createElement("ul", { role: "nav", className: "group-menu" },
 	                React.createElement("li", null,
-	                    React.createElement(react_router_1.Link, { to: "controls/attribution" }, "Attribution"))),
+	                    React.createElement(react_router_1.Link, { to: "controls/attribution" }, "Attribution")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/full-screen" }, "FullScreen")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/mouse-position" }, "MousePosition")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/overview-map" }, "OverviewMap")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/rotate" }, "Rotate")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/scale-line" }, "ScaleLine")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/zoom-slider" }, "ZoomSlider")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/zoom-to-extent" }, "ZoomToExtent")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "controls/zoom" }, "Zoom"))),
 	            React.createElement("div", { className: "contents" }, this.props.children)));
 	    };
 	    return Controls;
@@ -29587,7 +29624,7 @@
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29597,7 +29634,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var react_openlayers_1 = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var Attribution = (function (_super) {
 	    __extends(Attribution, _super);
 	    function Attribution(props) {
@@ -29608,8 +29645,8 @@
 	            React.createElement(react_openlayers_1.Map, null,
 	                React.createElement(react_openlayers_1.Layers, null,
 	                    React.createElement(react_openlayers_1.layer.Tile, null)),
-	                React.createElement(react_openlayers_1.Controls, { attribution: false, zoom: true })),
-	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls\n            attribution={false}\n            zoom={true}>\n          </Controls>\n        </Map>\n      ")));
+	                React.createElement(react_openlayers_1.Controls, { attribution: false, zoom: false })),
+	            React.createElement("pre", null, "\n      <Map>\n        <Layers><layer.Tile/></Layers>\n        <Controls attribution={false} zoom={false}></Controls>\n      </Map>\n      ")));
 	    };
 	    return Attribution;
 	}(React.Component));
@@ -29617,7 +29654,256 @@
 
 
 /***/ },
-/* 277 */
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var FullScreen = (function (_super) {
+	    __extends(FullScreen, _super);
+	    function FullScreen(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    FullScreen.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.FullScreen, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.FullScreen />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return FullScreen;
+	}(React.Component));
+	exports.FullScreen = FullScreen;
+
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var MousePosition = (function (_super) {
+	    __extends(MousePosition, _super);
+	    function MousePosition(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    MousePosition.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.MousePosition, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.MousePosition />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return MousePosition;
+	}(React.Component));
+	exports.MousePosition = MousePosition;
+
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var OverviewMap = (function (_super) {
+	    __extends(OverviewMap, _super);
+	    function OverviewMap(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    OverviewMap.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.OverviewMap, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.OverviewMap />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return OverviewMap;
+	}(React.Component));
+	exports.OverviewMap = OverviewMap;
+
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var Rotate = (function (_super) {
+	    __extends(Rotate, _super);
+	    function Rotate(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    Rotate.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.Rotate, null))),
+	            "Use Alt+Shift+Drag to rotate the map.",
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.Rotate />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return Rotate;
+	}(React.Component));
+	exports.Rotate = Rotate;
+
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var ScaleLine = (function (_super) {
+	    __extends(ScaleLine, _super);
+	    function ScaleLine(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    ScaleLine.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.ScaleLine, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.ScaleLine />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return ScaleLine;
+	}(React.Component));
+	exports.ScaleLine = ScaleLine;
+
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var ZoomSlider = (function (_super) {
+	    __extends(ZoomSlider, _super);
+	    function ZoomSlider(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    ZoomSlider.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.ZoomSlider, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.ZoomSlider />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return ZoomSlider;
+	}(React.Component));
+	exports.ZoomSlider = ZoomSlider;
+
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var ZoomToExtent = (function (_super) {
+	    __extends(ZoomToExtent, _super);
+	    function ZoomToExtent(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    ZoomToExtent.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.ZoomToExtent, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.ZoomToExtent />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return ZoomToExtent;
+	}(React.Component));
+	exports.ZoomToExtent = ZoomToExtent;
+
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var react_openlayers_1 = __webpack_require__(240);
+	var Zoom = (function (_super) {
+	    __extends(Zoom, _super);
+	    function Zoom(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    Zoom.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, null,
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                React.createElement(react_openlayers_1.Controls, null,
+	                    React.createElement(react_openlayers_1.control.Zoom, null))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers><layer.Tile/></Layers>\n          <Controls>\n            <control.Zoom />\n          </Controls>\n        </Map>\n        ")));
+	    };
+	    return Zoom;
+	}(React.Component));
+	exports.Zoom = Zoom;
+
+
+/***/ },
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29640,7 +29926,11 @@
 	                React.createElement("li", null,
 	                    React.createElement(react_router_1.Link, { to: "layers/tile" }, "Tile")),
 	                React.createElement("li", null,
-	                    React.createElement(react_router_1.Link, { to: "layers/vector" }, "Vector"))),
+	                    React.createElement(react_router_1.Link, { to: "layers/vector" }, "Vector")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "layers/heatmap" }, "Heatmap")),
+	                React.createElement("li", null,
+	                    React.createElement(react_router_1.Link, { to: "layers/image" }, "Image"))),
 	            React.createElement("div", { className: "contents" }, this.props.children)));
 	    };
 	    return Layers;
@@ -29649,7 +29939,7 @@
 
 
 /***/ },
-/* 278 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29659,7 +29949,8 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var react_openlayers_1 = __webpack_require__(239);
+	var ol = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var Tile = (function (_super) {
 	    __extends(Tile, _super);
 	    function Tile(props) {
@@ -29669,8 +29960,8 @@
 	        return (React.createElement("div", null,
 	            React.createElement(react_openlayers_1.Map, null,
 	                React.createElement(react_openlayers_1.Layers, null,
-	                    React.createElement(react_openlayers_1.layer.Tile, null))),
-	            React.createElement("pre", null, "\n          <Map>\n            <Layers>\n              <layer.Tile/>\n            </Layers>\n          </Map>\n        ")));
+	                    React.createElement(react_openlayers_1.layer.Tile, { source: new ol.source.Stamen({ layer: 'watercolor' }) }))),
+	            React.createElement("pre", null, "\n        <Map>\n          <Layers>\n            <layer.Tile source={new ol.source.Stamen({ layer: 'watercolor' })}/>\n          </Layers>\n        </Map>\n        ")));
 	    };
 	    return Tile;
 	}(React.Component));
@@ -29678,7 +29969,7 @@
 
 
 /***/ },
-/* 279 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29688,7 +29979,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var react_openlayers_1 = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var positions = [[-20, -20], [-10, -10], [0, 0], [10, 10], [20, 20]];
 	var markers = new react_openlayers_1.custom.Marker({ positions: positions });
 	var Vector = (function (_super) {
@@ -29710,7 +30001,95 @@
 
 
 /***/ },
-/* 280 */
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ol = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
+	var tileSource = new ol.source.Stamen({
+	    layer: 'toner'
+	});
+	var heatmapSource = new ol.source.Vector({
+	    url: 'https://openlayers.org/en/v4.0.1/examples/data/kml/2012_Earthquakes_Mag5.kml',
+	    format: new ol.format.KML({
+	        extractStyles: false
+	    })
+	});
+	var Heatmap = (function (_super) {
+	    __extends(Heatmap, _super);
+	    function Heatmap(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    Heatmap.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, { view: { center: [0, 0], zoom: 1 } },
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Tile, { source: tileSource }),
+	                    React.createElement(react_openlayers_1.layer.Heatmap, { source: heatmapSource, blur: 15, radius: 5 }))),
+	            React.createElement("pre", null, "\n          <Map center={[0,0]} view={{center:[0,0], zoom:1}}>\n            <Layers>\n              <layer.Tile source={tileSource} />\n              <layer.Heatmap source={heatmapSource} blur={15} radius={5} />\n            </Layers>\n          </Map>\n        ")));
+	    };
+	    return Heatmap;
+	}(React.Component));
+	exports.Heatmap = Heatmap;
+
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ol = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
+	var extent = [0, 0, 1024, 968];
+	var projection = new ol.proj.Projection({
+	    code: 'xkcd-image',
+	    units: 'pixels',
+	    extent: extent
+	});
+	var view = {
+	    projection: projection,
+	    center: ol.extent.getCenter(extent),
+	    zoom: 2,
+	    maxZoom: 9
+	};
+	var imageSource = new ol.source.ImageStatic({
+	    attributions: '© <a href="http://xkcd.com/license.html">xkcd</a>',
+	    url: 'https://imgs.xkcd.com/comics/online_communities.png',
+	    projection: projection,
+	    imageExtent: extent
+	});
+	var Image = (function (_super) {
+	    __extends(Image, _super);
+	    function Image(props) {
+	        return _super.call(this, props) || this;
+	    }
+	    Image.prototype.render = function () {
+	        return (React.createElement("div", null,
+	            React.createElement(react_openlayers_1.Map, { view: view },
+	                React.createElement(react_openlayers_1.Layers, null,
+	                    React.createElement(react_openlayers_1.layer.Image, { source: imageSource }))),
+	            React.createElement("pre", null, "\n          <Map view={view}>\n            <Layers>\n              <layer.Image source={imageSource} />\n            </Layers>\n          </Map>\n        ")));
+	    };
+	    return Image;
+	}(React.Component));
+	exports.Image = Image;
+
+
+/***/ },
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29744,7 +30123,7 @@
 
 
 /***/ },
-/* 281 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29754,7 +30133,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var react_openlayers_1 = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var positions = [[-20, -20], [-10, -10], [0, 0], [10, 10], [20, 20]];
 	var markers = new react_openlayers_1.custom.Marker({ positions: positions });
 	var selectedMarkerStyle = react_openlayers_1.Util.cloneObject(markers.style);
@@ -29780,7 +30159,7 @@
 
 
 /***/ },
-/* 282 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29790,7 +30169,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var react_openlayers_1 = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var positions = [[-20, -20], [-10, -10], [0, 0], [10, 10], [20, 20]];
 	var markers = new react_openlayers_1.custom.Marker({ positions: positions });
 	var Draw = (function (_super) {
@@ -29814,7 +30193,7 @@
 
 
 /***/ },
-/* 283 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29824,8 +30203,8 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
-	var react_openlayers_1 = __webpack_require__(239);
+	var ol = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
 	var source = new ol.source.Vector({
 	    url: 'https://rawgit.com/boundlessgeo/ol3-workshop/master/src/data/layers/7day-M2.5.json',
 	    format: new ol.format.GeoJSON()
@@ -29861,7 +30240,7 @@
 
 
 /***/ },
-/* 284 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29891,7 +30270,7 @@
 
 
 /***/ },
-/* 285 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29901,20 +30280,18 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
-	var ol = __webpack_require__(242);
-	var react_openlayers_1 = __webpack_require__(239);
+	var ol = __webpack_require__(239);
+	var react_openlayers_1 = __webpack_require__(240);
+	//AppOverlay to avoid conflict to Overlay
 	var AppOverlay = (function (_super) {
 	    __extends(AppOverlay, _super);
 	    function AppOverlay(props) {
 	        var _this = _super.call(this, props) || this;
 	        _this.showPopup = function (evt) {
-	            var feature = evt.map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) { return feature; });
-	            var overlayPosition = feature ?
-	                feature.getGeometry().getCoordinates() : evt.coordinate;
-	            _this.overlayComp.overlay.setPosition(overlayPosition);
-	            var lonlat = ol.proj.transform(overlayPosition, 'EPSG:3857', 'EPSG:4326');
+	            _this.overlayComp.overlay.setPosition(evt.coordinate);
+	            var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	            _this.popupComp.setContents("<p>You clicked here:</p><code> " + lonlat[0] + ", " + lonlat[1] + "</code>");
-	            _this.popupComp.show(feature);
+	            _this.popupComp.show();
 	        };
 	        return _this;
 	    }
@@ -29923,11 +30300,11 @@
 	        return (React.createElement("div", null,
 	            React.createElement(react_openlayers_1.Map, { onClick: this.showPopup },
 	                React.createElement(react_openlayers_1.Layers, null,
-	                    React.createElement(react_openlayers_1.layer.Tile, null)),
+	                    React.createElement(react_openlayers_1.layer.Tile, { source: new ol.source.Stamen({ layer: 'watercolor' }) })),
 	                React.createElement(react_openlayers_1.Overlays, null,
-	                    React.createElement(react_openlayers_1.Overlay, { ref: function (comp) { return _this.overlayComp = comp; }, element: "#popup" }))),
-	            React.createElement(react_openlayers_1.custom.Popup, { ref: function (comp) { return _this.popupComp = comp; } }),
-	            React.createElement("pre", null, "\n          <Map onClick={this.showPopup}>\n            <Layers><layer.Tile/></Layers>\n            <Overlays>\n              <Overlay \n                ref={comp => this.overlayComp = comp}\n                element=\"#popup\" />\n            </Overlays>\n          </Map>\n          <custom.Popup ref={comp => this.popupComp = comp}>\n          </custom.Popup>\n       ")));
+	                    React.createElement(react_openlayers_1.Overlay, { ref: function (comp) { return _this.overlayComp = comp; } },
+	                        React.createElement(react_openlayers_1.custom.Popup, { ref: function (comp) { return _this.popupComp = comp; } })))),
+	            React.createElement("pre", null, "\n        <Map onClick={this.showPopup}>\n          <Layers>\n            <layer.Tile source={new ol.source.Stamen({ layer: 'watercolor' })}/>\n          </Layers>\n          <Overlays>\n            <Overlay ref={comp => this.overlayComp = comp}>\n              <custom.Popup ref={comp => this.popupComp = comp}>\n              </custom.Popup>\n            </Overlay>\n          </Overlays>\n        </Map>\n       ")));
 	    };
 	    return AppOverlay;
 	}(React.Component));
