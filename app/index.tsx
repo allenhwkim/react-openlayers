@@ -30,6 +30,10 @@ import {Modify} from './interactions/modify';
 import {Overlays} from './overlays/overlays';
 import {AppOverlay}  from './overlays/app-overlay';
 
+import {Custom} from './custom/custom';
+import {EarthquakeClusters} from './custom/earthquake-clusters';
+import {MarkerStyle} from './custom/marker-style';
+
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -62,6 +66,11 @@ ReactDOM.render((
       <Route path="overlays" component={Overlays}>
         <IndexRoute component={AppOverlay} />
         <Route path="overlay" component={AppOverlay} />
+      </Route>
+      <Route path="custom" component={Custom}>
+        <IndexRoute component={EarthquakeClusters} />
+        <Route path="earthquake-clusters" component={EarthquakeClusters} />
+        <Route path="marker-style" component={MarkerStyle} />
       </Route>
     </Route>
   </Router>

@@ -11,7 +11,7 @@ var iconFeature = new ol.Feature(new ol.geom.Point([0, 0]));
 var source = new ol.source.Vector({features: [iconFeature]});
 var marker = new custom.MarkerStyle('https://openlayers.org/en/v4.0.1/examples/data/icon.png');
 
-export class Vector extends React.Component<any,any> {
+export class MarkerStyle extends React.Component<any,any> {
   constructor(props) {
     super(props);
   }
@@ -21,18 +21,12 @@ export class Vector extends React.Component<any,any> {
       <div>
         <Map>
           <Layers>
-            <layer.Tile/>
-            <layer.Vector source={source} style={marker.style} />
+            <layer.Tile />
+            <layer.Vector 
+              style={marker.style}
+              source={source}/>
           </Layers>
         </Map>
-        <pre>{`
-        <Map>
-          <Layers>
-            <layer.Tile/>
-            <layer.Vector source={source} style={marker.style} />
-          </Layers>
-        </Map>
-        `}</pre>
       </div>
     );
   }

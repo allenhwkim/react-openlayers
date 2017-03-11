@@ -16,6 +16,7 @@ export class App extends React.Component<any, any> {
           <li><Link to="/controls">Controls</Link></li>
           <li><Link to="/overlays">Overlays</Link></li>
           <li><Link to="/interactions">Interactions</Link></li>
+          <li><Link to="/custom">Custom Examples</Link></li>
         </ul>
 
         {this.props.children}

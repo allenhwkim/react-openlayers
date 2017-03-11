@@ -7,9 +7,11 @@ import {
   Map, Layers, Overlay, Util    //objects
 } from "react-openlayers";
 
-let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
-let markers = new custom.Marker({positions: positions});
-let selectedMarkerStyle = Util.cloneObject(markers.style);
+var iconFeature = new ol.Feature(new ol.geom.Point([0, 0]));
+var source = new ol.source.Vector({features: [iconFeature]});
+var marker = new custom.MarkerStyle('https://openlayers.org/en/v4.0.1/examples/data/icon.png');
+
+let selectedMarkerStyle = Util.cloneObject(marker.style);
 selectedMarkerStyle.getImage().setOpacity(1);
 
 export class Select extends React.Component<any, any> {
@@ -23,7 +25,7 @@ export class Select extends React.Component<any, any> {
         <Map>
           <Layers>
             <layer.Tile />
-            <layer.Vector source={markers} style={markers.style} />
+            <layer.Vector source={source} style={marker.style} />
           </Layers>
           <Interactions>
             <interaction.Select style={selectedMarkerStyle} />

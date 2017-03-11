@@ -7,8 +7,14 @@ import {
   Map, Layers, Overlay, Util    //objects
 } from "react-openlayers";
 
-let positions = [ [-20, -20], [-10,-10], [0,0], [10,10], [20,20] ];
-let markers = new custom.Marker({positions: positions});
+var source = new ol.source.Vector({
+  features: [
+    new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-10, -10]))),
+    new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([0, 0]))),
+    new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([10, 10])))
+  ]
+});
+var markerStyle = new custom.MarkerStyle();
 
 export class Draw extends React.Component<any, any> {
   constructor(props) {
@@ -21,10 +27,10 @@ export class Draw extends React.Component<any, any> {
         <Map>
           <Layers>
             <layer.Tile />
-            <layer.Vector source={markers} style={markers.style} />
+            <layer.Vector source={source} style={markerStyle.style} />
           </Layers>
           <Interactions>
-            <interaction.Draw source={markers} type='Point' />
+            <interaction.Draw source={source} type='Point' />
           </Interactions>
         </Map>
         <pre>{`
