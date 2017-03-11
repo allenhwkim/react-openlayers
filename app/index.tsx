@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom";
 import * as ol from 'openlayers';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {App} from './app';
-import {Home} from './home';
 
 import {Controls} from './controls/controls';
 import {Attribution} from './controls/attribution';
@@ -37,7 +36,7 @@ import {MarkerStyle} from './custom/marker-style';
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
+      <IndexRoute component={EarthquakeClusters} />
       <Route path="controls" component={Controls}>
         <IndexRoute component={Attribution} />
         <Route path="attribution" component={Attribution} />
