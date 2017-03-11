@@ -4,7 +4,7 @@ A minimal [React](https://facebook.github.io/react/)
 wrapper of [OpenLayer 3+](https://openlayers.org/)
 written in [TypeScript](https://www.typescriptlang.org/)
 
-[![image](https://cloud.githubusercontent.com/assets/1437734/23288537/3735daaa-fa12-11e6-8f4b-9f7f75869f98.png)](https://rawgit.com/allenhwkim/react-openlayers/master/app/index.html)
+[![image](http://i.imgur.com/5JQcT8G.png)](https://rawgit.com/allenhwkim/react-openlayers/master/app/index.html)
 
 
 Example
