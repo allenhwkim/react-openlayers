@@ -15,6 +15,7 @@ export class Custom extends React.Component<any, any> {
         <ul role="nav" className="group-menu">
           <li><Link to="custom/earthquake-clusters">Earthquake Clusters</Link></li>
           <li><Link to="custom/marker-style">Marker Style</Link></li>
+          <li><Link to="custom/google-street-view-panorama">Google StreetView Panorama</Link></li>
         </ul>
         
         <div className="contents">

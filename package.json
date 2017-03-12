@@ -63,6 +63,8 @@
     "zone.js": "^0.6.21"
   },
   "dependencies": {
+    "@types/googlemaps": "^3.26.4",
+    "google-maps": "^3.2.1",
     "react-async-loader": "^0.1.2",
     "react-async-script-loader": "^0.2.2"
   }

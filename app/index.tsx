@@ -32,6 +32,7 @@ import {AppOverlay}  from './overlays/app-overlay';
 import {Custom} from './custom/custom';
 import {EarthquakeClusters} from './custom/earthquake-clusters';
 import {MarkerStyle} from './custom/marker-style';
+import {GoogleStreetViewPanorama} from './custom/google-street-view-panorama';
 
 ReactDOM.render((
   <Router history={hashHistory}>
@@ -70,6 +71,7 @@ ReactDOM.render((
         <IndexRoute component={EarthquakeClusters} />
         <Route path="earthquake-clusters" component={EarthquakeClusters} />
         <Route path="marker-style" component={MarkerStyle} />
+        <Route path="google-street-view-panorama" component={GoogleStreetViewPanorama} />
       </Route>
     </Route>
   </Router>
