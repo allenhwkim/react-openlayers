@@ -14,24 +14,30 @@ const config = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.ts', '.webpack.js', '.js', '.tsx', '.json', '.css', '.html'],
+    extensions: ['.ts', '.webpack.js', '.js', '.tsx', '.json', '.css', '.html'],
     alias: {
       'react-openlayers': path.join(__dirname, '..', 'src', 'index')
     }
   },
   module: {
-    loaders: [
-      {test: /\.ts$/, loader: 'ts' },
-      {test: /\.css$/, loader: 'style!css'},
-      {test: /\.html/, loader: 'html'},
-      {test: /\.tsx?$/, loader: 'ts-loader'},
+    rules: [
+      {test: /\.ts$/, use: 'ts-loader' },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+        ],
+      },
+      {test: /\.html/, use: 'html-loader'},
+      {test: /\.tsx?$/, use: 'ts-loader'},
       // {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
       //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
-    ],
-    preLoaders: [
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { test: /\.js$/, loader: 'source-map-loader' }
-    ]
+    ] 
+    //preLoaders: [
+    //  // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+    //  { test: /\.js$/, use: 'source-map-loader' }
+    //]
   },
   //externals: {
   //  "react": "React",

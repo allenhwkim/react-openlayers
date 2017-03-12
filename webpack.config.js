@@ -14,23 +14,29 @@ var config = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.ts', '.tsx', '.js', '.json', '.css', '.html'],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.css', '.html'],
     alias: {
       'react-openlayers': path.join(__dirname, 'src', 'index.ts')
     },
   },
   module: {
-    loaders: [
-      {test: /\.ts$/, loader: 'ts' },
-      {test: /\.css$/, loader: 'style!css'},
-      {test: /\.html/, loader: 'html'},
-      {test: /\.tsx?$/, loader: 'ts-loader'},
+    rules: [
+      {test: /\.ts$/, use: 'ts-loader' },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+        ],
+      },
+      {test: /\.html/, use: 'html-loader'},
+      {test: /\.tsx?$/, use: 'ts-loader'},
       //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
     ]
   },
-  resolveLoader: {
-    root: path.join(__dirname, 'node_modules')
-  },
+  //resolveLoader: {
+  //  root: path.join(__dirname, 'node_modules')
+  //},
   externals: {
     "react": "React",
     "react-dom": "ReactDOM"
