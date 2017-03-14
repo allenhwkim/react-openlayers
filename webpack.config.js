@@ -30,16 +30,8 @@ var config = {
         ],
       },
       {test: /\.html/, use: 'html-loader'},
-      {test: /\.tsx?$/, use: 'ts-loader'},
-      //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
+      {test: /\.tsx?$/, use: 'ts-loader'}
     ]
-  },
-  //resolveLoader: {
-  //  root: path.join(__dirname, 'node_modules')
-  //},
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM"
   }
 };
 

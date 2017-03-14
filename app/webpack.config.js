@@ -30,19 +30,9 @@ const config = {
         ],
       },
       {test: /\.html/, use: 'html-loader'},
-      {test: /\.tsx?$/, use: 'ts-loader'},
-      // {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
-      //{test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
+      {test: /\.tsx?$/, use: 'ts-loader'}
     ] 
-    //preLoaders: [
-    //  // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-    //  { test: /\.js$/, use: 'source-map-loader' }
-    //]
   },
-  //externals: {
-  //  "react": "React",
-  //  "react-dom": "ReactDOM"
-  //},
   plugins: []
 };
 
