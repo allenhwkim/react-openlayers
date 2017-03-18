@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 219);
+/******/ 	return __webpack_require__(__webpack_require__.s = 220);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1560,7 +1560,7 @@ Ok.prototype.changed=Ok.prototype.s;Ok.prototype.dispatchEvent=Ok.prototype.b;Ok
 }));
 
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(218)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(219)))
 
 /***/ }),
 /* 7 */
@@ -11068,18 +11068,21 @@ exports.interaction = interaction;
 "use strict";
 
 var tile_1 = __webpack_require__(216);
-var vector_1 = __webpack_require__(217);
+var vector_1 = __webpack_require__(218);
 var layers_1 = __webpack_require__(215);
 exports.Layers = layers_1.Layers;
 var heatmap_1 = __webpack_require__(213);
 exports.Heatmap = heatmap_1.Heatmap;
 var image_1 = __webpack_require__(214);
 exports.Image = image_1.Image;
+var vector_tile_1 = __webpack_require__(217);
+exports.VectorTile = vector_tile_1.VectorTile;
 var layer = {
     Tile: tile_1.Tile,
     Vector: vector_1.Vector,
     Heatmap: heatmap_1.Heatmap,
-    Image: image_1.Image
+    Image: image_1.Image,
+    VectorTile: vector_tile_1.VectorTile,
 };
 exports.layer = layer;
 
@@ -24886,6 +24889,75 @@ var React = __webpack_require__(4);
 var ol = __webpack_require__(6);
 var util_1 = __webpack_require__(7);
 var map_1 = __webpack_require__(9);
+var VectorTile = (function (_super) {
+    __extends(VectorTile, _super);
+    function VectorTile(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            renderBuffer: undefined,
+            renderMode: undefined,
+            renderOrder: undefined,
+            extent: undefined,
+            minResolution: undefined,
+            maxResolution: undefined,
+            opacity: undefined,
+            preload: undefined,
+            source: undefined,
+            style: undefined,
+            updateWhileAnimating: undefined,
+            updateWhileInteracting: undefined,
+            visible: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:extent': undefined,
+            'change:maxResolution': undefined,
+            'change:minResolution': undefined,
+            'change:opacity': undefined,
+            'change:preload': undefined,
+            'change:source': undefined,
+            'change:useInterimTilesOnError': undefined,
+            'change:visible': undefined,
+            'change:zIndex': undefined,
+            'postcompose': undefined,
+            'precompose': undefined,
+            'propertychange': undefined,
+            'render': undefined
+        };
+        return _this;
+    }
+    VectorTile.prototype.render = function () {
+        return null;
+    };
+    VectorTile.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
+        this.layer = new ol.layer.VectorTile(options);
+        this.context.mapComp.layers.push(this.layer);
+    };
+    return VectorTile;
+}(React.Component));
+exports.VectorTile = VectorTile;
+VectorTile['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(4);
+var ol = __webpack_require__(6);
+var util_1 = __webpack_require__(7);
+var map_1 = __webpack_require__(9);
 var Vector = (function (_super) {
     __extends(Vector, _super);
     function Vector(props) {
@@ -24938,7 +25010,7 @@ Vector['contextTypes'] = {
 
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports) {
 
 var g;
@@ -24965,7 +25037,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
