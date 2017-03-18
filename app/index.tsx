@@ -20,6 +20,7 @@ import {Tile} from './layers/tile';
 import {Vector} from './layers/vector';
 import {Heatmap} from './layers/heatmap';
 import {Image} from './layers/image';
+import {VectorTile} from './layers/vector-tile';
 
 import {Interactions} from './interactions/interactions';
 import {Select} from './interactions/select';
@@ -56,6 +57,7 @@ ReactDOM.render((
         <Route path="vector" component={Vector} />
         <Route path="heatmap" component={Heatmap} />
         <Route path="image" component={Image} />
+        <Route path="vector-tile" component={VectorTile} />
       </Route>
       <Route path="interactions" component={Interactions}>
         <IndexRoute component={Select} />

@@ -65,6 +65,8 @@
   "dependencies": {
     "@types/googlemaps": "^3.26.4",
     "google-maps": "^3.2.1",
+    "ol-mapbox-style": "^2.1.1",
+    "qwest": "^4.4.5",
     "react-async-loader": "^0.1.2",
     "react-async-script-loader": "^0.2.2"
   }

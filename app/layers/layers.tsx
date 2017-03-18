@@ -4,6 +4,7 @@ import {Tile} from './tile';
 import {Vector} from './vector';
 import {Heatmap} from './heatmap';
 import {Image} from './image';
+import {VectorTile} from './vector-tile';
 
 export class Layers extends React.Component<any, any> {
   constructor(props) {
@@ -17,6 +18,7 @@ export class Layers extends React.Component<any, any> {
         <ul role="nav" className="group-menu">
           <li><Link to="layers/tile">Tile</Link></li>
           <li><Link to="layers/vector">Vector</Link></li>
+          <li><Link to="layers/vector-tile">Vector Tile</Link></li>
           <li><Link to="layers/heatmap">Heatmap</Link></li>
           <li><Link to="layers/image">Image</Link></li>
         </ul>
