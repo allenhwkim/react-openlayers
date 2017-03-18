@@ -14523,7 +14523,7 @@ var OSMVectorTiles = (function (_super) {
                     React.createElement(react_openlayers_1.layer.VectorTile, { source: source2, style: style2 }),
                     React.createElement(react_openlayers_1.layer.VectorTile, { source: source3, style: style3 }))),
             React.createElement("a", { href: "https://github.com/allenhwkim/react-openlayers/blob/master/app/layers/osm-vector-tiles.tsx" }, "Source Code"),
-            React.createElement("pre", null, "\n        ")));
+            React.createElement("pre", null, "\n        <Map view={{center: ol.proj.fromLonLat([-74.0064, 40.7142]), maxZoom: 19, zoom: 15 }}>\n          <Layers>\n            <layer.VectorTile source={source1} style={style1} />\n            <layer.VectorTile source={source2} style={style2} />\n            <layer.VectorTile source={source3} style={style3} />\n          </Layers>\n        </Map>\n        ")));
     };
     return OSMVectorTiles;
 }(React.Component));
