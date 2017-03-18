@@ -14485,7 +14485,8 @@ var VectorTile = (function (_super) {
             React.createElement(react_openlayers_1.Map, { view: { center: [0, 0], zoom: 2 } },
                 React.createElement(react_openlayers_1.Layers, null,
                     React.createElement(react_openlayers_1.layer.VectorTile, { source: source, style: mapbox_streets_v6_style_1.createMapboxStreetsV6Style() }))),
-            React.createElement("pre", null, "\n        ")));
+            React.createElement("a", { href: "https://github.com/allenhwkim/react-openlayers/blob/master/app/layers/vector-tile.tsx" }, "Source Code"),
+            React.createElement("pre", null, "\n        <Map view={{center: [0,0], zoom:2}}>\n          <Layers>\n            <layer.VectorTile source={source} style={createMapboxStreetsV6Style()} />\n          </Layers>\n        ")));
     };
     return VectorTile;
 }(React.Component));
