@@ -24932,6 +24932,9 @@ var VectorTile = (function (_super) {
     VectorTile.prototype.componentDidMount = function () {
         var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
         this.layer = new ol.layer.VectorTile(options);
+        if (this.options.callback) {
+            this.options.callback(this.layer);
+        }
         this.context.mapComp.layers.push(this.layer);
     };
     return VectorTile;
