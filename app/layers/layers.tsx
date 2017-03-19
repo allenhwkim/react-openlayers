@@ -5,6 +5,7 @@ import {Vector} from './vector';
 import {Heatmap} from './heatmap';
 import {Image} from './image';
 import {VectorTile} from './vector-tile';
+import {VectorTile2} from './vector-tile-2';
 import {OSMVectorTiles} from './osm-vector-tiles';
 
 export class Layers extends React.Component<any, any> {

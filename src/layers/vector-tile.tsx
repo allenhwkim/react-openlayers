@@ -51,6 +51,9 @@ export class VectorTile extends React.Component<any, any> {
   componentDidMount () {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     this.layer = new ol.layer.VectorTile(options);
+    if (this.options.callback) {
+      this.options.callback(this.layer);
+    }
     this.context.mapComp.layers.push(this.layer);
   }
 

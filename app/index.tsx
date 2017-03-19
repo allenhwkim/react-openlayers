@@ -21,6 +21,7 @@ import {Vector} from './layers/vector';
 import {Heatmap} from './layers/heatmap';
 import {Image} from './layers/image';
 import {VectorTile} from './layers/vector-tile';
+import {VectorTile2} from './layers/vector-tile-2';
 import {OSMVectorTiles} from './layers/osm-vector-tiles';
 
 import {Interactions} from './interactions/interactions';
@@ -59,6 +60,7 @@ ReactDOM.render((
         <Route path="heatmap" component={Heatmap} />
         <Route path="image" component={Image} />
         <Route path="vector-tile" component={VectorTile} />
+        <Route path="vector-tile-2" component={VectorTile2} />
         <Route path="osm-vector-tiles" component={OSMVectorTiles} />
       </Route>
       <Route path="interactions" component={Interactions}>
