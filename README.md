@@ -45,6 +45,8 @@ It strictly follows [OpenLayer 3+ API documention](https://openlayers.org/en/lat
 Allen Kim is the creator of [ngmap](https://github.com/allenhwkim/angularjs-google-maps) and
 [ng2-map](https://github.com/ng2-ui/ng2-map).
 
+If you like this, you may also like [geo-coder](https://github.com/allenhwkim/geocoder).
+
 ### To start
 
     $ git clone https://github.com/allenhwkim/react-openlayers.git
