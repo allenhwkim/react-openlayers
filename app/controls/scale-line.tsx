@@ -21,6 +21,7 @@ export class ScaleLine extends React.Component<any,any> {
             <control.ScaleLine />
           </Controls>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/controls/scale-line.tsx">source</a>
         <pre>{`
         <Map>
           <Layers><layer.Tile/></Layers>

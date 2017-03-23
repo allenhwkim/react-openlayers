@@ -33,6 +33,7 @@ export class Select extends React.Component<any, any> {
             <interaction.Select style={selectedMarkerStyle} />
           </Interactions>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/interactions/select.tsx">source</a>
         <pre>{`
           <Map>
             <Layers>

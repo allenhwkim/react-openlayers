@@ -10,7 +10,7 @@ export class App extends React.Component<any, any> {
   render() {
     return (
       <div className="menu">
-        <h1>React Open Layers</h1>
+        <h1>React OpenLayers</h1>
         <ul className="groups" role="nav">
           <li><Link to="/layers">Layers</Link></li>
           <li><Link to="/controls">Controls</Link></li>

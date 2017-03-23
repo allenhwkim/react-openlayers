@@ -21,6 +21,7 @@ export class ZoomSlider extends React.Component<any,any> {
             <control.ZoomSlider />
           </Controls>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/controls/zoom-slider.tsx">source</a>
         <pre>{`
         <Map>
           <Layers><layer.Tile/></Layers>

@@ -22,6 +22,7 @@ export class Rotate extends React.Component<any,any> {
           </Controls>
         </Map>
         Use Alt+Shift+Drag to rotate the map.
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/controls/rotate.tsx">source</a>
         <pre>{`
         <Map>
           <Layers><layer.Tile/></Layers>

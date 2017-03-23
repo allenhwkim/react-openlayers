@@ -7,6 +7,7 @@ import {Map} from '../../map';
 export class GeoCoderComponent extends React.Component<any, any> {
 
   control: GeoCoderControl;
+  geoCoder: any;
 
   options: any = {
     provider: undefined,
@@ -19,12 +20,16 @@ export class GeoCoderComponent extends React.Component<any, any> {
 
   constructor(props) { super(props); }
 
-  render() { return null; }
+  render() { 
+    return (<div>{this.props.children}</div>);
+  }
 
   componentDidMount () {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.control = new GeoCoderControl(options);
+    this.geoCoder = this.control.geoCoder;
     this.context.mapComp.controls.push(this.control)
+    this.geoCoder = this.control.geoCoder;
     
     //regitster events
     let olEvents = Util.getEvents(this.events, this.props);

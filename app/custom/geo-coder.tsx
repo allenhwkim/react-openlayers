@@ -21,9 +21,22 @@ var marker = new custom.style.MarkerStyle(
 
 export class GeoCoder extends React.Component<any,any> {
   geocodeControl: any;
+  overlay: any;
+  geoCoder: any;
+  popup: any;
 
   constructor(props) {
     super(props);
+  }
+
+  showPopup = (evt) => {
+    this.overlay.setPosition(evt.coordinate);
+    var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+    this.geoCoder.reverse(lonlat[0], lonlat[1]).then(result => {
+      console.log('address...............', result.address)
+      this.popup.setContents(`<b>${result.address}</b>`);
+      this.popup.show();
+    });
   }
 
   geocode = event => {
@@ -39,7 +52,7 @@ export class GeoCoder extends React.Component<any,any> {
     return (
       <div>
         This uses <a href="https://github.com/allenhwkim/geocoder">geo-coder;</a>
-        <Map>
+        <Map onClick={this.showPopup}>
           <Layers>
             <layer.Tile/>
             <layer.Vector 
@@ -48,10 +61,19 @@ export class GeoCoder extends React.Component<any,any> {
           </Layers>
           <Controls>
             <custom.control.GeoCoderComponent
-              ref={comp => this.geocodeControl = comp.control}
+              ref={cmp => {
+                console.log('cmp', cmp);
+                this.geocodeControl = cmp && cmp.control;
+                this.geoCoder = cmp && cmp.geoCoder;
+              }}
               provider='osm'
               onPlace_changed={this.geocode} />
           </Controls>
+          <Overlays>
+            <Overlay ref={cmp => this.overlay = cmp && cmp.overlay}>
+              <custom.Popup ref={cmp => this.popup = cmp}></custom.Popup>
+            </Overlay>
+          </Overlays>
         </Map>
         <pre>{`
         `}</pre>

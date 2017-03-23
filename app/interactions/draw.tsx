@@ -33,6 +33,7 @@ export class Draw extends React.Component<any, any> {
             <interaction.Draw source={source} type='Point' />
           </Interactions>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/interactions/draw.tsx">source</a>
         <pre>{`
           <Map>
             <Layers>

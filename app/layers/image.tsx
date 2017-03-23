@@ -39,6 +39,7 @@ export class Image extends React.Component<any,any> {
             <layer.Image source={imageSource} />
           </Layers>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/layers/image.tsx">source</a>
         <pre>{`
           <Map view={view}>
             <Layers>

@@ -27,6 +27,7 @@ export class Vector extends React.Component<any,any> {
             <layer.Vector source={source} style={marker.style} />
           </Layers>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/layers/vector.tsx">Source Code</a>
         <pre>{`
         <Map>
           <Layers>

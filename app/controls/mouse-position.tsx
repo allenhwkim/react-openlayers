@@ -21,6 +21,7 @@ export class MousePosition extends React.Component<any,any> {
             <control.MousePosition />
           </Controls>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/controls/mouse-position.tsx">source</a>
         <pre>{`
         <Map>
           <Layers><layer.Tile/></Layers>
