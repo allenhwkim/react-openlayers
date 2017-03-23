@@ -36690,11 +36690,10 @@ var GeoCoder = (function (_super) {
     function GeoCoder(props) {
         return _super.call(this, props) || this;
     }
-    GeoCoder.prototype.geocode = function (event) {
-        console.log('................', event);
-    };
     GeoCoder.prototype.render = function () {
         return (React.createElement("div", null,
+            "This uses ",
+            React.createElement("a", { href: "https://github.com/allenhwkim/geocoder" }, "geo-coder;"),
             React.createElement(react_openlayers_1.Map, null,
                 React.createElement(react_openlayers_1.Layers, null,
                     React.createElement(react_openlayers_1.layer.Tile, null)),

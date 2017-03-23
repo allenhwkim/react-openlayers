@@ -12,13 +12,10 @@ export class GeoCoder extends React.Component<any,any> {
     super(props);
   }
 
-  geocode(event) {
-    console.log('................', event);
-  }
-
   render(){
     return (
       <div>
+        This uses <a href="https://github.com/allenhwkim/geocoder">geo-coder;</a>
         <Map>
           <Layers><layer.Tile/></Layers>
           <Controls>
