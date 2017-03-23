@@ -79,7 +79,6 @@ export class Map extends React.Component<any, any> {
     let controlsCmp = Util.findChild(this.props.children, 'Controls') || {};
     let interactionsCmp = Util.findChild(this.props.children, 'Interactions') || {};
 
-console.log('this.controls............', this.controls);
     options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
     options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
 
@@ -87,6 +86,7 @@ console.log('this.controls............', this.controls);
     options.overlays = this.overlays;
     console.log('map options', options);
 
+console.log('this.layers............', this.layers);
     this.map = new ol.Map(options);
     this.map.setTarget(options.target || this.mapDiv);
 

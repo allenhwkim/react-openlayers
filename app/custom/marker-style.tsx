@@ -29,6 +29,16 @@ export class MarkerStyle extends React.Component<any,any> {
               source={source}/>
           </Layers>
         </Map>
+        <pre>{`
+        <Map>
+          <Layers>
+            <layer.Tile />
+            <layer.Vector 
+              style={marker.style}
+              source={source}/>
+          </Layers>
+        </Map>
+        `}</pre>
       </div>
     );
   }
