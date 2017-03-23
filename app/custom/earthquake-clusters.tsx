@@ -27,7 +27,7 @@ var selectCondition = function(evt) {
     evt.type == 'singleclick';
 };
 
-var cluster = new custom.ClusterStyle(vectorSource);
+var cluster = new custom.style.ClusterStyle(vectorSource);
 
 export class EarthquakeClusters extends React.Component<any,any> {
   constructor(props) {

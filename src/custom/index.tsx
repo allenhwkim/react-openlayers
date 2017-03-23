@@ -1,12 +1,20 @@
 import {Popup} from './popup';
-import {ClusterStyle} from './cluster-style';
-import {MarkerStyle} from './marker-style';
 import {GoogleStreetViewPanorama} from './google-street-view-panorama';
+import {ClusterStyle} from './style/cluster-style';
+import {MarkerStyle} from './style/marker-style';
+import {GeoCoderControl} from './control/geo-coder-control';
+import {GeoCoderComponent} from './control/geo-coder-component';
 
 let custom = {
+  style: {
+    MarkerStyle: MarkerStyle,
+    ClusterStyle: ClusterStyle
+  },
+  control: {
+    GeoCoderControl: GeoCoderControl,
+    GeoCoderComponent: GeoCoderComponent
+  },
   Popup: Popup,
-  ClusterStyle: ClusterStyle,
-  MarkerStyle: MarkerStyle,
   GoogleStreetViewPanorama: GoogleStreetViewPanorama
 };
 

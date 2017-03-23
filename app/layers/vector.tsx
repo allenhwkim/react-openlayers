@@ -9,7 +9,9 @@ import {
 
 var iconFeature = new ol.Feature(new ol.geom.Point([0, 0]));
 var source = new ol.source.Vector({features: [iconFeature]});
-var marker = new custom.MarkerStyle('https://openlayers.org/en/v4.0.1/examples/data/icon.png');
+var marker = new custom.style.MarkerStyle(
+  'https://openlayers.org/en/v4.0.1/examples/data/icon.png'
+);
 
 export class Vector extends React.Component<any,any> {
   constructor(props) {

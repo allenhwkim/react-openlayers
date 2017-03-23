@@ -1,0 +1,23 @@
+.geo-coder {
+  top: 65px;
+  left: 8px;
+  position: absolute;
+  display: inline-block;
+}
+.geo-coder  button {
+  display: inline-block;
+  vertical-align: middle;
+}
+.geo-coder .autocomplete {
+  display: inline-block;
+  width: 500px;
+  padding: 0 3px 0 5px;
+}
+.geo-coder .autocomplete input {
+  width: 100%;
+  height: 20px;
+  font-size: 1em;
+}
+.geo-coder .autocomplete ul {
+  border: none;
+}

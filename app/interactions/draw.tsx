@@ -14,7 +14,7 @@ var source = new ol.source.Vector({
     new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([10, 10])))
   ]
 });
-var markerStyle = new custom.MarkerStyle();
+var markerStyle = new custom.style.MarkerStyle();
 
 export class Draw extends React.Component<any, any> {
   constructor(props) {

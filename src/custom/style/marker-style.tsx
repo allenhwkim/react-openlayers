@@ -7,7 +7,6 @@ export class MarkerStyle {
 
   constructor(src?: string) {
     this.src = src;
-    return this.style;
   }
 
   style = new ol.style.Style({
