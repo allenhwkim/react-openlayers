@@ -12,6 +12,10 @@ export class GeoCoder extends React.Component<any,any> {
     super(props);
   }
 
+  geocode(event) {
+    console.log('geocode found....', event)
+  }
+
   render(){
     return (
       <div>
