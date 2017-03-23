@@ -75,6 +75,7 @@ export class GeoCoder extends React.Component<any,any> {
             </Overlay>
           </Overlays>
         </Map>
+        <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/custom/geo-coder.tsx">source</a>
         <pre>{`
         `}</pre>
       </div>
