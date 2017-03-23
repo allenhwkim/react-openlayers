@@ -18,5 +18,5 @@ Implementation of following features
     (DONE https://github.com/allenhwkim/geocoder)
   
   * Geo coding implementation
-    * Search an address and locate/zoom into it. (geo-lookup)
+    * Search an address and locate/zoom into it. (geo-lookup) (DONE)
     * Show an address when a location is clicked (reverse geocoding)
