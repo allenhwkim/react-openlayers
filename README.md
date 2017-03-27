@@ -6,6 +6,17 @@ written in [TypeScript](https://www.typescriptlang.org/)
 
 [![image](http://i.imgur.com/5JQcT8G.png)](https://rawgit.com/allenhwkim/react-openlayers/master/app/index.html)
 
+## Install
+
+    npm install react-openlayers --save-dev
+
+## Usage
+
+    import {
+      interaction, layer, custom, control, //name spaces
+      Interactions, Overlays, Controls,     //group
+      Map, Layers, Overlay, Util    //objects
+    } from "react-openlayers";
 
 Example
 ```
