@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {Link} from 'react-router';
-import {Tile} from './tile';
-import {Vector} from './vector';
-import {Heatmap} from './heatmap';
-import {Image} from './image';
-import {VectorTile} from './vector-tile';
-import {VectorTile2} from './vector-tile-2';
-import {OSMVectorTiles} from './osm-vector-tiles';
+
+export {Tile} from './tile';
+export {Vector} from './vector';
+export {Heatmap} from './heatmap';
+export {Image} from './image';
+export {VectorTile} from './vector-tile';
+export {VectorTile2} from './vector-tile-2';
+export {OSMVectorTiles} from './osm-vector-tiles';
 
 export class Layers extends React.Component<any, any> {
   constructor(props) {

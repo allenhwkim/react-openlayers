@@ -4,39 +4,64 @@ import * as ol from 'openlayers';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {App} from './app';
 
-import {Controls} from './controls/controls';
-import {Attribution} from './controls/attribution';
-import {FullScreen} from './controls/full-screen';
-import {MousePosition} from './controls/mouse-position';
-import {OverviewMap} from './controls/overview-map';
-import {Rotate} from './controls/rotate';
-import {ScaleLine} from './controls/scale-line';
-import {ZoomSlider} from './controls/zoom-slider';
-import {ZoomToExtent} from './controls/zoom-to-extent';
-import {Zoom} from './controls/zoom';
+import {
+  Controls,
+  Attribution,
+  FullScreen,
+  MousePosition,
+  OverviewMap,
+  Rotate,
+  ScaleLine,
+  ZoomSlider,
+  ZoomToExtent,
+  Zoom 
+} from './controls'
 
-import {Layers} from './layers/layers';
-import {Tile} from './layers/tile';
-import {Vector} from './layers/vector';
-import {Heatmap} from './layers/heatmap';
-import {Image} from './layers/image';
-import {VectorTile} from './layers/vector-tile';
-import {VectorTile2} from './layers/vector-tile-2';
-import {OSMVectorTiles} from './layers/osm-vector-tiles';
+import {
+  Layers,
+  Tile,
+  Vector,
+  Heatmap,
+  Image,
+  VectorTile,
+  VectorTile2,
+  OSMVectorTiles
+} from './layers';
 
-import {Interactions} from './interactions/interactions';
-import {Select} from './interactions/select';
-import {Draw} from './interactions/draw';
-import {Modify} from './interactions/modify';
+import {
+  Interactions,
+  Select, 
+  Draw,
+  Modify,
+  DoubleClickZoom,
+  DragAndDrop,
+  DragBox,
+  DragPan,
+  DragRotateAndZoom,
+  DragRotate,
+  DragZoom,
+  KeyboardPan,
+  KeyboardZoom,
+  MouseWheelZoom,
+  PinchRotate,
+  PinchZoom,
+  Pointer,
+  Snap,
+  Translate
+} from './interactions';
 
-import {Overlays} from './overlays/overlays';
-import {AppOverlay}  from './overlays/app-overlay';
+import {
+  Overlays, 
+  AppOverlay
+} from './overlays';
 
-import {Custom} from './custom/custom';
-import {EarthquakeClusters} from './custom/earthquake-clusters';
-import {MarkerStyle} from './custom/marker-style';
-import {GoogleStreetViewPanorama} from './custom/google-street-view-panorama';
-import {GeoCoder} from './custom/geo-coder';
+import {
+  Custom,
+  EarthquakeClusters,
+  MarkerStyle,
+  GoogleStreetViewPanorama,
+  GeoCoder
+} from './custom';
 
 ReactDOM.render((
   <Router history={hashHistory}>
@@ -69,6 +94,21 @@ ReactDOM.render((
         <Route path="select" component={Select} />
         <Route path="draw" component={Draw} />
         <Route path="modify" component={Modify} />
+        <Route path="double-click-zoom" component={DoubleClickZoom} />
+        <Route path="drag-and-drop" component={DragAndDrop} />
+        <Route path="drag-box" component={DragBox} />
+        <Route path="drag-pan" component={DragPan} />
+        <Route path="drag-rotate-and-zoom" component={DragRotateAndZoom} />
+        <Route path="drag-rotate" component={DragRotate} />
+        <Route path="drag-zoom" component={DragZoom} />
+        <Route path="keyboard-pan" component={KeyboardPan} />
+        <Route path="keyboard-zoom" component={KeyboardZoom} />
+        <Route path="mouse-wheel-zoom" component={MouseWheelZoom} />
+        <Route path="pinch-rotate" component={PinchRotate} />
+        <Route path="pinch-zoom" component={PinchZoom} />
+        <Route path="pointer" component={Pointer} />
+        <Route path="snap" component={Snap} />
+        <Route path="translate" component={Translate} />
       </Route>
       <Route path="overlays" component={Overlays}>
         <IndexRoute component={AppOverlay} />

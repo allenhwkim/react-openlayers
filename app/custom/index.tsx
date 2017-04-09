@@ -1,6 +1,11 @@
 import * as React from 'react';
 import {Link} from 'react-router';
 
+export {EarthquakeClusters} from './earthquake-clusters';
+export {MarkerStyle} from './marker-style';
+export {GoogleStreetViewPanorama} from './google-street-view-panorama';
+export {GeoCoder} from './geo-coder';
+
 export class Custom extends React.Component<any, any> {
   constructor(props) {
     super(props)

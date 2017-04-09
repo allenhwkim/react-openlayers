@@ -2,6 +2,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ol from 'openlayers';
 import {applyStyle} from 'ol-mapbox-style'; // in case we use olms
+import * as mb2olstyle from 'mapbox-to-ol-style';
+console.log('mb2olstyle', mb2olstyle, mb2olstyle.mb2olstyle)
+
 import {
   interaction, layer, custom, control, //name spaces
   Interactions, Overlays, Controls,     //group
@@ -38,10 +41,12 @@ export class VectorTile2 extends React.Component<any,any> {
     fetch('https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json')
       .then(function(response) {
         response.json().then(function(glStyle) {
-          applyStyle(layer, glStyle, 'openmaptiles').then(function() {
-            console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-            // map.addLayer(layer);
-          });
+          let styleFunc = mb2olstyle.default(glStyle, 'openmaptiles');
+          layer.setStyle(styleFunc);
+          // applyStyle(layer, glStyle, 'openmaptiles').then(function() {
+          //   console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+          //   // map.addLayer(layer);
+          // });
         });
       });
   }

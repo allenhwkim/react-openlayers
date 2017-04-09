@@ -1,6 +1,15 @@
 import * as React from 'react';
 import {Link} from 'react-router';
-import {Attribution} from './attribution';
+
+export {Attribution} from './attribution';
+export {FullScreen} from './full-screen';
+export {MousePosition} from './mouse-position';
+export {OverviewMap} from './overview-map';
+export {Rotate} from './rotate';
+export {ScaleLine} from './scale-line';
+export {ZoomSlider} from './zoom-slider';
+export {ZoomToExtent} from './zoom-to-extent';
+export {Zoom} from './zoom';
 
 export class Controls extends React.Component<any, any> {
   constructor(props) {

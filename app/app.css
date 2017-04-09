@@ -18,3 +18,8 @@
   width: 80%;
   min-width: 400px;
 }
+
+.todo {
+  line-height: 300px;
+  text-align: center;
+}
