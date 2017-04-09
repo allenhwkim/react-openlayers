@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 229);
+/******/ 	return __webpack_require__(__webpack_require__.s = 245);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -267,6 +267,16 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(23);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -325,7 +335,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -398,61 +408,7 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-
-/**
- * WARNING: DO NOT manually require this module.
- * This is a replacement for `invariant(...)` used by the error code system
- * and will _only_ be required by the corresponding babel pass.
- * It always throws.
- */
-
-function reactProdInvariant(code) {
-  var argCount = arguments.length - 1;
-
-  var message = 'Minified React error #' + code + '; visit ' + 'http://facebook.github.io/react/docs/error-decoder.html?invariant=' + code;
-
-  for (var argIdx = 0; argIdx < argCount; argIdx++) {
-    message += '&args[]=' + encodeURIComponent(arguments[argIdx + 1]);
-  }
-
-  message += ' for the full message or use the non-minified dev environment' + ' for full errors and additional helpful warnings.';
-
-  var error = new Error(message);
-  error.name = 'Invariant Violation';
-  error.framesToPop = 1; // we don't care about reactProdInvariant's own frame
-
-  throw error;
-}
-
-module.exports = reactProdInvariant;
-
-/***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(23);
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;var require;var require;var require;var require;var require;var require;// OpenLayers. See https://openlayers.org/
@@ -1466,12 +1422,12 @@ Ok.prototype.changed=Ok.prototype.s;Ok.prototype.dispatchEvent=Ok.prototype.b;Ok
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(87)))
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
 function getOptions(props) {
     var options = {};
     for (var key in props) {
@@ -1550,7 +1506,182 @@ exports.Util = Util;
 
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+__webpack_require__(203);
+__webpack_require__(202);
+/**
+ * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
+ *
+ * example:
+ * <Map view={{center: [0, 0], zoom: 1}}>
+ *   <layers>
+ *     <layer.Tile source={new ol.source.OSM()} />
+ *     <layer.Vector options={}/>
+ *   </layers>
+ *   <controls></controls>
+ *   <interactions></interactions>
+ *   <overlays></overlays>
+ * </Map>
+ */
+var Map = (function (_super) {
+    __extends(Map, _super);
+    /**
+     * Component mounting LifeCycle; constructor, componentDidMount, and render
+     * https://facebook.github.io/react/docs/react-component.html#mounting
+     */
+    function Map(props) {
+        var _this = _super.call(this, props) || this;
+        _this.layers = [];
+        _this.interactions = [];
+        _this.controls = [];
+        _this.overlays = [];
+        _this.options = {
+            pixelRation: undefined,
+            keyboardEventTarget: undefined,
+            loadTilesWhileAnimation: undefined,
+            loadTilesWhileInteractiong: undefined,
+            logo: undefined,
+            renderer: undefined,
+            view: new ol.View({ center: [0, 0], zoom: 3 }),
+            controls: undefined,
+            interactions: undefined,
+            layers: undefined,
+            overlays: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:layerGroup': undefined,
+            'change:size': undefined,
+            'change:target': undefined,
+            'change:view': undefined,
+            'click': undefined,
+            'dblclick': undefined,
+            'moveend': undefined,
+            'pointerdrag': undefined,
+            'pointermove': undefined,
+            'postcompose': undefined,
+            'postrender': undefined,
+            'precompose': undefined,
+            'propertychange': undefined,
+            'singleclick': undefined
+        };
+        console.log('Map constructor');
+        return _this;
+    }
+    Map.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
+        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
+        var controlsCmp = util_1.Util.findChild(this.props.children, 'Controls') || {};
+        var interactionsCmp = util_1.Util.findChild(this.props.children, 'Interactions') || {};
+        options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
+        options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
+        options.layers = this.layers;
+        options.overlays = this.overlays;
+        console.log('map options', options);
+        console.log('this.layers............', this.layers);
+        this.map = new ol.Map(options);
+        this.map.setTarget(options.target || this.mapDiv);
+        //regitster events
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.map.on(eventName, olEvents[eventName]);
+        }
+    };
+    Map.prototype.render = function () {
+        var _this = this;
+        return (React.createElement("div", null,
+            React.createElement("div", { className: "openlayers-map", ref: function (el) { return _this.mapDiv = el; } }, this.props.children)));
+    };
+    /**
+     * Component Updating LifeCycle
+     * https://facebook.github.io/react/docs/react-component.html#updating
+     */
+    //componentWillReceiveProps(nextProps)
+    //shouldComponentUpdate(nextProps, nextState)
+    //componentWillUpdate(nextProps, nextState)
+    //componentDidUpdate(prevProps, prevState)
+    /**
+     * Component Unmounting LifeCycle
+     * https://facebook.github.io/react/docs/react-component.html#unmounting
+     */
+    Map.prototype.componentWillUnmount = function () {
+        this.map.setTarget(undefined);
+    };
+    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
+    Map.prototype.getChildContext = function () {
+        return {
+            mapComp: this,
+            map: this.map
+        };
+    };
+    return Map;
+}(React.Component));
+exports.Map = Map;
+// Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
+Map['childContextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+
+/**
+ * WARNING: DO NOT manually require this module.
+ * This is a replacement for `invariant(...)` used by the error code system
+ * and will _only_ be required by the corresponding babel pass.
+ * It always throws.
+ */
+
+function reactProdInvariant(code) {
+  var argCount = arguments.length - 1;
+
+  var message = 'Minified React error #' + code + '; visit ' + 'http://facebook.github.io/react/docs/error-decoder.html?invariant=' + code;
+
+  for (var argIdx = 0; argIdx < argCount; argIdx++) {
+    message += '&args[]=' + encodeURIComponent(arguments[argIdx + 1]);
+  }
+
+  message += ' for the full message or use the non-minified dev environment' + ' for full errors and additional helpful warnings.';
+
+  var error = new Error(message);
+  error.name = 'Invariant Violation';
+  error.framesToPop = 1; // we don't care about reactProdInvariant's own frame
+
+  throw error;
+}
+
+module.exports = reactProdInvariant;
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1647,7 +1778,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1663,12 +1794,12 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var DOMProperty = __webpack_require__(17);
 var ReactDOMComponentFlags = __webpack_require__(65);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 var Flags = ReactDOMComponentFlags;
@@ -1848,137 +1979,6 @@ module.exports = ReactDOMComponentTree;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-__webpack_require__(203);
-__webpack_require__(202);
-/**
- * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
- *
- * example:
- * <Map view={{center: [0, 0], zoom: 1}}>
- *   <layers>
- *     <layer.Tile source={new ol.source.OSM()} />
- *     <layer.Vector options={}/>
- *   </layers>
- *   <controls></controls>
- *   <interactions></interactions>
- *   <overlays></overlays>
- * </Map>
- */
-var Map = (function (_super) {
-    __extends(Map, _super);
-    /**
-     * Component mounting LifeCycle; constructor, componentDidMount, and render
-     * https://facebook.github.io/react/docs/react-component.html#mounting
-     */
-    function Map(props) {
-        var _this = _super.call(this, props) || this;
-        _this.layers = [];
-        _this.interactions = [];
-        _this.controls = [];
-        _this.overlays = [];
-        _this.options = {
-            pixelRation: undefined,
-            keyboardEventTarget: undefined,
-            loadTilesWhileAnimation: undefined,
-            loadTilesWhileInteractiong: undefined,
-            logo: undefined,
-            renderer: undefined,
-            view: new ol.View({ center: [0, 0], zoom: 3 }),
-            controls: undefined,
-            interactions: undefined,
-            layers: undefined,
-            overlays: undefined
-        };
-        _this.events = {
-            'change': undefined,
-            'change:layerGroup': undefined,
-            'change:size': undefined,
-            'change:target': undefined,
-            'change:view': undefined,
-            'click': undefined,
-            'dblclick': undefined,
-            'moveend': undefined,
-            'pointerdrag': undefined,
-            'pointermove': undefined,
-            'postcompose': undefined,
-            'postrender': undefined,
-            'precompose': undefined,
-            'propertychange': undefined,
-            'singleclick': undefined
-        };
-        console.log('Map constructor');
-        return _this;
-    }
-    Map.prototype.componentDidMount = function () {
-        var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
-        !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
-        var controlsCmp = util_1.Util.findChild(this.props.children, 'Controls') || {};
-        var interactionsCmp = util_1.Util.findChild(this.props.children, 'Interactions') || {};
-        console.log('this.controls............', this.controls);
-        options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
-        options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
-        options.layers = this.layers;
-        options.overlays = this.overlays;
-        console.log('map options', options);
-        this.map = new ol.Map(options);
-        this.map.setTarget(options.target || this.mapDiv);
-        //regitster events
-        var olEvents = util_1.Util.getEvents(this.events, this.props);
-        for (var eventName in olEvents) {
-            this.map.on(eventName, olEvents[eventName]);
-        }
-    };
-    Map.prototype.render = function () {
-        var _this = this;
-        return (React.createElement("div", null,
-            React.createElement("div", { className: "openlayers-map", ref: function (el) { return _this.mapDiv = el; } }, this.props.children)));
-    };
-    /**
-     * Component Updating LifeCycle
-     * https://facebook.github.io/react/docs/react-component.html#updating
-     */
-    //componentWillReceiveProps(nextProps)
-    //shouldComponentUpdate(nextProps, nextState)
-    //componentWillUpdate(nextProps, nextState)
-    //componentDidUpdate(prevProps, prevState)
-    /**
-     * Component Unmounting LifeCycle
-     * https://facebook.github.io/react/docs/react-component.html#unmounting
-     */
-    Map.prototype.componentWillUnmount = function () {
-        this.map.setTarget(undefined);
-    };
-    // Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-    Map.prototype.getChildContext = function () {
-        return {
-            mapComp: this,
-            map: this.map
-        };
-    };
-    return Map;
-}(React.Component));
-exports.Map = Map;
-// Ref. https://facebook.github.io/react/docs/context.html#how-to-use-context
-Map['childContextTypes'] = {
-    mapComp: React.PropTypes.instanceOf(Map),
-    map: React.PropTypes.instanceOf(ol.Map)
-};
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2041,8 +2041,8 @@ var _prodInvariant = __webpack_require__(20);
 
 var ReactCurrentOwner = __webpack_require__(15);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 function isNative(fn) {
   // Based on isNative() from Lodash
@@ -2450,8 +2450,8 @@ module.exports = emptyFunction;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var CallbackQueue = __webpack_require__(63);
 var PooledClass = __webpack_require__(18);
@@ -2459,7 +2459,7 @@ var ReactFeatureFlags = __webpack_require__(68);
 var ReactReconciler = __webpack_require__(22);
 var Transaction = __webpack_require__(33);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var dirtyComponents = [];
 var updateBatchNumber = 0;
@@ -2743,12 +2743,12 @@ module.exports = ReactCurrentOwner;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var PooledClass = __webpack_require__(18);
 
 var emptyFunction = __webpack_require__(13);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var didWarnForAddedNewProperty = false;
 var isProxySupported = typeof Proxy === 'function';
@@ -3017,9 +3017,9 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 function checkMask(value, bitmask) {
   return (value & bitmask) === bitmask;
@@ -3234,9 +3234,9 @@ module.exports = DOMProperty;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Static poolers. Several custom versions for each potential number of
@@ -3351,11 +3351,11 @@ module.exports = PooledClass;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var ReactCurrentOwner = __webpack_require__(15);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 var canDefineProperty = __webpack_require__(56);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -3868,7 +3868,7 @@ module.exports = DOMLazyTree;
 var ReactRef = __webpack_require__(160);
 var ReactInstrumentation = __webpack_require__(12);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 /**
  * Helper to call ReactRef.attachRefs with this composite component, split out
@@ -4039,7 +4039,7 @@ module.exports = ReactReconciler;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var ReactChildren = __webpack_require__(191);
 var ReactComponent = __webpack_require__(53);
@@ -4051,7 +4051,7 @@ var ReactPropTypes = __webpack_require__(194);
 var ReactVersion = __webpack_require__(196);
 
 var onlyChild = __webpack_require__(198);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var createElement = ReactElement.createElement;
 var createFactory = ReactElement.createFactory;
@@ -4160,7 +4160,7 @@ module.exports = emptyObject;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var EventPluginRegistry = __webpack_require__(30);
 var EventPluginUtils = __webpack_require__(40);
@@ -4168,7 +4168,7 @@ var ReactErrorUtils = __webpack_require__(44);
 
 var accumulateInto = __webpack_require__(75);
 var forEachAccumulated = __webpack_require__(76);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Internal store for event listeners
@@ -4449,7 +4449,7 @@ var EventPluginUtils = __webpack_require__(40);
 
 var accumulateInto = __webpack_require__(75);
 var forEachAccumulated = __webpack_require__(76);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var getListener = EventPluginHub.getListener;
 
@@ -4758,9 +4758,9 @@ module.exports = function() {
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Injectable ordering of event plugins.
@@ -5018,7 +5018,7 @@ module.exports = EventPluginRegistry;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var EventPluginRegistry = __webpack_require__(30);
 var ReactEventEmitterMixin = __webpack_require__(150);
@@ -5429,9 +5429,9 @@ module.exports = SyntheticMouseEvent;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var OBSERVED_ERROR = {};
 
@@ -6217,7 +6217,7 @@ module.exports = shallowEqual;
 
 var DOMLazyTree = __webpack_require__(21);
 var Danger = __webpack_require__(123);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactInstrumentation = __webpack_require__(12);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
@@ -6471,12 +6471,12 @@ module.exports = DOMNamespaces;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var ReactErrorUtils = __webpack_require__(44);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 /**
  * Injected dependencies:
@@ -6767,13 +6767,13 @@ module.exports = KeyEscapeUtils;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var React = __webpack_require__(23);
 var ReactPropTypesSecret = __webpack_require__(73);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var hasReadOnlyValue = {
   'button': true,
@@ -6909,9 +6909,9 @@ module.exports = LinkedValueUtils;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var injected = false;
 
@@ -7043,15 +7043,15 @@ module.exports = ReactErrorUtils;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var ReactCurrentOwner = __webpack_require__(15);
 var ReactInstanceMap = __webpack_require__(27);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactUpdates = __webpack_require__(14);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 function enqueueUpdate(internalInstance) {
   ReactUpdates.enqueueUpdate(internalInstance);
@@ -7567,10 +7567,10 @@ module.exports = shouldUpdateReactComponent;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var emptyFunction = __webpack_require__(13);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var validateDOMNesting = emptyFunction;
 
@@ -7961,8 +7961,8 @@ var ReactNoopUpdateQueue = __webpack_require__(54);
 
 var canDefineProperty = __webpack_require__(56);
 var emptyObject = __webpack_require__(24);
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 /**
  * Base class helpers for the updating state of a component.
@@ -8079,7 +8079,7 @@ module.exports = ReactComponent;
 
 
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 function warnNoop(publicInstance, callerName) {
   if (process.env.NODE_ENV !== 'production') {
@@ -8616,13 +8616,13 @@ module.exports = CSSProperty;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PooledClass = __webpack_require__(18);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * A specialized pseudo-event module to help keep track of components waiting to
@@ -8741,11 +8741,11 @@ module.exports = PooledClass.addPoolingTo(CallbackQueue);
 
 
 var DOMProperty = __webpack_require__(17);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactInstrumentation = __webpack_require__(12);
 
 var quoteAttributeValueForBrowser = __webpack_require__(187);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
 var illegalAttributeNameCache = {};
@@ -9006,13 +9006,13 @@ module.exports = ReactDOMComponentFlags;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var LinkedValueUtils = __webpack_require__(42);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(14);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var didWarnValueLink = false;
 var didWarnValueDefaultValue = false;
@@ -9274,9 +9274,9 @@ module.exports = ReactFeatureFlags;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var genericComponentClass = null;
 var textComponentClass = null;
@@ -9477,14 +9477,14 @@ module.exports = ReactInputSelection;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var DOMLazyTree = __webpack_require__(21);
 var DOMProperty = __webpack_require__(17);
 var React = __webpack_require__(23);
 var ReactBrowserEventEmitter = __webpack_require__(31);
 var ReactCurrentOwner = __webpack_require__(15);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDOMContainerInfo = __webpack_require__(133);
 var ReactDOMFeatureFlags = __webpack_require__(135);
 var ReactFeatureFlags = __webpack_require__(68);
@@ -9497,10 +9497,10 @@ var ReactUpdates = __webpack_require__(14);
 
 var emptyObject = __webpack_require__(24);
 var instantiateReactComponent = __webpack_require__(79);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 var setInnerHTML = __webpack_require__(35);
 var shouldUpdateReactComponent = __webpack_require__(51);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 var ROOT_ATTR_NAME = DOMProperty.ROOT_ATTRIBUTE_NAME;
@@ -10022,11 +10022,11 @@ module.exports = ReactMount;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var React = __webpack_require__(23);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var ReactNodeTypes = {
   HOST: 0,
@@ -10122,9 +10122,9 @@ module.exports = ViewportMetrics;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Accumulates items that must not be null or undefined into the first one. This
@@ -10294,16 +10294,16 @@ module.exports = getTextContentAccessor;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var ReactCompositeComponent = __webpack_require__(130);
 var ReactEmptyComponent = __webpack_require__(67);
 var ReactHostComponent = __webpack_require__(69);
 
 var getNextDebugID = __webpack_require__(184);
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 // To avoid a cyclic dependency, we create the final class in this module
 var ReactCompositeComponentWrapper = function (element) {
@@ -10541,15 +10541,15 @@ module.exports = setTextContent;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var ReactCurrentOwner = __webpack_require__(15);
 var REACT_ELEMENT_TYPE = __webpack_require__(149);
 
 var getIteratorFn = __webpack_require__(183);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 var KeyEscapeUtils = __webpack_require__(41);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
@@ -10763,7 +10763,7 @@ var checkReactTypeSpec = __webpack_require__(197);
 
 var canDefineProperty = __webpack_require__(56);
 var getIteratorFn = __webpack_require__(57);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 function getDeclarationErrorAddendum() {
   if (ReactCurrentOwner.current) {
@@ -11004,7 +11004,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ol = __webpack_require__(5);
+var ol = __webpack_require__(4);
 var geo_coder_1 = __webpack_require__(113);
 __webpack_require__(200);
 var element = document.createElement('div');
@@ -11015,13 +11015,13 @@ var GeoCoderControl = (function (_super) {
         var _this = _super.call(this, { element: element }) || this;
         _this.eventListeners = {};
         _this.expanded = false;
-        _this.locate = function (lat, lon) {
-            var lonLat = [parseFloat(lon), parseFloat(lat)];
+        _this.locate = function (options) {
+            var lonLat = [parseFloat(options.lon), parseFloat(options.lat)];
             var projection = _this.getMap().getView().getProjection();
             var coord = ol.proj.transform(lonLat, 'EPSG:4326', projection);
             var view = _this.getMap().getView();
-            var duration = 500;
-            var resolution = 2.388657133911758;
+            var duration = options.duration || 500;
+            var resolution = options.resolution || 2.388657133911758;
             view.animate({ duration: duration, resolution: resolution }, { duration: duration, center: coord });
         };
         _this.toggleExpand = function () {
@@ -11035,7 +11035,6 @@ var GeoCoderControl = (function (_super) {
         element.appendChild(_this.autocompleteEl = _this.getAutocompleteHTML());
         return _this;
     }
-    // '(type: string | string[], listener: Function, opt_this?: Object) => Object | Object[]'
     GeoCoderControl.prototype.on = function (eventName, listener, option) {
         this.eventListeners[eventName] = listener;
         return listener;
@@ -11056,7 +11055,7 @@ var GeoCoderControl = (function (_super) {
         autocompleteEl.appendChild(inputEl);
         this.geoCoder.autocomplete(inputEl);
         inputEl.addEventListener('place_changed', function (event) {
-            _this.locate(event.detail.lat, event.detail.lon);
+            //this.locate(event.detail.lat, event.detail.lon);
             _this.eventListeners['place_changed'](event);
         });
         return autocompleteEl;
@@ -11157,15 +11156,47 @@ exports.custom = custom;
 
 "use strict";
 
-var interactions_1 = __webpack_require__(220);
+var double_click_zoom_1 = __webpack_require__(219);
+var drag_and_drop_1 = __webpack_require__(220);
+var drag_box_1 = __webpack_require__(221);
+var drag_pan_1 = __webpack_require__(222);
+var drag_rotate_1 = __webpack_require__(224);
+var drag_rotate_and_zoom_1 = __webpack_require__(223);
+var drag_zoom_1 = __webpack_require__(225);
+var draw_1 = __webpack_require__(226);
+var extent_1 = __webpack_require__(227);
+var interactions_1 = __webpack_require__(228);
 exports.Interactions = interactions_1.Interactions;
-var select_1 = __webpack_require__(222);
-var draw_1 = __webpack_require__(219);
-var modify_1 = __webpack_require__(221);
+var keyboard_pan_1 = __webpack_require__(229);
+var keyboard_zoom_1 = __webpack_require__(230);
+var modify_1 = __webpack_require__(231);
+var mouse_wheel_zoom_1 = __webpack_require__(232);
+var pinch_rotate_1 = __webpack_require__(233);
+var pinch_zoom_1 = __webpack_require__(234);
+var pointer_1 = __webpack_require__(235);
+var select_1 = __webpack_require__(236);
+var snap_1 = __webpack_require__(237);
+var translate_1 = __webpack_require__(238);
 var interaction = {
-    Select: select_1.Select,
+    DoubleClickZoom: double_click_zoom_1.DoubleClickZoom,
+    DragAndDrop: drag_and_drop_1.DragAndDrop,
+    DragBox: drag_box_1.DragBox,
+    DragPan: drag_pan_1.DragPan,
+    DragRotate: drag_rotate_1.DragRotate,
+    DragRotateAndZoom: drag_rotate_and_zoom_1.DragRotateAndZoom,
+    DragZoom: drag_zoom_1.DragZoom,
     Draw: draw_1.Draw,
-    Modify: modify_1.Modify
+    Extent: extent_1.Extent,
+    KeyboardPan: keyboard_pan_1.KeyboardPan,
+    KeyboardZoom: keyboard_zoom_1.KeyboardZoom,
+    Modify: modify_1.Modify,
+    MouseWheelZoom: mouse_wheel_zoom_1.MouseWheelZoom,
+    PinchRotate: pinch_rotate_1.PinchRotate,
+    PinchZoom: pinch_zoom_1.PinchZoom,
+    Pointer: pointer_1.Pointer,
+    Select: select_1.Select,
+    Snap: snap_1.Snap,
+    Translate: translate_1.Translate
 };
 exports.interaction = interaction;
 
@@ -11176,15 +11207,15 @@ exports.interaction = interaction;
 
 "use strict";
 
-var tile_1 = __webpack_require__(226);
-var vector_1 = __webpack_require__(228);
-var layers_1 = __webpack_require__(225);
+var tile_1 = __webpack_require__(242);
+var vector_1 = __webpack_require__(244);
+var layers_1 = __webpack_require__(241);
 exports.Layers = layers_1.Layers;
-var heatmap_1 = __webpack_require__(223);
+var heatmap_1 = __webpack_require__(239);
 exports.Heatmap = heatmap_1.Heatmap;
-var image_1 = __webpack_require__(224);
+var image_1 = __webpack_require__(240);
 exports.Image = image_1.Image;
-var vector_tile_1 = __webpack_require__(227);
+var vector_tile_1 = __webpack_require__(243);
 exports.VectorTile = vector_tile_1.VectorTile;
 var layer = {
     Tile: tile_1.Tile,
@@ -11207,10 +11238,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
 var ReactDOM = __webpack_require__(61);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
 var Overlay = (function (_super) {
     __extends(Overlay, _super);
     function Overlay() {
@@ -11267,7 +11298,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
 var Overlays = (function (_super) {
     __extends(Overlays, _super);
     function Overlays() {
@@ -11603,7 +11634,7 @@ module.exports = containsNode;
  * @typechecks
  */
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Convert array-like objects to arrays.
@@ -11742,7 +11773,7 @@ var ExecutionEnvironment = __webpack_require__(10);
 
 var createArrayFromMixed = __webpack_require__(102);
 var getMarkupWrap = __webpack_require__(104);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Dummy container used to render all markup.
@@ -11829,7 +11860,7 @@ module.exports = createNodesFromMarkup;
 
 var ExecutionEnvironment = __webpack_require__(10);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Dummy container used to detect which wraps are necessary.
@@ -14302,7 +14333,7 @@ exports = module.exports = __webpack_require__(5)(undefined);
 
 
 // module
-exports.push([module.i, ".geocode-autocomplete {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #333;\n  margin: 0;\n  list-style: none;\n  padding: 0;\n  max-height: 200px;\n  overflow: scroll; \n}\n.geocode-autocomplete li {\n  padding: 2px 10px;\n  pointer: cursor;\n}\n.geocode-autocomplete li:nth-child(even) {\n  background-color: #eee\n}\n.geocode-autocomplete li:hover {\n   background-color: #ccc;\n}\n", ""]);
+exports.push([module.i, ".geocode-autocomplete {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #333;\n  margin: 0;\n  list-style: none;\n  padding: 0;\n  max-height: 200px;\n  overflow: auto; \n}\n.geocode-autocomplete li {\n  padding: 2px 10px;\n  pointer: cursor;\n}\n.geocode-autocomplete li:nth-child(even) {\n  background-color: #eee\n}\n.geocode-autocomplete li:hover {\n   background-color: #ccc;\n}\n", ""]);
 
 // exports
 
@@ -14912,8 +14943,8 @@ var Bing = (function () {
                 return results.map(function (result) {
                     return {
                         source: 'Bing',
-                        lon: result.point.coordinates[1],
-                        lat: result.point.coordinates[0],
+                        lon: parseFloat(result.point.coordinates[1]),
+                        lat: parseFloat(result.point.coordinates[0]),
                         address: {
                             name: result.name
                         },
@@ -15062,8 +15093,8 @@ var Google = (function () {
                 if (anyItemHasValue(details)) {
                     array_1.push({
                         source: 'Google',
-                        lon: result.geometry.location.lng,
-                        lat: result.geometry.location.lat,
+                        lon: parseFloat(result.geometry.location.lng),
+                        lat: parseFloat(result.geometry.location.lat),
                         address: {
                             name: details.name,
                             postalCode: details.postcode,
@@ -15120,8 +15151,8 @@ var OpenStreet = (function () {
             return json['map'](function (result) {
                 return {
                     source: 'OpenStreetMap',
-                    lon: result.lon,
-                    lat: result.lat,
+                    lon: parseFloat(result.lon),
+                    lat: parseFloat(result.lat),
                     address: {
                         name: result.address.neighbourhood || '',
                         road: result.address.road || '',
@@ -15204,7 +15235,6 @@ exports.GeoCoder = geo_coder_1.GeoCoder;
 /******/ ]);
 });
 //# sourceMappingURL=geocoder.umd.js.map
-
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(117).Buffer))
 
 /***/ }),
@@ -17430,7 +17460,7 @@ module.exports = ARIADOMPropertyConfig;
 
 
 
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 
 var focusNode = __webpack_require__(59);
 
@@ -17857,7 +17887,7 @@ var camelizeStyleName = __webpack_require__(100);
 var dangerousStyleValue = __webpack_require__(179);
 var hyphenateStyleName = __webpack_require__(107);
 var memoizeStringOnly = __webpack_require__(110);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var processStyleName = memoizeStringOnly(function (styleName) {
   return hyphenateStyleName(styleName);
@@ -18067,7 +18097,7 @@ module.exports = CSSPropertyOperations;
 var EventPluginHub = __webpack_require__(25);
 var EventPropagators = __webpack_require__(26);
 var ExecutionEnvironment = __webpack_require__(10);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(14);
 var SyntheticEvent = __webpack_require__(16);
 
@@ -18390,14 +18420,14 @@ module.exports = ChangeEventPlugin;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var DOMLazyTree = __webpack_require__(21);
 var ExecutionEnvironment = __webpack_require__(10);
 
 var createNodesFromMarkup = __webpack_require__(103);
 var emptyFunction = __webpack_require__(13);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 var Danger = {
 
@@ -18476,7 +18506,7 @@ module.exports = DefaultEventPluginOrder;
 
 
 var EventPropagators = __webpack_require__(26);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var SyntheticMouseEvent = __webpack_require__(32);
 
 var eventTypes = {
@@ -18580,7 +18610,7 @@ module.exports = EnterLeaveEventPlugin;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var PooledClass = __webpack_require__(18);
 
@@ -18903,7 +18933,7 @@ var instantiateReactComponent = __webpack_require__(79);
 var KeyEscapeUtils = __webpack_require__(41);
 var shouldUpdateReactComponent = __webpack_require__(51);
 var traverseAllChildren = __webpack_require__(82);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
@@ -19092,8 +19122,8 @@ module.exports = ReactComponentBrowserEnvironment;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var React = __webpack_require__(23);
 var ReactComponentEnvironment = __webpack_require__(43);
@@ -19109,10 +19139,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var emptyObject = __webpack_require__(24);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 var shallowEqual = __webpack_require__(37);
 var shouldUpdateReactComponent = __webpack_require__(51);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var CompositeTypes = {
   ImpureClass: 0,
@@ -20002,7 +20032,7 @@ module.exports = ReactCompositeComponent;
 
 
 
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDefaultInjection = __webpack_require__(148);
 var ReactMount = __webpack_require__(71);
 var ReactReconciler = __webpack_require__(22);
@@ -20012,7 +20042,7 @@ var ReactVersion = __webpack_require__(163);
 var findDOMNode = __webpack_require__(180);
 var getHostComponentFromComposite = __webpack_require__(77);
 var renderSubtreeIntoContainer = __webpack_require__(188);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 ReactDefaultInjection.inject();
 
@@ -20119,8 +20149,8 @@ module.exports = ReactDOM;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var AutoFocusUtils = __webpack_require__(119);
 var CSSPropertyOperations = __webpack_require__(121);
@@ -20132,7 +20162,7 @@ var EventPluginHub = __webpack_require__(25);
 var EventPluginRegistry = __webpack_require__(30);
 var ReactBrowserEventEmitter = __webpack_require__(31);
 var ReactDOMComponentFlags = __webpack_require__(65);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDOMInput = __webpack_require__(137);
 var ReactDOMOption = __webpack_require__(140);
 var ReactDOMSelect = __webpack_require__(66);
@@ -20143,11 +20173,11 @@ var ReactServerRenderingTransaction = __webpack_require__(161);
 
 var emptyFunction = __webpack_require__(13);
 var escapeTextContentForBrowser = __webpack_require__(34);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 var isEventSupported = __webpack_require__(50);
 var shallowEqual = __webpack_require__(37);
 var validateDOMNesting = __webpack_require__(52);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var Flags = ReactDOMComponentFlags;
 var deleteListener = EventPluginHub.deleteListener;
@@ -21163,10 +21193,10 @@ module.exports = ReactDOMContainerInfo;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var DOMLazyTree = __webpack_require__(21);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 
 var ReactDOMEmptyComponent = function (instantiate) {
   // ReactCompositeComponent uses this:
@@ -21253,7 +21283,7 @@ module.exports = ReactDOMFeatureFlags;
 
 
 var DOMChildrenOperations = __webpack_require__(38);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 
 /**
  * Operations used to process updates to DOM nodes.
@@ -21291,16 +21321,16 @@ module.exports = ReactDOMIDOperations;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var DOMPropertyOperations = __webpack_require__(64);
 var LinkedValueUtils = __webpack_require__(42);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(14);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var didWarnValueLink = false;
 var didWarnCheckedLink = false;
@@ -21578,7 +21608,7 @@ module.exports = ReactDOMInput;
 var DOMProperty = __webpack_require__(17);
 var ReactComponentTreeHook = __webpack_require__(11);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var warnedProperties = {};
 var rARIA = new RegExp('^(aria)-[' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -21676,7 +21706,7 @@ module.exports = ReactDOMInvalidARIAHook;
 
 var ReactComponentTreeHook = __webpack_require__(11);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var didWarnValueNull = false;
 
@@ -21723,13 +21753,13 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var React = __webpack_require__(23);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDOMSelect = __webpack_require__(66);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 var didWarnInvalidOptionChildren = false;
 
 function flattenChildren(children) {
@@ -22069,15 +22099,15 @@ module.exports = ReactDOMSelection;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var DOMChildrenOperations = __webpack_require__(38);
 var DOMLazyTree = __webpack_require__(21);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 
 var escapeTextContentForBrowser = __webpack_require__(34);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 var validateDOMNesting = __webpack_require__(52);
 
 /**
@@ -22239,15 +22269,15 @@ module.exports = ReactDOMTextComponent;
 
 
 
-var _prodInvariant = __webpack_require__(3),
-    _assign = __webpack_require__(7);
+var _prodInvariant = __webpack_require__(7),
+    _assign = __webpack_require__(8);
 
 var LinkedValueUtils = __webpack_require__(42);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(14);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var didWarnValueLink = false;
 var didWarnValDefaultVal = false;
@@ -22405,9 +22435,9 @@ module.exports = ReactDOMTextarea;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Return the lowest common ancestor of A and B, or null if they are in
@@ -22551,7 +22581,7 @@ var DOMProperty = __webpack_require__(17);
 var EventPluginRegistry = __webpack_require__(30);
 var ReactComponentTreeHook = __webpack_require__(11);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 if (process.env.NODE_ENV !== 'production') {
   var reactProps = {
@@ -22672,7 +22702,7 @@ var ReactComponentTreeHook = __webpack_require__(11);
 var ExecutionEnvironment = __webpack_require__(10);
 
 var performanceNow = __webpack_require__(112);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var hooks = [];
 var didHookThrowForEvent = {};
@@ -23032,7 +23062,7 @@ module.exports = ReactDebugTool;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var ReactUpdates = __webpack_require__(14);
 var Transaction = __webpack_require__(33);
@@ -23113,7 +23143,7 @@ var EnterLeaveEventPlugin = __webpack_require__(125);
 var HTMLDOMPropertyConfig = __webpack_require__(127);
 var ReactComponentBrowserEnvironment = __webpack_require__(129);
 var ReactDOMComponent = __webpack_require__(132);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDOMEmptyComponent = __webpack_require__(134);
 var ReactDOMTreeTraversal = __webpack_require__(144);
 var ReactDOMTextComponent = __webpack_require__(142);
@@ -23259,12 +23289,12 @@ module.exports = ReactEventEmitterMixin;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var EventListener = __webpack_require__(58);
 var ExecutionEnvironment = __webpack_require__(10);
 var PooledClass = __webpack_require__(18);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(14);
 
 var getEventTarget = __webpack_require__(49);
@@ -23498,7 +23528,7 @@ module.exports = ReactInjection;
 
 
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 if (process.env.NODE_ENV !== 'production') {
   var processingChildContext = false;
@@ -23595,7 +23625,7 @@ module.exports = ReactMarkupChecksum;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var ReactComponentEnvironment = __webpack_require__(43);
 var ReactInstanceMap = __webpack_require__(27);
@@ -23607,7 +23637,7 @@ var ReactChildReconciler = __webpack_require__(128);
 
 var emptyFunction = __webpack_require__(13);
 var flattenChildren = __webpack_require__(181);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Make an update for markup to be rendered and inserted at a supplied index.
@@ -24052,9 +24082,9 @@ module.exports = ReactMultiChild;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * @param {?object} object
@@ -24182,7 +24212,7 @@ module.exports = ReactPropTypeLocationNames;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var CallbackQueue = __webpack_require__(63);
 var PooledClass = __webpack_require__(18);
@@ -24460,7 +24490,7 @@ module.exports = ReactRef;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var PooledClass = __webpack_require__(18);
 var Transaction = __webpack_require__(33);
@@ -24561,7 +24591,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var ReactUpdateQueue = __webpack_require__(45);
 
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 function warnNoop(publicInstance, callerName) {
   if (process.env.NODE_ENV !== 'production') {
@@ -25029,7 +25059,7 @@ module.exports = SVGDOMPropertyConfig;
 
 var EventPropagators = __webpack_require__(26);
 var ExecutionEnvironment = __webpack_require__(10);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactInputSelection = __webpack_require__(70);
 var SyntheticEvent = __webpack_require__(16);
 
@@ -25224,11 +25254,11 @@ module.exports = SelectEventPlugin;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var EventListener = __webpack_require__(58);
 var EventPropagators = __webpack_require__(26);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var SyntheticAnimationEvent = __webpack_require__(167);
 var SyntheticClipboardEvent = __webpack_require__(168);
 var SyntheticEvent = __webpack_require__(16);
@@ -25243,7 +25273,7 @@ var SyntheticWheelEvent = __webpack_require__(176);
 
 var emptyFunction = __webpack_require__(13);
 var getEventCharCode = __webpack_require__(47);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Turns
@@ -26000,13 +26030,13 @@ module.exports = adler32;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var ReactPropTypeLocationNames = __webpack_require__(158);
 var ReactPropTypesSecret = __webpack_require__(73);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
@@ -26094,7 +26124,7 @@ module.exports = checkReactTypeSpec;
 
 
 var CSSProperty = __webpack_require__(62);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 var styleWarnings = {};
@@ -26178,15 +26208,15 @@ module.exports = dangerousStyleValue;
 
 
 
-var _prodInvariant = __webpack_require__(3);
+var _prodInvariant = __webpack_require__(7);
 
 var ReactCurrentOwner = __webpack_require__(15);
-var ReactDOMComponentTree = __webpack_require__(8);
+var ReactDOMComponentTree = __webpack_require__(9);
 var ReactInstanceMap = __webpack_require__(27);
 
 var getHostComponentFromComposite = __webpack_require__(77);
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 /**
  * Returns the DOM node rendered by this element.
@@ -26247,7 +26277,7 @@ module.exports = findDOMNode;
 
 var KeyEscapeUtils = __webpack_require__(41);
 var traverseAllChildren = __webpack_require__(82);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
@@ -26809,7 +26839,7 @@ module.exports = KeyEscapeUtils;
 
 var _prodInvariant = __webpack_require__(20);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Static poolers. Several custom versions for each potential number of
@@ -27121,7 +27151,7 @@ module.exports = ReactChildren;
 
 
 var _prodInvariant = __webpack_require__(20),
-    _assign = __webpack_require__(7);
+    _assign = __webpack_require__(8);
 
 var ReactComponent = __webpack_require__(53);
 var ReactElement = __webpack_require__(19);
@@ -27129,8 +27159,8 @@ var ReactPropTypeLocationNames = __webpack_require__(55);
 var ReactNoopUpdateQueue = __webpack_require__(54);
 
 var emptyObject = __webpack_require__(24);
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var MIXINS_KEY = 'mixins';
 
@@ -28025,7 +28055,7 @@ var ReactPropTypesSecret = __webpack_require__(85);
 
 var emptyFunction = __webpack_require__(13);
 var getIteratorFn = __webpack_require__(57);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 /**
  * Collection of methods that allow declaration and validation of props that are
@@ -28459,7 +28489,7 @@ module.exports = ReactPropTypes;
 
 
 
-var _assign = __webpack_require__(7);
+var _assign = __webpack_require__(8);
 
 var ReactComponent = __webpack_require__(53);
 var ReactNoopUpdateQueue = __webpack_require__(54);
@@ -28530,8 +28560,8 @@ var _prodInvariant = __webpack_require__(20);
 var ReactPropTypeLocationNames = __webpack_require__(55);
 var ReactPropTypesSecret = __webpack_require__(85);
 
-var invariant = __webpack_require__(1);
-var warning = __webpack_require__(2);
+var invariant = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
@@ -28621,7 +28651,7 @@ var _prodInvariant = __webpack_require__(20);
 
 var ReactElement = __webpack_require__(19);
 
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 
 /**
  * Returns the first child in a collection of children and verifies that there
@@ -28668,9 +28698,9 @@ var ReactCurrentOwner = __webpack_require__(15);
 var REACT_ELEMENT_TYPE = __webpack_require__(83);
 
 var getIteratorFn = __webpack_require__(57);
-var invariant = __webpack_require__(1);
+var invariant = __webpack_require__(2);
 var KeyEscapeUtils = __webpack_require__(189);
-var warning = __webpack_require__(2);
+var warning = __webpack_require__(3);
 
 var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
@@ -28942,10 +28972,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Attribution = (function (_super) {
     __extends(Attribution, _super);
     function Attribution(props) {
@@ -28992,9 +29022,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
 // I wish I can name it as 'layers', not 'Layers'
 var Controls = (function (_super) {
     __extends(Controls, _super);
@@ -29035,10 +29065,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var FullScreen = (function (_super) {
     __extends(FullScreen, _super);
     function FullScreen(props) {
@@ -29084,10 +29114,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var MousePosition = (function (_super) {
     __extends(MousePosition, _super);
     function MousePosition(props) {
@@ -29134,10 +29164,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var OverviewMap = (function (_super) {
     __extends(OverviewMap, _super);
     function OverviewMap(props) {
@@ -29185,10 +29215,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Rotate = (function (_super) {
     __extends(Rotate, _super);
     function Rotate(props) {
@@ -29235,10 +29265,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var ScaleLine = (function (_super) {
     __extends(ScaleLine, _super);
     function ScaleLine(props) {
@@ -29283,10 +29313,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var ZoomSlider = (function (_super) {
     __extends(ZoomSlider, _super);
     function ZoomSlider(props) {
@@ -29330,10 +29360,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var ZoomToExtent = (function (_super) {
     __extends(ZoomToExtent, _super);
     function ZoomToExtent(props) {
@@ -29377,10 +29407,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Zoom = (function (_super) {
     __extends(Zoom, _super);
     function Zoom(props) {
@@ -29428,11 +29458,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
 var geo_coder_control_1 = __webpack_require__(86);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var GeoCoderComponent = (function (_super) {
     __extends(GeoCoderComponent, _super);
     function GeoCoderComponent(props) {
@@ -29446,11 +29476,15 @@ var GeoCoderComponent = (function (_super) {
         };
         return _this;
     }
-    GeoCoderComponent.prototype.render = function () { return null; };
+    GeoCoderComponent.prototype.render = function () {
+        return (React.createElement("div", null, this.props.children));
+    };
     GeoCoderComponent.prototype.componentDidMount = function () {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new geo_coder_control_1.GeoCoderControl(options);
+        this.geoCoder = this.control.geoCoder;
         this.context.mapComp.controls.push(this.control);
+        this.geoCoder = this.control.geoCoder;
         //regitster events
         var olEvents = util_1.Util.getEvents(this.events, this.props);
         for (var eventName in olEvents) {
@@ -29477,7 +29511,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
 var ReactDOM = __webpack_require__(61);
 var GoogleMapsLoader = __webpack_require__(114);
 var GoogleStreetViewPanorama = (function (_super) {
@@ -29523,7 +29557,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
 __webpack_require__(201);
 var Popup = (function (_super) {
     __extends(Popup, _super);
@@ -29562,7 +29596,7 @@ exports.Popup = Popup;
 
 "use strict";
 
-var ol = __webpack_require__(5);
+var ol = __webpack_require__(4);
 var ClusterStyle = (function () {
     function ClusterStyle(vectorSource) {
         var _this = this;
@@ -29662,7 +29696,7 @@ exports.ClusterStyle = ClusterStyle;
 
 "use strict";
 
-var ol = __webpack_require__(5);
+var ol = __webpack_require__(4);
 var MarkerStyle = (function () {
     function MarkerStyle(src) {
         this.src = 'https://openlayers.org/en/v4.0.1/examples/data/icon.png';
@@ -29698,10 +29732,343 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DoubleClickZoom = (function (_super) {
+    __extends(DoubleClickZoom, _super);
+    function DoubleClickZoom(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            duration: undefined,
+            delta: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DoubleClickZoom.prototype.render = function () { return null; };
+    DoubleClickZoom.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DoubleClickZoom(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DoubleClickZoom;
+}(React.Component));
+exports.DoubleClickZoom = DoubleClickZoom;
+DoubleClickZoom['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DragAndDrop = (function (_super) {
+    __extends(DragAndDrop, _super);
+    function DragAndDrop(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            formatConstructors: undefined,
+            projection: undefined,
+            target: undefined
+        };
+        _this.events = {
+            'addfeatures': undefined,
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DragAndDrop.prototype.render = function () { return null; };
+    DragAndDrop.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DragAndDrop(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DragAndDrop;
+}(React.Component));
+exports.DragAndDrop = DragAndDrop;
+DragAndDrop['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DragBox = (function (_super) {
+    __extends(DragBox, _super);
+    function DragBox(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            className: undefined,
+            condition: undefined,
+            boxEndCondition: undefined
+        };
+        _this.events = {
+            'boxdrag': undefined,
+            'boxend': undefined,
+            'boxstart': undefined,
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DragBox.prototype.render = function () { return null; };
+    DragBox.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DragBox(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DragBox;
+}(React.Component));
+exports.DragBox = DragBox;
+DragBox['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DragPan = (function (_super) {
+    __extends(DragPan, _super);
+    function DragPan(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            condition: undefined,
+            kinetic: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DragPan.prototype.render = function () { return null; };
+    DragPan.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DragPan(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DragPan;
+}(React.Component));
+exports.DragPan = DragPan;
+DragPan['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DragRotateAndZoom = (function (_super) {
+    __extends(DragRotateAndZoom, _super);
+    function DragRotateAndZoom(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            condition: undefined,
+            duration: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DragRotateAndZoom.prototype.render = function () { return null; };
+    DragRotateAndZoom.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DragRotateAndZoom(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DragRotateAndZoom;
+}(React.Component));
+exports.DragRotateAndZoom = DragRotateAndZoom;
+DragRotateAndZoom['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DragRotate = (function (_super) {
+    __extends(DragRotate, _super);
+    function DragRotate(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            condition: undefined,
+            duration: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DragRotate.prototype.render = function () { return null; };
+    DragRotate.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DragRotate(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DragRotate;
+}(React.Component));
+exports.DragRotate = DragRotate;
+DragRotate['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var DragZoom = (function (_super) {
+    __extends(DragZoom, _super);
+    function DragZoom(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            className: undefined,
+            condition: undefined,
+            duration: undefined,
+            out: undefined
+        };
+        _this.events = {
+            'boxdrag': undefined,
+            'boxend': undefined,
+            'boxstart': undefined,
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    DragZoom.prototype.render = function () { return null; };
+    DragZoom.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.DragZoom(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return DragZoom;
+}(React.Component));
+exports.DragZoom = DragZoom;
+DragZoom['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Draw = (function (_super) {
     __extends(Draw, _super);
     function Draw(props) {
@@ -29748,7 +30115,7 @@ Draw['contextTypes'] = {
 
 
 /***/ }),
-/* 220 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29758,7 +30125,56 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var Extent = (function (_super) {
+    __extends(Extent, _super);
+    function Extent(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            extent: undefined,
+            boxStyle: undefined,
+            pointerStyle: undefined,
+            wrapX: undefined
+        };
+        _this.events = {
+            'Event': undefined,
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    Extent.prototype.render = function () { return null; };
+    Extent.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction['Extent'](options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return Extent;
+}(React.Component));
+exports.Extent = Extent;
+Extent['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
 var Interactions = (function (_super) {
     __extends(Interactions, _super);
     function Interactions() {
@@ -29773,7 +30189,7 @@ exports.Interactions = Interactions;
 
 
 /***/ }),
-/* 221 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29783,10 +30199,104 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var KeyboardPan = (function (_super) {
+    __extends(KeyboardPan, _super);
+    function KeyboardPan(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            condition: undefined,
+            duration: undefined,
+            pixelDelta: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    KeyboardPan.prototype.render = function () { return null; };
+    KeyboardPan.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.KeyboardPan(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return KeyboardPan;
+}(React.Component));
+exports.KeyboardPan = KeyboardPan;
+KeyboardPan['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var KeyboardZoom = (function (_super) {
+    __extends(KeyboardZoom, _super);
+    function KeyboardZoom(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            condition: undefined,
+            duration: undefined,
+            delta: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    KeyboardZoom.prototype.render = function () { return null; };
+    KeyboardZoom.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.KeyboardZoom(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return KeyboardZoom;
+}(React.Component));
+exports.KeyboardZoom = KeyboardZoom;
+KeyboardZoom['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Modify = (function (_super) {
     __extends(Modify, _super);
     function Modify(props) {
@@ -29825,7 +30335,7 @@ Modify['contextTypes'] = {
 
 
 /***/ }),
-/* 222 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29835,10 +30345,196 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var MouseWheelZoom = (function (_super) {
+    __extends(MouseWheelZoom, _super);
+    function MouseWheelZoom(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            duration: undefined,
+            timeout: undefined,
+            useAnchor: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    MouseWheelZoom.prototype.render = function () { return null; };
+    MouseWheelZoom.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.MouseWheelZoom(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return MouseWheelZoom;
+}(React.Component));
+exports.MouseWheelZoom = MouseWheelZoom;
+MouseWheelZoom['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var PinchRotate = (function (_super) {
+    __extends(PinchRotate, _super);
+    function PinchRotate(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            duration: undefined,
+            threshold: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    PinchRotate.prototype.render = function () { return null; };
+    PinchRotate.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        this.interaction = new ol.interaction.PinchRotate(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return PinchRotate;
+}(React.Component));
+exports.PinchRotate = PinchRotate;
+PinchRotate['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var PinchZoom = (function (_super) {
+    __extends(PinchZoom, _super);
+    function PinchZoom(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            duration: undefined,
+            constrainResolution: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    PinchZoom.prototype.render = function () { return null; };
+    PinchZoom.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        console.log('double-click-zoom options', options);
+        this.interaction = new ol.interaction.PinchZoom(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return PinchZoom;
+}(React.Component));
+exports.PinchZoom = PinchZoom;
+PinchZoom['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var Pointer = (function (_super) {
+    __extends(Pointer, _super);
+    function Pointer(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            handleDownEvent: undefined,
+            handleDragEvent: undefined,
+            handleEvent: undefined,
+            handleMoveEvent: undefined,
+            handleUpEvent: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    Pointer.prototype.render = function () { return null; };
+    Pointer.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        this.interaction = new ol.interaction.Pointer(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return Pointer;
+}(React.Component));
+exports.Pointer = Pointer;
+Pointer['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Select = (function (_super) {
     __extends(Select, _super);
     function Select(props) {
@@ -29885,7 +30581,7 @@ Select['contextTypes'] = {
 
 
 /***/ }),
-/* 223 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29895,10 +30591,107 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var Snap = (function (_super) {
+    __extends(Snap, _super);
+    function Snap(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            features: undefined,
+            edge: undefined,
+            vertex: undefined,
+            pixelTolerance: undefined,
+            source: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined
+        };
+        return _this;
+    }
+    Snap.prototype.render = function () { return null; };
+    Snap.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        this.interaction = new ol.interaction.Snap(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return Snap;
+}(React.Component));
+exports.Snap = Snap;
+Snap['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
+var Translate = (function (_super) {
+    __extends(Translate, _super);
+    function Translate(props) {
+        var _this = _super.call(this, props) || this;
+        _this.options = {
+            features: undefined,
+            layers: undefined,
+            hitTolerance: undefined
+        };
+        _this.events = {
+            'change': undefined,
+            'change:active': undefined,
+            'propertychange': undefined,
+            'translateend': undefined,
+            'translatestart': undefined,
+            'translating': undefined
+        };
+        return _this;
+    }
+    Translate.prototype.render = function () { return null; };
+    Translate.prototype.componentDidMount = function () {
+        var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
+        this.interaction = new ol.interaction.Translate(options);
+        this.context.mapComp.interactions.push(this.interaction);
+    };
+    return Translate;
+}(React.Component));
+exports.Translate = Translate;
+Translate['contextTypes'] = {
+    mapComp: React.PropTypes.instanceOf(map_1.Map),
+    map: React.PropTypes.instanceOf(ol.Map)
+};
+
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Heatmap = (function (_super) {
     __extends(Heatmap, _super);
     function Heatmap(props) {
@@ -29951,7 +30744,7 @@ Heatmap['contextTypes'] = {
 
 
 /***/ }),
-/* 224 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29961,10 +30754,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Image = (function (_super) {
     __extends(Image, _super);
     function Image(props) {
@@ -30011,7 +30804,7 @@ Image['contextTypes'] = {
 
 
 /***/ }),
-/* 225 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30021,7 +30814,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
+var React = __webpack_require__(1);
 // I wish I can name it as 'layers', not 'Layers'
 var Layers = (function (_super) {
     __extends(Layers, _super);
@@ -30037,7 +30830,7 @@ exports.Layers = Layers;
 
 
 /***/ }),
-/* 226 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30047,10 +30840,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Tile = (function (_super) {
     __extends(Tile, _super);
     function Tile(props) {
@@ -30104,7 +30897,7 @@ Tile['contextTypes'] = {
 
 
 /***/ }),
-/* 227 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30114,10 +30907,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var VectorTile = (function (_super) {
     __extends(VectorTile, _super);
     function VectorTile(props) {
@@ -30176,7 +30969,7 @@ VectorTile['contextTypes'] = {
 
 
 /***/ }),
-/* 228 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30186,10 +30979,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = __webpack_require__(4);
-var ol = __webpack_require__(5);
-var util_1 = __webpack_require__(6);
-var map_1 = __webpack_require__(9);
+var React = __webpack_require__(1);
+var ol = __webpack_require__(4);
+var util_1 = __webpack_require__(5);
+var map_1 = __webpack_require__(6);
 var Vector = (function (_super) {
     __extends(Vector, _super);
     function Vector(props) {
@@ -30242,7 +31035,7 @@ Vector['contextTypes'] = {
 
 
 /***/ }),
-/* 229 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30260,11 +31053,11 @@ var overlays_1 = __webpack_require__(93);
 exports.Overlays = overlays_1.Overlays;
 var index_4 = __webpack_require__(89);
 exports.custom = index_4.custom;
-var map_1 = __webpack_require__(9);
+var map_1 = __webpack_require__(6);
 exports.Map = map_1.Map;
 var overlay_1 = __webpack_require__(92);
 exports.Overlay = overlay_1.Overlay;
-var util_1 = __webpack_require__(6);
+var util_1 = __webpack_require__(5);
 exports.Util = util_1.Util;
 
 
