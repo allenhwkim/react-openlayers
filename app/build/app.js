@@ -1580,7 +1580,6 @@ var Map = (function (_super) {
         options.layers = this.layers;
         options.overlays = this.overlays;
         console.log('map options', options);
-        console.log('this.layers............', this.layers);
         this.map = new ol.Map(options);
         this.map.setTarget(options.target || this.mapDiv);
         //regitster events
@@ -40886,29 +40885,27 @@ var __extends = (this && this.__extends) || function (d, b) {
 var React = __webpack_require__(0);
 var ol = __webpack_require__(2);
 var react_openlayers_1 = __webpack_require__(8);
-var source = new ol.source.Vector({
-    features: [
-        new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-10, -10]))),
-        new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([0, 0]))),
-        new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([10, 10])))
-    ]
-});
-var markerStyle = new react_openlayers_1.custom.style.MarkerStyle();
+var rasterTile = new ol.source.OSM();
+var vectorSource = new ol.source.Vector({ wrapX: false });
 var Draw = (function (_super) {
     __extends(Draw, _super);
     function Draw(props) {
         return _super.call(this, props) || this;
     }
+    Draw.prototype.drawend = function (e) {
+        console.log('xxxxxxxxxxxxx, draw end', e);
+    };
     Draw.prototype.render = function () {
+        var typeSelect = document.getElementById('type');
         return (React.createElement("div", null,
-            React.createElement(react_openlayers_1.Map, null,
+            React.createElement(react_openlayers_1.Map, { view: { center: [-11000000, 4600000], zoom: 4 } },
                 React.createElement(react_openlayers_1.Layers, null,
-                    React.createElement(react_openlayers_1.layer.Tile, null),
-                    React.createElement(react_openlayers_1.layer.Vector, { source: source, style: markerStyle.style })),
+                    React.createElement(react_openlayers_1.layer.Tile, { source: rasterTile }),
+                    React.createElement(react_openlayers_1.layer.Vector, { source: vectorSource })),
                 React.createElement(react_openlayers_1.Interactions, null,
-                    React.createElement(react_openlayers_1.interaction.Draw, { source: source, type: 'Point' }))),
+                    React.createElement(react_openlayers_1.interaction.Draw, { onDrawend: this.drawend, source: vectorSource, type: 'Circle' }))),
             React.createElement("a", { href: "https://github.com/allenhwkim/react-openlayers/blob/master/app/interactions/draw.tsx" }, "source"),
-            React.createElement("pre", null, "\n          <Map>\n            <Layers>\n              <layer.Tile />\n              <layer.Vector source={markers} style={markers.style} />\n            </Layers>\n            <Interactions>\n              <interaction.Draw source={markers} type='Point' />\n            </Interactions>\n          </Map>\n        ")));
+            React.createElement("pre", null, "\n        ")));
     };
     return Draw;
 }(React.Component));
@@ -41700,6 +41697,10 @@ var Attribution = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.Attribution(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return Attribution;
 }(React.Component));
@@ -41792,6 +41793,10 @@ var FullScreen = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.FullScreen(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return FullScreen;
 }(React.Component));
@@ -41873,6 +41878,10 @@ var MousePosition = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.MousePosition(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return MousePosition;
 }(React.Component));
@@ -41924,6 +41933,10 @@ var OverviewMap = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.OverviewMap(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return OverviewMap;
 }(React.Component));
@@ -41974,6 +41987,10 @@ var Rotate = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.Rotate(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return Rotate;
 }(React.Component));
@@ -42022,6 +42039,10 @@ var ScaleLine = (function (_super) {
         var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
         this.control = new ol.control.ScaleLine(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return ScaleLine;
 }(React.Component));
@@ -42069,6 +42090,10 @@ var ZoomSlider = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.ZoomSlider(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return ZoomSlider;
 }(React.Component));
@@ -42116,6 +42141,10 @@ var ZoomToExtent = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.ZoomToExtent(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return ZoomToExtent;
 }(React.Component));
@@ -42167,6 +42196,10 @@ var Zoom = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.control = new ol.control.Zoom(options);
         this.context.mapComp.controls.push(this.control);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.control.on(eventName, olEvents[eventName]);
+        }
     };
     return Zoom;
 }(React.Component));
@@ -42511,9 +42544,12 @@ var DoubleClickZoom = (function (_super) {
     DoubleClickZoom.prototype.render = function () { return null; };
     DoubleClickZoom.prototype.componentDidMount = function () {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
-        console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DoubleClickZoom(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DoubleClickZoom;
 }(React.Component));
@@ -42562,6 +42598,10 @@ var DragAndDrop = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DragAndDrop(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DragAndDrop;
 }(React.Component));
@@ -42612,6 +42652,10 @@ var DragBox = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DragBox(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DragBox;
 }(React.Component));
@@ -42658,6 +42702,10 @@ var DragPan = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DragPan(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DragPan;
 }(React.Component));
@@ -42704,6 +42752,10 @@ var DragRotateAndZoom = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DragRotateAndZoom(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DragRotateAndZoom;
 }(React.Component));
@@ -42750,6 +42802,10 @@ var DragRotate = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DragRotate(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DragRotate;
 }(React.Component));
@@ -42801,6 +42857,10 @@ var DragZoom = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.DragZoom(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return DragZoom;
 }(React.Component));
@@ -42861,6 +42921,10 @@ var Draw = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.interaction = new ol.interaction.Draw(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Draw;
 }(React.Component));
@@ -42910,6 +42974,10 @@ var Extent = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction['Extent'](options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Extent;
 }(React.Component));
@@ -43033,6 +43101,10 @@ var KeyboardPan = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.KeyboardPan(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return KeyboardPan;
 }(React.Component));
@@ -43080,6 +43152,10 @@ var KeyboardZoom = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.KeyboardZoom(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return KeyboardZoom;
 }(React.Component));
@@ -43132,6 +43208,10 @@ var Modify = (function (_super) {
         console.log('modify options', options);
         this.interaction = new ol.interaction.Modify(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Modify;
 }(React.Component));
@@ -43179,6 +43259,10 @@ var MouseWheelZoom = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.MouseWheelZoom(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return MouseWheelZoom;
 }(React.Component));
@@ -43224,6 +43308,10 @@ var PinchRotate = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.interaction = new ol.interaction.PinchRotate(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return PinchRotate;
 }(React.Component));
@@ -43270,6 +43358,10 @@ var PinchZoom = (function (_super) {
         console.log('double-click-zoom options', options);
         this.interaction = new ol.interaction.PinchZoom(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return PinchZoom;
 }(React.Component));
@@ -43318,6 +43410,10 @@ var Pointer = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.interaction = new ol.interaction.Pointer(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Pointer;
 }(React.Component));
@@ -43378,6 +43474,10 @@ var Select = (function (_super) {
             this.interaction = new ol.interaction.Select(options);
         }
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Select;
 }(React.Component));
@@ -43426,6 +43526,10 @@ var Snap = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.interaction = new ol.interaction.Snap(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Snap;
 }(React.Component));
@@ -43475,6 +43579,10 @@ var Translate = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.interaction = new ol.interaction.Translate(options);
         this.context.mapComp.interactions.push(this.interaction);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.interaction.on(eventName, olEvents[eventName]);
+        }
     };
     return Translate;
 }(React.Component));
@@ -43541,6 +43649,10 @@ var Heatmap = (function (_super) {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
         this.layer = new ol.layer.Heatmap(options);
         this.context.mapComp.layers.push(this.layer);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.layer.on(eventName, olEvents[eventName]);
+        }
     };
     return Heatmap;
 }(React.Component));
@@ -43598,9 +43710,12 @@ var Image = (function (_super) {
     Image.prototype.render = function () { return null; };
     Image.prototype.componentDidMount = function () {
         var options = util_1.Util.getOptions(Object['assign'](this.options, this.props));
-        console.log('image options........', options);
         this.layer = new ol.layer.Image(options);
         this.context.mapComp.layers.push(this.layer);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.layer.on(eventName, olEvents[eventName]);
+        }
     };
     return Image;
 }(React.Component));
@@ -43720,6 +43835,10 @@ var Tile = (function (_super) {
         options.source = options.source || new ol.source.OSM();
         this.layer = new ol.layer.Tile(options);
         this.context.mapComp.layers.push(this.layer);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.layer.on(eventName, olEvents[eventName]);
+        }
     };
     return Tile;
 }(React.Component));
@@ -43792,6 +43911,10 @@ var VectorTile = (function (_super) {
             this.options.callback(this.layer);
         }
         this.context.mapComp.layers.push(this.layer);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.layer.on(eventName, olEvents[eventName]);
+        }
     };
     return VectorTile;
 }(React.Component));
@@ -43858,6 +43981,10 @@ var Vector = (function (_super) {
         var options = util_1.Util.getOptions(Object.assign(this.options, this.props));
         this.layer = new ol.layer.Vector(options);
         this.context.mapComp.layers.push(this.layer);
+        var olEvents = util_1.Util.getEvents(this.events, this.props);
+        for (var eventName in olEvents) {
+            this.layer.on(eventName, olEvents[eventName]);
+        }
     };
     return Vector;
 }(React.Component));
