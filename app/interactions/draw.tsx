@@ -7,43 +7,38 @@ import {
   Map, Layers, Overlay, Util    //objects
 } from "react-openlayers";
 
-var source = new ol.source.Vector({
-  features: [
-    new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-10, -10]))),
-    new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([0, 0]))),
-    new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([10, 10])))
-  ]
-});
-var markerStyle = new custom.style.MarkerStyle();
+var rasterTile = new ol.source.OSM();
+
+var vectorSource = new ol.source.Vector({wrapX: false});
 
 export class Draw extends React.Component<any, any> {
   constructor(props) {
     super(props)
   }
 
+  drawend(e) {
+    console.log('xxxxxxxxxxxxx, draw end', e);
+  }
+  
   render() {
+    var typeSelect = document.getElementById('type');
+
     return (
       <div>
-        <Map>
+        <Map view={{center: [-11000000, 4600000], zoom: 4}}>
           <Layers>
-            <layer.Tile />
-            <layer.Vector source={source} style={markerStyle.style} />
+            <layer.Tile source={rasterTile} />
+            <layer.Vector source={vectorSource} />
           </Layers>
           <Interactions>
-            <interaction.Draw source={source} type='Point' />
+            <interaction.Draw 
+              onDrawend={this.drawend}
+              source={vectorSource}
+              type='Circle' />
           </Interactions>
         </Map>
         <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/interactions/draw.tsx">source</a>
         <pre>{`
-          <Map>
-            <Layers>
-              <layer.Tile />
-              <layer.Vector source={markers} style={markers.style} />
-            </Layers>
-            <Interactions>
-              <interaction.Draw source={markers} type='Point' />
-            </Interactions>
-          </Map>
         `}</pre>
       </div>
     );

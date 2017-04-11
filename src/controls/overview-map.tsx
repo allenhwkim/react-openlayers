@@ -32,6 +32,11 @@ export class OverviewMap extends React.Component<any, any> {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.control = new ol.control.OverviewMap(options);
     this.context.mapComp.controls.push(this.control)
+
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.control.on(eventName, olEvents[eventName]);
+    }
   }
 
 }

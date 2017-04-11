@@ -55,6 +55,11 @@ export class VectorTile extends React.Component<any, any> {
       this.options.callback(this.layer);
     }
     this.context.mapComp.layers.push(this.layer);
+    
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.layer.on(eventName, olEvents[eventName]);
+    }
   }
 
 }

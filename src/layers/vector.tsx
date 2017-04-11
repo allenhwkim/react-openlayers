@@ -49,6 +49,11 @@ export class Vector extends React.Component<any, any> {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     this.layer = new ol.layer.Vector(options);
     this.context.mapComp.layers.push(this.layer);
+
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.layer.on(eventName, olEvents[eventName]);
+    }
   }
 
 }

@@ -33,6 +33,11 @@ export class Modify extends React.Component<any, any> {
     console.log('modify options', options);
     this.interaction = new ol.interaction.Modify(options);
     this.context.mapComp.interactions.push(this.interaction)
+    
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.interaction.on(eventName, olEvents[eventName]);
+    }
   }
 
 }

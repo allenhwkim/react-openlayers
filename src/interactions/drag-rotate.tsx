@@ -27,6 +27,11 @@ export class DragRotate extends React.Component<any, any> {
     console.log('double-click-zoom options', options);
     this.interaction = new ol.interaction.DragRotate(options);
     this.context.mapComp.interactions.push(this.interaction)
+    
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.interaction.on(eventName, olEvents[eventName]);
+    }
   }
 
 }

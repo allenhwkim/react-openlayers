@@ -86,7 +86,6 @@ export class Map extends React.Component<any, any> {
     options.overlays = this.overlays;
     console.log('map options', options);
 
-console.log('this.layers............', this.layers);
     this.map = new ol.Map(options);
     this.map.setTarget(options.target || this.mapDiv);
 

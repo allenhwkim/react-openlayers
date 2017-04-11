@@ -40,9 +40,13 @@ export class Image extends React.Component<any, any> {
 
   componentDidMount () {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
-    console.log('image options........', options);
     this.layer = new ol.layer.Image(options);
     this.context.mapComp.layers.push(this.layer);
+
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.layer.on(eventName, olEvents[eventName]);
+    }
   }
 
 }

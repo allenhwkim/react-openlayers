@@ -40,6 +40,11 @@ export class Select extends React.Component<any, any> {
       this.interaction = new ol.interaction.Select(options);
     }
     this.context.mapComp.interactions.push(this.interaction)
+    
+    let olEvents = Util.getEvents(this.events, this.props);
+    for(let eventName in olEvents) {
+      this.interaction.on(eventName, olEvents[eventName]);
+    }
   }
 
 }
