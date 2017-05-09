@@ -47,6 +47,29 @@ export class Select extends React.Component<any, any> {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    if(nextProps !== this.props){
+      this.context.mapComp.map.removeInteraction(this.interaction);
+
+      if (this.props.instance) {
+        this.interaction = this.props.instance;
+      } else {
+        let options = Util.getOptions(Object['assign'](this.options, nextProps));
+        this.interaction = new ol.interaction.Select(options);
+      }
+      this.context.mapComp.map.addInteraction(this.interaction);
+
+      let olEvents = Util.getEvents(this.events, this.props);
+      for(let eventName in olEvents) {
+        this.interaction.on(eventName, olEvents[eventName]);
+      }
+    }
+  }
+  
+  componentWillUnmount () {
+    this.context.mapComp.map.removeInteraction(this.interaction);
+  }
+
 }
 
 Select['contextTypes'] = {
