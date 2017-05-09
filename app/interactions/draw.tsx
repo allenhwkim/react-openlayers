@@ -15,14 +15,15 @@ export class Draw extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      zoom: 4,
-      center: [-11000000, 4600000],
+      view: {
+        zoom: 4,
+        center: [-11000000, 4600000],
+      }
     };
     this.drawend = this.drawend.bind(this);
   }
 
   drawend(e) {
-    this.setState({ center: [0,0] });
     console.log('xxxxxxxxxxxxx, draw end', e);
   }
 
@@ -30,7 +31,7 @@ export class Draw extends React.Component<any, any> {
     var typeSelect = document.getElementById('type');
     return (
       <div>
-        <Map view={{center: [-11000000, 4600000], zoom: 4}} setCenter={ this.state.center }>
+        <Map view={this.state.view}>
           <Layers>
             <layer.Tile source={rasterTile} />
             <layer.Vector source={vectorSource} />
