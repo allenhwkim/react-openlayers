@@ -104,10 +104,10 @@ export class Map extends React.Component<any, any> {
   /* Modified by Harinder Randhawa */
   componentWillReceiveProps(nextProps) {
     let options = Util.getOptions(Object.assign(this.options, nextProps));
-    if(nextProps.setCenter !== this.props.view.center){
+    if(this.props.view && nextProps.setCenter !== this.props.view.center){
       this.map.getView().setCenter(nextProps.setCenter);
     }
-    if(nextProps.setZoom !== this.props.view.zoom){
+    if(this.props.view && nextProps.setZoom !== this.props.view.zoom){
       this.map.getView().setZoom(nextProps.setZoom);
     }
  }
