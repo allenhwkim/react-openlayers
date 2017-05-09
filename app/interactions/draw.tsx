@@ -18,7 +18,8 @@ export class Draw extends React.Component<any, any> {
       view: {
         zoom: 4,
         center: [-11000000, 4600000],
-      }
+      },
+      interactionType: 'Circle',
     };
     this.drawend = this.drawend.bind(this);
   }
@@ -40,9 +41,16 @@ export class Draw extends React.Component<any, any> {
             <interaction.Draw
               onDrawend={this.drawend}
               source={vectorSource}
-              type='Circle' />
+              type={this.state.interactionType} />
           </Interactions>
         </Map>
+        <select onChange={(event) => this.setState({interactionType: event.target.value})} value={this.state.interactionType}>
+          <option value="Point">Point</option>
+          <option value="Polygon">Polygon</option>
+          <option value="Line">Line</option>
+          <option value="Circle">Circle</option>
+        </select>
+        <br/>
         <a href="https://github.com/allenhwkim/react-openlayers/blob/master/app/interactions/draw.tsx">source</a>
         <pre>{`
         `}</pre>
