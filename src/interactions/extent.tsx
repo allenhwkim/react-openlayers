@@ -27,7 +27,7 @@ export class Extent extends React.Component<any, any> {
 
   componentDidMount () {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
-    console.log('double-click-zoom options', options);
+    console.log('options', options);
     this.interaction = new ol.interaction['Extent'](options);
     this.context.mapComp.interactions.push(this.interaction)
     
@@ -35,6 +35,24 @@ export class Extent extends React.Component<any, any> {
     for(let eventName in olEvents) {
       this.interaction.on(eventName, olEvents[eventName]);
     }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if(nextProps !== this.props){
+      this.context.mapComp.map.removeInteraction(this.interaction);
+      let options = Util.getOptions(Object['assign'](this.options, nextProps));
+      this.interaction = new ol.interaction['Extent'](options);
+      this.context.mapComp.map.addInteraction(this.interaction);
+
+      let olEvents = Util.getEvents(this.events, this.props);
+      for(let eventName in olEvents) {
+        this.interaction.on(eventName, olEvents[eventName]);
+      }
+    }
+  }
+  
+  componentWillUnmount () {
+    this.context.mapComp.map.removeInteraction(this.interaction);
   }
 
 }
