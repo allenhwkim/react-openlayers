@@ -103,12 +103,11 @@ export class Map extends React.Component<any, any> {
   // update the view with new props
   /* Modified by Harinder Randhawa */
   componentWillReceiveProps(nextProps) {
-    let options = Util.getOptions(Object.assign(this.options, nextProps));
-    if(nextProps.setCenter !== this.props.view.center){
-      this.map.getView().setCenter(nextProps.setCenter);
+    if(this.props.view && nextProps.view.center !== this.props.view.center){
+      this.map.getView().setCenter(nextProps.view.center);
     }
-    if(nextProps.setZoom !== this.props.view.zoom){
-      this.map.getView().setZoom(nextProps.setZoom);
+    if(this.props.view && nextProps.view.zoom !== this.props.view.zoom){
+      this.map.getView().setZoom(nextProps.view.zoom);
     }
  }
   render() {

@@ -7,11 +7,11 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "NODE_ENV=dev webpack-dev-server --quiet --port 9001 --content-base app --config app/webpack.config --open",
+    "start": "cross-env NODE_ENV=dev webpack-dev-server --quiet --port 9001 --content-base app --config app/webpack.config --open",
     "clean": "rimraf dist",
     "build": "npm-run-all --serial clean build:umd build:app",
-    "build:umd": "NODE_ENV=prod webpack",
-    "build:app": "NODE_ENV=prod webpack --config app/webpack.config",
+    "build:umd": "cross-env NODE_ENV=prod webpack",
+    "build:app": "cross-env NODE_ENV=prod webpack --config app/webpack.config",
     "upgrade": "npm-check-updates -a/--upgradeAll && npm i"
   },
   "repository": {
@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@types/googlemaps": "^3.26.4",
+    "cross-env": "^4.0.0",
     "google-maps": "^3.2.1",
     "ol-mapbox-style": "^2.1.1",
     "qwest": "^4.4.5",
