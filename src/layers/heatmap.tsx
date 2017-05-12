@@ -46,6 +46,9 @@ export class Heatmap extends React.Component<any, any> {
   componentDidMount() {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.layer = new ol.layer.Heatmap(options);
+    if(this.props.zIndex){
+      this.layer.setZIndex(this.props.zIndex);
+    }
     this.context.mapComp.layers.push(this.layer);
 
     let olEvents = Util.getEvents(this.events, this.props);
