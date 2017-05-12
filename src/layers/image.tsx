@@ -49,6 +49,27 @@ export class Image extends React.Component<any, any> {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    if(nextProps !== this.props){
+      let options = Util.getOptions(Object.assign(this.options, this.props));
+      this.context.mapComp.map.removeLayer(this.layer);
+      this.layer = new ol.layer.Image(options);
+      if(this.props.zIndex){
+        this.layer.setZIndex(this.props.zIndex);
+      }
+      this.context.mapComp.map.addLayer(this.layer);
+
+      let olEvents = Util.getEvents(this.events, this.props);
+      for(let eventName in olEvents) {
+        this.layer.on(eventName, olEvents[eventName]);
+      }
+    }
+  }
+  
+  componentWillUnmount () {
+    this.context.mapComp.map.removeLayer(this.layer);
+  }
+
 }
 
 Image['contextTypes'] = {

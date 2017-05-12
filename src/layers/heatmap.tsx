@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ol from 'openlayers';
-import {Util} from "../util";
-import {Map} from '../map';
+import { Util } from "../util";
+import { Map } from '../map';
 
 export class Heatmap extends React.Component<any, any> {
 
@@ -17,7 +17,7 @@ export class Heatmap extends React.Component<any, any> {
     minResolution: undefined,
     maxResolution: undefined,
     opacity: undefined,
-    source: undefined, 
+    source: undefined,
     visible: undefined
   };
 
@@ -43,15 +43,36 @@ export class Heatmap extends React.Component<any, any> {
 
   render() { return null; }
 
-  componentDidMount () {
+  componentDidMount() {
     let options = Util.getOptions(Object['assign'](this.options, this.props));
     this.layer = new ol.layer.Heatmap(options);
     this.context.mapComp.layers.push(this.layer);
 
     let olEvents = Util.getEvents(this.events, this.props);
-    for(let eventName in olEvents) {
+    for (let eventName in olEvents) {
       this.layer.on(eventName, olEvents[eventName]);
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      let options = Util.getOptions(Object.assign(this.options, this.props));
+      this.context.mapComp.map.removeLayer(this.layer);
+      this.layer = new ol.layer.Heatmap(options);
+      if (this.props.zIndex) {
+        this.layer.setZIndex(this.props.zIndex);
+      }
+      this.context.mapComp.map.addLayer(this.layer);
+
+      let olEvents = Util.getEvents(this.events, this.props);
+      for (let eventName in olEvents) {
+        this.layer.on(eventName, olEvents[eventName]);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.context.mapComp.map.removeLayer(this.layer);
   }
 
 }
