@@ -49,6 +49,9 @@ export class Tile extends React.Component<any, any> {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     options.source = options.source || new ol.source.OSM();
     this.layer = new ol.layer.Tile(options);
+    if(this.props.zIndex){
+      this.layer.setZIndex(this.props.zIndex);
+    }
     this.context.mapComp.layers.push(this.layer)
 
     let olEvents = Util.getEvents(this.events, this.props);

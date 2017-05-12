@@ -23,7 +23,7 @@ Example
     <Map view={{center: [0, 0], zoom: 2}} onClick={showPopup}>
       <Layers>
         <layer.Tile/>
-        <layer.Vector source={markers} style={markers.style} />
+        <layer.Vector source={markers} style={markers.style} zIndex="1" />
       </Layers>
       <Overlays>
         <Overlay 
