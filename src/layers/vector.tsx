@@ -48,9 +48,7 @@ export class Vector extends React.Component<any, any> {
   componentDidMount () {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     this.layer = new ol.layer.Vector(options);
-    console.log(this.props.zIndex);
     if(this.props.zIndex){
-      console.log('set zIndex');
       this.layer.setZIndex(this.props.zIndex);
     }  
     this.context.mapComp.layers.push(this.layer);

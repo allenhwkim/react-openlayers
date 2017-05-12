@@ -32,7 +32,7 @@ export class Vector extends React.Component<any,any> {
         <Map>
           <Layers>
             <layer.Tile/>
-            <layer.Vector source={source} style={marker.style} />
+            <layer.Vector source={source} style={marker.style} zIndex="1"/>
           </Layers>
         </Map>
         `}</pre>
