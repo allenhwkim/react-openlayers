@@ -6,10 +6,17 @@ import './popup.css';
 export class Popup extends React.Component<any, any> {
   containerEl: HTMLElement;
   contentEl: HTMLElement;
+  contentClose:HTMLElement;
 
-  constructor(props) { 
+  constructor(props) {
     console.log(2222222222);
     super(props);
+  }
+
+  componentDidMount(){
+    this.contentClose.addEventListener("click",()=>{
+      this.containerEl.style.display='none';
+    });
   }
 
   render() {
@@ -18,7 +25,8 @@ export class Popup extends React.Component<any, any> {
       <div className="olPopup" ref={el => this.containerEl = el}>
         <a className="olPopupCloser"
           href="javascript:void(0)"
-          onClick={this.hide}></a>{/* why this does not work??? */}
+          ref={el => this.contentClose = el}
+        ></a>
         <div className="olPopupContents" ref={el => this.contentEl = el}></div>
       </div>
     );
@@ -33,7 +41,4 @@ export class Popup extends React.Component<any, any> {
     this.containerEl.style.display = 'block';
   }
 
-  hide() {
-    this.containerEl.style.display = 'block';
-  }
 }
