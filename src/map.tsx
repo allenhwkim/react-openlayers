@@ -6,6 +6,8 @@ import {layer} from './layers/index';
 
 import './ol.css';
 import './map.css';
+import {Controls} from "./controls";
+import {Interactions} from "./interactions";
 
 /**
  * Implementation of ol.map https://openlayers.org/en/latest/apidoc/ol.Map.html
@@ -81,8 +83,8 @@ export class Map extends React.Component<any, any> {
     let options = Util.getOptions(Object.assign(this.options, this.props));
     !(options.view instanceof ol.View) && (options.view = new ol.View(options.view));
 
-    let controlsCmp = Util.findChild(this.props.children, 'Controls') || {};
-    let interactionsCmp = Util.findChild(this.props.children, 'Interactions') || {};
+    let controlsCmp = Util.findChild(this.props.children, Controls) || {};
+    let interactionsCmp = Util.findChild(this.props.children, Interactions) || {};
 
     options.controls = ol.control.defaults(controlsCmp.props).extend(this.controls);
     options.interactions = ol.interaction.defaults(interactionsCmp.props).extend(this.interactions);
