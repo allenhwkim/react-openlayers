@@ -58,12 +58,12 @@ function cloneObject(obj){
   return obj;
 }
 
-function findChild(children: any[], childType: string) {
+function findChild(children: any[], childType: any) {
   let found: any;
   let childrenArr = React.Children.toArray(children);
   for (let i=0; i<childrenArr.length; i++) {
     let child: any = childrenArr[i];
-    if (child.type.name == childType){
+    if (child.type == childType){
       found = child;
       break;
     }
