@@ -111,13 +111,12 @@ export class Map extends React.Component<any, any> {
     if(this.props.view && nextProps.view.zoom !== this.props.view.zoom){
       this.map.getView().setZoom(nextProps.view.zoom);
     }
- }
+  }
+
   render() {
     return (
-      <div>
-        <div className="openlayers-map" ref={(el)=> this.mapDiv = el}>
-          {this.props.children}
-        </div>
+      <div className="openlayers-map" ref={(el)=> this.mapDiv = el}>
+        {this.props.children}
       </div>
     );
   }

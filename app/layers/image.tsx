@@ -5,7 +5,7 @@ import {
   interaction, layer, custom, control, //name spaces
   Interactions, Overlays, Controls,     //group
   Map, Layers, Overlay, Util    //objects
-} from "react-openlayers";
+}  from "../../src/index";
 
 var extent: any = [0, 0, 1024, 968];
 var projection = new ol.proj.Projection({

@@ -5,8 +5,7 @@ import {
   interaction, layer, custom, control, //name spaces
   Interactions, Overlays, Controls,     //group
   Map, Layers, Overlay, Util    //objects
-} from "react-openlayers";
-
+} from "../../src/index";
 
 var iconFeature = new ol.Feature({
   geometry: new ol.geom.Point(

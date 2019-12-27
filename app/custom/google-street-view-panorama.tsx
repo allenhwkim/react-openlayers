@@ -6,7 +6,7 @@ import {
   interaction, layer, custom, control, //name spaces
   Interactions, Overlays, Controls,     //group
   Map, Layers, Overlay, Util    //objects
-} from "react-openlayers";
+} from "../../src/index";
 // GoogleMapsLoader.KEY = 'qwertyuiopasdfghjklzxcvbnm';
 // GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
 // GoogleMapsLoader.LANGUAGE = 'fr';

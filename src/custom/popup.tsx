@@ -9,7 +9,6 @@ export class Popup extends React.Component<any, any> {
   contentClose:HTMLElement;
 
   constructor(props) {
-    console.log(2222222222);
     super(props);
   }
 
@@ -20,7 +19,6 @@ export class Popup extends React.Component<any, any> {
   }
 
   render() {
-    console.log(3333333333);
     return (
       <div className="olPopup" ref={el => this.containerEl = el}>
         <a className="olPopupCloser"

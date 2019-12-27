@@ -14,7 +14,7 @@ const config = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.webpack.js', '.js', '.tsx', '.json', '.css', '.html'],
+    extensions: ['.ts', '.js', '.tsx', '.json', '.css', '.html'],
     alias: {
       'react-openlayers': path.join(__dirname, '..', 'src', 'index')
     }

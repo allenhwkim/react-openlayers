@@ -43,9 +43,11 @@ export class Tile extends React.Component<any, any> {
 
   render() {
     return null;
+    console.log('Tile render() .....');
   }
 
   componentDidMount () {
+    console.log('Tile componentDidMount() .....');
     let options = Util.getOptions(Object.assign(this.options, this.props));
     options.source = options.source || new ol.source.OSM();
     this.layer = new ol.layer.Tile(options);
@@ -61,6 +63,7 @@ export class Tile extends React.Component<any, any> {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log('Tile componentWillReceiveProps() .....');
     if(nextProps !== this.props){
       let options = Util.getOptions(Object.assign(this.options, this.props));
       this.context.mapComp.map.removeLayer(this.layer);
@@ -84,6 +87,5 @@ export class Tile extends React.Component<any, any> {
 }
 
 Tile['contextTypes'] = {
-  mapComp: React.PropTypes.instanceOf(Map),
-  map: React.PropTypes.instanceOf(ol.Map)
+  mapComp: React.PropTypes.instanceOf(Map)
 };

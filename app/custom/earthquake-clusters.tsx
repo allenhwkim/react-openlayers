@@ -5,13 +5,12 @@ import {
   interaction, layer, custom, control, //name spaces
   Interactions, Overlays, Controls,     //group
   Map, Layers, Overlay, Util    //objects
-} from "react-openlayers";
-
+} from "../../src/index";
 
 var vectorSource= new ol.source.Cluster({
   distance: 40,
   source: new ol.source.Vector({
-    url: 'https://openlayers.org/en/v4.0.1/examples/data/kml/2012_Earthquakes_Mag5.kml',
+    url: 'https://openlayers.org/en/latest/examples/kml-earthquakes.html',
     format: new ol.format.KML({
       extractStyles: false
     })

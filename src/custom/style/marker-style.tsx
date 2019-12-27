@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as ol from 'openlayers';
 
 export class MarkerStyle {
-  src: string = 'https://openlayers.org/en/v4.0.1/examples/data/icon.png';
+  src: string = 'https://openlayers.org/en/latest/examples/data/icon.png';
 
   constructor(src?: string) {
     this.src = src;
@@ -20,7 +20,7 @@ export class MarkerStyle {
       image: new ol.style.Icon({
           anchor: [0.5, 0.96],
           color: '#4271AE',
-          src: 'https://openlayers.org/en/v4.0.1/examples/data/dot.png'
+          src: 'https://openlayers.org/en/latest/examples/data/dot.png'
         })
     })
   };
