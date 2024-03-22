@@ -60,7 +60,7 @@
     "url-loader": "^0.5.8",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1",
+    "webpack-dev-server": "^5.0.4",
     "zone.js": "^0.6.21"
   },
   "dependencies": {
