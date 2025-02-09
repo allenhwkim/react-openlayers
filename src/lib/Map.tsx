@@ -8,7 +8,7 @@ import './style.css';
 
 const MapContext = createContext<any>(undefined);
 
-const OlMap = forwardRef( (props:any, ref:any) => {
+const Map = forwardRef( (props:any, ref:any) => {
   const [map, setMap] = useState<ol.Map>();
   const mapRef = useRef<any>();
 
@@ -29,6 +29,6 @@ const OlMap = forwardRef( (props:any, ref:any) => {
 }
 );
 
-export default OlMap;
+export default Map;
 
 export const useMap = () => useContext(MapContext);

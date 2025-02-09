@@ -1,20 +1,20 @@
 import * as ol from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { OSM } from 'ol/source';
-import OlMap from '../lib/Map';
+import Map from '../lib/Map';
 import { useRef } from 'react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
   title: 'Map',
-  component: OlMap,
+  component: Map,
   tags: ['autodocs'],
   argTypes: {}, // https://storybook.js.org/docs/api/argtypes
   parameters: {
   },
 }
 
-const MapWithButton = () => {
+const MapStory = (props) => {
   const map = useRef<ol.Map>();
  
   const showMap = () => {
@@ -25,12 +25,12 @@ const MapWithButton = () => {
   };
 
   return <div>
-    <OlMap ref={map} />
+    <Map ref={map} />
     <button onClick={showMap}>Show Map</button>
   </div>
 };
  
 export const Primary = {
   args: {}, // https://storybook.js.org/docs/writing-stories/args
-  render: () => <MapWithButton />
+  render: MapStory
 }
