@@ -1,0 +1,9 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "lib": [ "ES2022", "dom" ]
+  }
+}
