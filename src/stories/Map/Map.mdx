@@ -1,0 +1,34 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as MapStories from './Map.stories';
+ 
+<Meta of={MapStories} />
+ 
+# {'<Map />'}
+ 
+React representative of `new ol.Map(...)` 
+https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
+<Story of={MapStories.Primary} />
+
+### Usage
+```typescript
+import * as ol from 'ol';
+import { OSM } from 'ol/source';
+import { Map, View, TileLayer } from 'react-openlayers';
+
+export default function(props) {
+  const mapRef= useRef<ol.Map>();
+  setTimeout(() => console.log(olMap.current), 1000));
+
+  return ( 
+    <Map ref={mapRef}>
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
+```
+To get or set the Map property, use a Map instance get/set function,
+e.g. [setSize()](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#setSize)
+```javascript
+mapRef.current.setSize([400, 200]);
+```

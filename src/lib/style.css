@@ -1,4 +1,8 @@
 .ol-map {
-  height: 400px;
+  height: 320px;
   width: 100%;
+}
+
+.sb-story {
+  margin-bottom: 2rem; /* to have gap between next title, e.g. Usage */
 }

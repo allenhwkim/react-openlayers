@@ -1,0 +1,49 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as TileStories from './Tile.stories';
+ 
+<Meta of={TileStories} />
+ 
+# {'<TileLayer />'}
+ 
+React representative of `new TileLayer(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_layer_Tile-TileLayer.html
+<Story of={TileStories.Primary} />
+
+### Usage
+```typescript
+import {useRef} from 'react';
+import TileArcGISRest from 'ol/source/TileArcGISRest';
+import OSM from 'ol/source/OSM';
+import {Map, TileLayer, View} from 'react-openlayers';
+
+export default function(props) {
+  const mapRef = useRef();
+  const source =  new TileArcGISRest({
+    url: 'https://sampleserver6.arcgisonline.com/ArcGIS/rest/services/USA/MapServer',
+  });
+  return (
+    <Map ref={mapRef}>
+      <TileLayer source={new OSM()} properties={{key: 'osmLayer'}} />
+      <TileLayer source={source} extent={[-13884991, 2870341, -7455066, 6338219]} properties={{key: 'myLayer'}}/>
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
+```
+
+### props
+
+| Prop   | type        | description |
+| ------ | ----------- | ------------|
+| source | TileSource  | Source for this layer. | 
+| extent | Extent      | The bounding extent for layer rendering. The layer will not be rendered outside of this extent. |
+| properties | Object  | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
+
+To update a TileLayer property, which is not listed on props above table,
+use a TileLayer instance set function,
+e.g. [setVisible()](https://openlayers.org/en/latest/apidoc/module-ol_layer_Tile-TileLayer.html#setVisible)
+```javascript
+mapRef.current.getLayers().getArray()[0].setVisible(true)
+// or
+mapRef.current.getLayer.find(el => el.get('key') === 'osmLayer')).setVisible(true);
+```

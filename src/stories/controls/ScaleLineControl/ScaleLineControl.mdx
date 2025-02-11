@@ -1,0 +1,43 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as ScaleLineControlStories from './ScaleLineControl.stories';
+ 
+<Meta of={ScaleLineControlStories} />
+ 
+# {'<ScaleLineControl />'}
+ 
+React representative of `new ScaleLine(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine.html
+<Story of={ScaleLineControlStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { Map, TileLayer, View, ScaleLineControl } from 'react-openlayers';
+
+export default function(props) {
+  const mapRef = useRef();
+  return (
+    <Map ref={mapRef}>
+      <ScaleLineControl units="metric" />
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  )
+}
+```
+
+### props
+
+| Prop   | type     | description |
+| ------ | -------- | ------------|
+| units  | string   | 'degrees', 'imperial', 'nautical', 'metric', or 'us' | 
+| bar    | boolean  | default false, Render scalebars instead of a line. |
+| steps  | number   | default 4, Number of steps the scalebar should use. Use even numbers for best results. Only applies when bar is true |
+| text   | boolean  | default false, Render the text scale above of the scalebar. Only applies when bar is true. |
+
+To update a ScaleLine property, which is not listed on props above table,
+use a ScaleLine instance set function,
+e.g. [setUnits()](https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html#setUnits)
+```javascript
+mapRef.current.getControls().getArray()[0].setUnits('us')
+```

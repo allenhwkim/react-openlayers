@@ -1,0 +1,34 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as FullScreenControlStories from './FullScreenControl.stories';
+ 
+<Meta of={FullScreenControlStories} />
+ 
+# {'<FullScreenControl />'}
+ 
+React representative of `new FullScreen(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_control_FullScreen-FullScreen.html
+<Story of={FullScreenControlStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { Map, TileLayer, View, FullScreenControl } from 'react-openlayers';
+
+export default function(props) {
+  const mapRef = useRef();
+  return (
+    <Map ref={mapRef}>
+      <FullScreenControl />
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  )
+}
+```
+
+To get/set a FullScreen property, which is not accepted as a prop,
+use a FullScreen instance get/set function,
+e.g. [setMap()](https://openlayers.org/en/latest/apidoc/module-ol_control_FullScreen-FullScreen.html#setMap)
+```javascript
+mapRef.current.getControls().getArray().setMap(null)
+```

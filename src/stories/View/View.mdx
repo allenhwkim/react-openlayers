@@ -1,0 +1,40 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as ViewStories from './View.stories';
+ 
+<Meta of={ViewStories} />
+ 
+# {'<View />'}
+ 
+React representative of `new View(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_View-View.html
+<Story of={ViewStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { Map, TileLayer, View } from '../../lib/Map';
+
+export default function(props) {
+  const mapRef = useRef();
+  return (
+    <Map ref={mapRef}>
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  )
+}
+```
+
+### props
+
+| Prop   | type        | description |
+| ------ | ----------- | ------------|
+| center | Coordinate  | The initial center for the view. | 
+| zoom   | number      | Zoom level used to calculate the initial resolution for the view.|
+
+To get/set a View property, which is not listed on props above table,
+use a View instance get/set function,
+e.g. [setMaxZoom()](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#setMaxZoom)
+```javascript
+mapRef.current.getView().setMaxZoom(10)
+```
