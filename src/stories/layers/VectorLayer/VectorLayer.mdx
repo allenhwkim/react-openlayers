@@ -1,0 +1,58 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as VectorLayerStories from './VectorLayer.stories';
+ 
+<Meta of={VectorLayerStories} />
+ 
+# {'<VectorLayer />'}
+ 
+React representative of `new VectorLayer(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html
+<Story of={VectorLayerStories.Primary} />
+
+### Usage
+```typescript
+import VectorSource from 'ol/source/Vector';
+import GeoJSON from 'ol/format/GeoJSON';
+import { Map, View, VectorLayer } from '../../../lib';
+import { useRef } from 'react';
+
+export default function(props) {
+  const mapRef = useRef();
+  const source = new VectorSource({
+    url: 'https://openlayers.org/data/vector/ecoregions.json',
+    format: new GeoJSON(),
+  });
+
+  return (
+    <Map ref={mapRef}>
+      <VectorLayer 
+        source={source}
+        background="#1a2b39"
+        style={{'fill-color': ['string', ['get', 'COLOR'], '#eee']}}
+        properties={{key: 'myLayer'}}
+      />
+      <View center={[0,0]} zoom={4}/>
+    </Map>
+  );
+}
+```
+
+### props
+
+| Prop   | type        | description |
+| ------ | ----------- | ------------|
+| source | TileSource  | Source for this layer. | 
+| extent | Extent      | The bounding extent for layer rendering. The layer will not be rendered outside of this extent. |
+| style  | StyleLike   | Layer style. When set to null, only features that have their own style will be rendered. |
+| background  | string | Background color for the layer. If not specified, no background will be rendered. |
+| zIndex | number      | The z-index for layer rendering. At rendering time, the layers will be ordered, first by Z-index and then by position. |
+| properties | Object  | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
+
+To update a VectorLayer property, which is not listed on props above table,
+use a LayerLayer instance set function,
+e.g. [setVisible()](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html#setVisible)
+```javascript
+mapRef.current.getLayers().getArray()[0].setVisible(true)
+// or
+mapRef.current.getLayer.find(el => el.get('key') === 'myLayer')).setVisible(true);
+```

@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/blocks';
-import * as TileStories from './Tile.stories';
+import * as TileStories from './TileLayer.stories';
  
 <Meta of={TileStories} />
  
@@ -37,6 +37,7 @@ export default function(props) {
 | ------ | ----------- | ------------|
 | source | TileSource  | Source for this layer. | 
 | extent | Extent      | The bounding extent for layer rendering. The layer will not be rendered outside of this extent. |
+| zIndex | number      | The z-index for layer rendering. At rendering time, the layers will be ordered, first by Z-index and then by position. |
 | properties | Object  | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
 
 To update a TileLayer property, which is not listed on props above table,

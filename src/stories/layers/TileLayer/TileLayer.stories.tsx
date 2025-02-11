@@ -1,9 +1,9 @@
 import TileArcGISRest from 'ol/source/TileArcGISRest';
 import OSM from 'ol/source/OSM';
-import { Map, View, TileLayer } from '../../lib';
+import { Map, View, TileLayer } from '../../../lib';
 
 export default {
-  title: 'Tile',
+  title: 'Layers/TileLayer',
 }
 
 export const Primary = {

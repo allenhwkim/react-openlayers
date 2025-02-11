@@ -1,0 +1,40 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as MarkerStories from './Marker.stories';
+ 
+<Meta of={MarkerStories} />
+ 
+# {'<Marker />'}
+ 
+React representative of `new ol.Feature(...)` customized as a marker  
+https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html
+<Story of={MarkerStories.Primary} />
+
+### Usage
+```typescript
+import { OSM } from 'ol/source';
+import { useRef } from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Map, TileLayer, View } from '../../lib';
+import { Marker } from '../../lib/Marker';
+
+export default function(props) {
+  const mapRef = useRef();
+
+  return (
+    <Map ref={mapRef}>
+      <TileLayer source={new OSM()} />
+      <View center={[0,0]} zoom={4}/>
+      <Marker lonLat={[0,0]} color="blue" />
+    </Map>
+  );
+}
+```
+
+
+### props
+
+| Prop   | type        | description |
+| ------ | ----------- | ------------|
+| lonLat | number[]    | longitude and latitude that marker to point, e.g. [0,0] | 
+| color  | string      | Fill color of the marker, e.g. 'red' |
+
