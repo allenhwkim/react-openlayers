@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useMap } from '../Map';
 
 export function TileLayer({
-  source, 
-  extent=undefined, 
+  source,
+  extent=undefined,
   zIndex=undefined,
   properties=undefined
 }) {
@@ -13,8 +13,8 @@ export function TileLayer({
   useEffect(() => {
     if (!map) return;
     const layer = new OlTileLayer({
-      source, 
-      extent, 
+      source,
+      extent,
       zIndex,
       properties
     });

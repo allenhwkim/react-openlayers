@@ -17,7 +17,7 @@ export const Primary = {
 
     return (
       <Map ref={mapRef}>
-        <VectorLayer 
+        <VectorLayer
           source={source}
           background="#1a2b39"
           style={{'fill-color': ['string', ['get', 'COLOR'], '#eee']}}

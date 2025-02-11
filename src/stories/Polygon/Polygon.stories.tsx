@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Map, TileLayer, View } from '../../lib';
 import { Polygon } from '../../lib/Polygon';
 
-declare var window: any;
+declare let window: any;
 
 export default { title: 'Polygon' } as Meta;
 

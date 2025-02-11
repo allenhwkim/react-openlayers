@@ -14,13 +14,13 @@ export function Polygon({coordinates, color=undefined}) {
     if (!map) return;
 
     const polygon = new OlPolygon(coordinates);
-    polygon.transform('EPSG:4326', 'EPSG:3857'); // transform the coordinate system 
+    polygon.transform('EPSG:4326', 'EPSG:3857'); // transform the coordinate system
 
-    var polygonFeature = new ol.Feature(polygon);
+    const polygonFeature = new ol.Feature(polygon);
     polygonFeature.setStyle(new Style({ fill: new Fill({color}) }));
 
     const source = new Vector({ features: [polygonFeature] });
-    var polygonLayer = new VectorLayer({source});
+    const polygonLayer = new VectorLayer({source});
 
     map.addLayer(polygonLayer);
   }, [map]);

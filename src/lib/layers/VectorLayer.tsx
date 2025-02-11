@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useMap } from '../Map';
 
 export function VectorLayer({
-  source, 
-  extent=undefined, 
+  source,
+  extent=undefined,
   style=undefined,
   background=undefined,
   zIndex=undefined,
@@ -15,8 +15,8 @@ export function VectorLayer({
   useEffect(() => {
     if (!map) return;
     const layer = new OlVectorLayer({
-      source, 
-      extent, 
+      source,
+      extent,
       style,
       background,
       zIndex,
