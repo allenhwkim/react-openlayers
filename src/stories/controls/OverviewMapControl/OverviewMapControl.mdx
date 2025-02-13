@@ -1,0 +1,38 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as OverviewMapControlStories from './OverviewMapControl.stories';
+ 
+<Meta of={OverviewMapControlStories} />
+ 
+# {'<OverviewMapControl />'}
+
+Create a new control with a map acting as an overview map for another defined map.
+
+A react representative of of `new OverviewMapControl(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_control_OverviewMap-OverviewMap.html
+
+<Story of={OverviewMapControlStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import OlTileLayer from 'ol/layer/Tile';
+import { Map, TileLayer, View, OverviewMapControl } from '../../../lib';
+
+export default function(props) {
+  const overviewLayers = [
+    new OlTileLayer({source: new OSM()})
+  ];
+  return (
+    <Map>
+      <OverviewMapControl layers={overviewLayers} />
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_control_OverviewMap-OverviewMap.html)
