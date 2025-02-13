@@ -1,0 +1,7 @@
+.draw-control .shapes > .active {
+  border: 2px inset;
+  background: #ddd;
+}
+.draw-control .shapes > * {
+  background: #f0f0f0;
+}

@@ -1,0 +1,32 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as DrawControlStories from './DrawControl.stories';
+ 
+<Meta of={DrawControlStories} />
+ 
+# {'<DrawControl />'}
+
+Custom control to draw points, lines, polygons and circles. 
+Press shift key for freehand drawing.
+ 
+<Story of={DrawControlStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { Map, TileLayer, View, DrawControl } from 'react-openlayers';
+
+export default function(props) {
+  const mapRef = useRef();
+  return (
+    <Map ref={mapRef}>
+      <DrawControl />
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  )
+}
+```
+
+### props
+
+N/A

@@ -39,7 +39,7 @@ export const Map = forwardRef( (props:any, ref:any) => {
 
   return (
     <MapContext.Provider value={map}>
-      <div ref={mapRef} className="ol-map">
+      <div ref={mapRef} className="ol-map" tabIndex={0}>
         {props.children}
       </div>
     </MapContext.Provider>
