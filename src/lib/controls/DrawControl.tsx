@@ -1,5 +1,5 @@
 import * as ol from 'ol';
-import Control from "ol/control/Control";
+import Control from 'ol/control/Control';
 import { useEffect } from 'react';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
@@ -10,6 +10,7 @@ import { listen, unlistenByKey } from 'ol/events';
 import { useMap } from '../Map';
 import { drawIcon, lineIcon, pointIcon, polygonIcon, circleIcon} from './icons';
 import './style.css';
+import GeoJSON from 'ol/format/GeoJSON';
 
 class DrawControlClass extends Control {
   vectorSource: VectorSource;
@@ -27,7 +28,7 @@ class DrawControlClass extends Control {
     const title = 'Press shift for freehand drawing';
     element.insertAdjacentHTML('beforeend', `
       <button id="draw-btn">${drawIcon}</button>
-      <div id="draw-btns" class="shapes" hidden>
+      <div id="draw-btns" class="shapes" title="Shift+S to save as GeoJson" hidden>
         <button id="point-btn">${pointIcon}</button>
         <button id="line-btn" title="${title}">${lineIcon}</button>
         <button id="polygon-btn" title="${title}">${polygonIcon}</button>
@@ -85,17 +86,36 @@ class DrawControlClass extends Control {
       this.getMap().addLayer(this.drawLayer);
       this.getMap().addInteraction(this.modify);
       this.keyboardListener = listen(
-        this.getMap().getTargetElement(), 
-        'keydown', 
+        this.getMap().getTargetElement(),
+        'keydown',
         this.onKeyPressed.bind(this)
       );
     }
   }
 
-  onKeyPressed(event) {
+  onKeyPressed(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       this.draw.abortDrawing();
+    } else if (event.shiftKey && event.key === 'S') {
+      this.downloadGeoJson();
     }
+  }
+
+  downloadGeoJson() {
+    const format = new GeoJSON();
+    const features = this.drawLayer.getSource().getFeatures();
+    const options = {
+      dataProjection: 'EPSG:4326', // Desired projection for the output
+      featureProjection: 'EPSG:3857' // Projection of the features in the source
+    };
+    const geoJsonObject = new GeoJSON().writeFeaturesObject(features, options);
+    const geoJsonStr = JSON.stringify(geoJsonObject);
+
+    var a = document.createElement("a");
+    var file = new Blob([geoJsonStr], {type: 'application/json'});
+    a.href = URL.createObjectURL(file);
+    a.download = 'react-openlayer-geojson.json';
+    a.click();
   }
 
   onShapeBtnClick(event, type) {
