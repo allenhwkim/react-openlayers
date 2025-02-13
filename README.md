@@ -17,12 +17,12 @@ This module is the core component that represents the map itself. It manages lay
 * N/A  ol/control/defaults: A function that returns a collection of default controls.
 * DONE ol/control/FullScreen: Adds a button to toggle full-screen mode.
 * DONE ol/control/MousePosition: Displays the current mouse position in coordinates.
-* ol/control/OverviewMap: Displays an overview map of the main map.
-* ol/control/Rotate: Adds a button to reset the map rotation to zero.
+* DONE ol/control/OverviewMap: Displays an overview map of the main map.
+* N/A  ol/control/Rotate: Adds a button to reset the map rotation to zero.
 * DONE ol/control/ScaleLine: Displays a scale line on the map.
-* ol/control/Zoom: Adds zoom in and zoom out buttons.
-* ol/control/ZoomSlider: Adds a slider for zooming.
-* ol/control/ZoomToExtent: Adds a button to zoom to a specific extent.
+* DEFAULT ol/control/Zoom: Adds zoom in and zoom out buttons.
+* ???? ol/control/ZoomSlider: Adds a slider for zooming.
+* ???? ol/control/ZoomToExtent: Adds a button to zoom to a specific extent.
 
 ## Interactions
 
