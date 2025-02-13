@@ -111,8 +111,8 @@ class DrawControlClass extends Control {
     const geoJsonObject = new GeoJSON().writeFeaturesObject(features, options);
     const geoJsonStr = JSON.stringify(geoJsonObject);
 
-    var a = document.createElement("a");
-    var file = new Blob([geoJsonStr], {type: 'application/json'});
+    const a = document.createElement('a');
+    const file = new Blob([geoJsonStr], {type: 'application/json'});
     a.href = URL.createObjectURL(file);
     a.download = 'react-openlayer-geojson.json';
     a.click();
