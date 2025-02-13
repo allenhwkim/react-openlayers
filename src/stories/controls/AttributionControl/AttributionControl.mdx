@@ -1,0 +1,32 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as AttributionControlStories from './AttributionControl.stories';
+ 
+<Meta of={AttributionControlStories} />
+ 
+# {'<DrawControl />'}
+
+Custom control to draw points, lines, polygons and circles. 
+Press shift key for freehand drawing.
+ 
+<Story of={AttributionControlStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { Map, TileLayer, View, AttributionControl } from 'react-openlayers';
+
+export default function(props) {
+  const mapRef = useRef();
+  return (
+    <Map ref={mapRef}>
+      <AttributionControl attributions="Hello me"/>
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  )
+}
+```
+
+### props
+
+N/A

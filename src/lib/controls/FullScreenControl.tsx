@@ -8,7 +8,7 @@ export function FullScreenControl(props) {
 
   useEffect(() => {
     if (!map) return;
-    map.addControl(new FullScreen());
+    map.addControl(new FullScreen(props));
   }, [map]);
 
   return null;

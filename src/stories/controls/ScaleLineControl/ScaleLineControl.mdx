@@ -34,9 +34,9 @@ export default function(props) {
 | bar    | boolean  | default false, Render scalebars instead of a line. |
 | steps  | number   | default 4, Number of steps the scalebar should use. Use even numbers for best results. Only applies when bar is true |
 | text   | boolean  | default false, Render the text scale above of the scalebar. Only applies when bar is true. |
+| ...    | ...      | For more properties, refer Openlays documentation |
 
-To update a ScaleLine property, which is not listed on props above table,
-use a ScaleLine instance set function,
+To update a ScaleLine property after initialization, use a ScaleLine instance set function,
 e.g. [setUnits()](https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html#setUnits)
 ```javascript
 mapRef.current.getControls().getArray()[0].setUnits('us')

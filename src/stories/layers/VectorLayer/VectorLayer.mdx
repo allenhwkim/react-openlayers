@@ -47,9 +47,9 @@ export default function(props) {
 | background  | string | Background color for the layer. If not specified, no background will be rendered. |
 | zIndex | number      | The z-index for layer rendering. At rendering time, the layers will be ordered, first by Z-index and then by position. |
 | properties | Object  | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
+| ...    | ...         | For more, refer to Openlayers documentation |
 
-To update a VectorLayer property, which is not listed on props above table,
-use a LayerLayer instance set function,
+To update a VectorLayer property after initialization, use a LayerLayer instance set function,
 e.g. [setVisible()](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html#setVisible)
 ```javascript
 mapRef.current.getLayers().getArray()[0].setVisible(true)

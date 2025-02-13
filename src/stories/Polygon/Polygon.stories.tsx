@@ -2,8 +2,8 @@ import { OSM } from 'ol/source';
 import { useEffect, useRef } from 'react';
 import { fromLonLat } from 'ol/proj';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Map, TileLayer, View } from '../../lib';
-import { Polygon } from '../../lib/Polygon';
+import Fill from 'ol/style/Fill';
+import { Map, TileLayer, View, Polygon } from '../../lib';
 
 declare let window: any;
 
@@ -19,7 +19,9 @@ export const Primary: StoryObj<any> = {
       [-122.3909033, 37.7881577],
       [-122.4775065, 37.7882933]
     ]];
-    const color = 'rgba(210, 12, 12, 0.5)';
+    const style = { 
+      fill: new Fill({color: 'rgba(210, 12, 12, 0.5)'}) 
+    }
     const center = fromLonLat([-122.42, 37.779]);
     useEffect(() => {
       setTimeout(() => window.map = mapRef.current, 1000)
@@ -29,7 +31,7 @@ export const Primary: StoryObj<any> = {
       <Map ref={mapRef}>
         <TileLayer source={new OSM()} />
         <View center={center} zoom={12}/>
-        <Polygon coordinates={coordinates} color={color} />
+        <Polygon coordinates={coordinates} style={style} />
       </Map>
     );
   }

@@ -2,24 +2,14 @@ import OlTileLayer from 'ol/layer/Tile';
 import { useEffect } from 'react';
 import { useMap } from '../Map';
 
-export function TileLayer({
-  source,
-  extent=undefined,
-  zIndex=undefined,
-  properties=undefined
-}) {
+export function TileLayer(props) {
   const map = useMap();
 
   useEffect(() => {
     if (!map) return;
-    const layer = new OlTileLayer({
-      source,
-      extent,
-      zIndex,
-      properties
-    });
+    const layer = new OlTileLayer(props);
     map.addLayer(layer);
-  }, [map, source]);
+  }, [map]);
 
   return null;
 };

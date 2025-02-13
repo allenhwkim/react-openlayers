@@ -78,9 +78,11 @@ class DrawControlClass extends Control {
     drawBtnsEl.toggleAttribute('hidden');
 
     if (drawBtnsEl.hasAttribute('hidden')) {
+      this.getMap().removeInteraction(this.draw);
+      this.getMap().removeInteraction(this.snap);
       this.getMap().removeLayer(this.drawLayer);
       this.getMap().removeInteraction(this.modify);
-      listen(this.getMap().getTargetElement(), 'keydown', this.onKeyPressed);
+
       unlistenByKey(this.keyboardListener);
     } else {
       this.getMap().addLayer(this.drawLayer);

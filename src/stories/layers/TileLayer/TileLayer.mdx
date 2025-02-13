@@ -39,9 +39,9 @@ export default function(props) {
 | extent | Extent      | The bounding extent for layer rendering. The layer will not be rendered outside of this extent. |
 | zIndex | number      | The z-index for layer rendering. At rendering time, the layers will be ordered, first by Z-index and then by position. |
 | properties | Object  | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
+| ...    | ...         | For more, refer to Openlayers documentation |
 
-To update a TileLayer property, which is not listed on props above table,
-use a TileLayer instance set function,
+To update a TileLayer property after initialization, use a TileLayer instance set function,
 e.g. [setVisible()](https://openlayers.org/en/latest/apidoc/module-ol_layer_Tile-TileLayer.html#setVisible)
 ```javascript
 mapRef.current.getLayers().getArray()[0].setVisible(true)

@@ -7,17 +7,18 @@ import OlPolygon from 'ol/geom/Polygon';
 import Style from 'ol/style/Style';
 import Fill from 'ol/style/Fill';
 
-export function Polygon({coordinates, color=undefined}) {
+export function Polygon(props) {
   const map = useMap();
 
   useEffect(() => {
     if (!map) return;
 
-    const polygon = new OlPolygon(coordinates);
+    const {coordinates, layout, ends} = props;
+    const polygon = new OlPolygon(coordinates, layout, ends);
     polygon.transform('EPSG:4326', 'EPSG:3857'); // transform the coordinate system
 
     const polygonFeature = new ol.Feature(polygon);
-    polygonFeature.setStyle(new Style({ fill: new Fill({color}) }));
+    polygonFeature.setStyle(new Style(props.style));
 
     const source = new Vector({ features: [polygonFeature] });
     const polygonLayer = new VectorLayer({source});

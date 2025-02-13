@@ -2,12 +2,12 @@ import OlView from 'ol/View';
 import { useEffect } from 'react';
 import { useMap } from './Map';
 
-export function View({center, zoom}) {
+export function View(props) {
   const map = useMap();
 
   useEffect(() => {
     if (!map) return;
-    const view = new OlView({center, zoom});
+    const view = new OlView(props);
     map.setView(view);
   }, [map]);
 

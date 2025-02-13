@@ -31,9 +31,9 @@ export default function(props) {
 | ------ | ----------- | ------------|
 | center | Coordinate  | The initial center for the view. | 
 | zoom   | number      | Zoom level used to calculate the initial resolution for the view.|
+| ...    | ...         | For more properties, refer Openlays documentation |
 
-To get/set a View property, which is not listed on props above table,
-use a View instance get/set function,
+To get/set a View property after initializatin, use a View instance get/set function.
 e.g. [setMaxZoom()](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#setMaxZoom)
 ```javascript
 mapRef.current.getView().setMaxZoom(10)

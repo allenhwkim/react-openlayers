@@ -5,7 +5,7 @@ import * as PolygonStories from './Polygon.stories';
  
 # {'<Polygon />'}
  
-React representative of `new ol.Feature(...)` customized as polygons  
+React representative of `new ol.Polygon(...)` styled.
 https://openlayers.org/en/latest/apidoc/module-ol_geom_Polygon-Polygon.html
 <Story of={PolygonStories.Primary} />
 
@@ -15,8 +15,7 @@ import { OSM } from 'ol/source';
 import { useRef } from 'react';
 import { fromLonLat } from 'ol/proj';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Map, TileLayer, View } from '../../lib';
-import { Polygon } from '../../lib/Polygon';
+import { Map, TileLayer, View, Polygon } from 'react-openlayers';
 
 export default function (props) {
   const mapRef = useRef();
@@ -45,6 +44,8 @@ export default function (props) {
 
 | Prop        | type    | description |
 | ----------- | ------- | ------------|
-| coordinates | array   | longitude and latitude that marker to point, e.g. [[ [-122, 37], [-123, 38], [-124, 39] ]] | 
-| color       | string  | Fill color of the polygons, e.g. 'rgba(210, 12, 12, 0.5)' |
+| coordinates | array   | longitude and latitude that marker to point, e.g. `[[ [-122, 37], [-123, 38], [-124, 39] ]]` | 
+| layout      | GeometryLayout | Layout.  | 
+| ends        | Arrray  | Ends (for internal use with flat coordinates).  | 
+| style       | object  | style  e.g. `{ fill: new Fill({color: 'rgba(210, 12, 12, 0.5)'}) }` |
 
