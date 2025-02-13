@@ -1,0 +1,39 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as MousePositionControlStories from './MousePositionControl.stories';
+ 
+<Meta of={MousePositionControlStories} />
+ 
+# {'<MousePositionControl />'}
+
+A control to show the 2D coordinates of the mouse cursor. 
+By default, these are in the view projection, but can be in any supported projection. 
+By default the control is shown in the top right corner of the map, 
+but this can be changed by using the css selector `.ol-mouse-position`.
+
+A react representative of of `new MousePositionControl(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition-MousePosition.html
+
+<Story of={MousePositionControlStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { createStringXY } from 'ol/coordinate';
+import { Map, TileLayer, View, MousePositionControl } from '../../../lib';
+
+export default function(props) {
+  const format = createStringXY(4);
+  return (
+    <Map>
+      <MousePositionControl coordinateFormat={format} projection='ESPG:4326' />
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition-MousePosition.html)

@@ -1,0 +1,20 @@
+import OSM from 'ol/source/OSM';
+import { createStringXY } from 'ol/coordinate';
+import { Map, TileLayer, View, MousePositionControl } from '../../../lib';
+
+export default {
+  title: 'Controls/MousePositionControl',
+}
+
+export const Primary = {
+  render: (props) => {
+    const format = createStringXY(4);
+    return (
+      <Map>
+        <MousePositionControl coordinateFormat={format} projection='ESPG:4326' />
+        <TileLayer source={new OSM()} />
+        <View center={[-10997148, 4569099]} zoom={4}/>
+      </Map>
+    );
+  }
+}
