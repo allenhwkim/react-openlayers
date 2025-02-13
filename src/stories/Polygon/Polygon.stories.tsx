@@ -19,8 +19,8 @@ export const Primary: StoryObj<any> = {
       [-122.3909033, 37.7881577],
       [-122.4775065, 37.7882933]
     ]];
-    const style = { 
-      fill: new Fill({color: 'rgba(210, 12, 12, 0.5)'}) 
+    const style = {
+      fill: new Fill({color: 'rgba(210, 12, 12, 0.5)'})
     }
     const center = fromLonLat([-122.42, 37.779]);
     useEffect(() => {
