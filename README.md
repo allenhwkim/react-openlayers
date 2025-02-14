@@ -21,29 +21,29 @@ This module is the core component that represents the map itself. It manages lay
 * N/A  ol/control/Rotate: Adds a button to reset the map rotation to zero.
 * DONE ol/control/ScaleLine: Displays a scale line on the map.
 * DEFAULT ol/control/Zoom: Adds zoom in and zoom out buttons.
-* ???? ol/control/ZoomSlider: Adds a slider for zooming.
-* ???? ol/control/ZoomToExtent: Adds a button to zoom to a specific extent.
+* USEFUL? ol/control/ZoomSlider: Adds a slider for zooming.
+* USEFUL? ol/control/ZoomToExtent: Adds a button to zoom to a specific extent.
 
 ## Interactions
 
 Interactions are behaviors that allow users to interact with the map in various ways, such as panning, zooming, and drawing.
 
-* ol/interaction/DoubleClickZoom: Allows zooming by double-clicking on the map.
-* ol/interaction/DragAndDrop: Allows dragging and dropping files onto the map to load data.
-* ol/interaction/DragBox: Allows drawing a box by clicking and dragging.
-* ol/interaction/DragPan: Allows panning the map by dragging.
-* ol/interaction/DragRotate: Allows rotating the map by dragging.
-* ol/interaction/DragRotateAndZoom: Allows rotating and zooming the map by dragging.
-* ol/interaction/DragZoom: Allows zooming to a box drawn by dragging.
+* USEFUL? ol/interaction/DoubleClickZoom: Allows zooming by double-clicking on the map.
+* USEFUL? ol/interaction/DragAndDrop: Allows dragging and dropping files onto the map to load data.
+* LATER? ol/interaction/DragBox: Allows drawing a box by clicking and dragging.(It might be useful with Draw control to remove the existing features)
+* DEFAULT ol/interaction/DragPan: Allows panning the map by dragging.
+* ↓↓↓↓↓↓↓ ol/interaction/DragRotate: Allows rotating the map by dragging.
+* PLANNED ol/interaction/DragRotateAndZoom: Allows rotating and zooming the map by dragging.
+* ↑↑↑↑↑↑↑ ol/interaction/DragZoom: Allows zooming to a box drawn by dragging.
 * DONE ol/interaction/Draw: Allows drawing geometries on the map.
 * ol/interaction/Extent: Allows modifying the extent of a geometry.
-* ol/interaction/KeyboardPan: Allows panning the map using keyboard arrows.
-* ol/interaction/KeyboardZoom: Allows zooming the map using keyboard keys.
-* ol/interaction/Link: Synchronizes the map view with the URL.
+* USEFUL? ol/interaction/KeyboardPan: Allows panning the map using keyboard arrows.
+* USEFUL? ol/interaction/KeyboardZoom: Allows zooming the map using keyboard keys.
+* PLANNED ol/interaction/Link: Synchronizes the map view with the URL.
 * DONE ol/interaction/Modify: Allows modifying existing geometries.
-* ol/interaction/MouseWheelZoom: Allows zooming the map using the mouse wheel.
-* ol/interaction/PinchRotate: Allows rotating the map using pinch gestures.
-* ol/interaction/PinchZoom: Allows zooming the map using pinch gestures.
+* DEFAULT ol/interaction/MouseWheelZoom: Allows zooming the map using the mouse wheel.
+* LATER? ol/interaction/PinchRotate: Allows rotating the map using pinch gestures.
+* LATER? ol/interaction/PinchZoom: Allows zooming the map using pinch gestures.
 * ol/interaction/Pointer: Base class for pointer interactions.
 * ol/interaction/Select: Allows selecting features on the map.
 * DONE ol/interaction/Snap: Allows snapping geometries to other geometries.

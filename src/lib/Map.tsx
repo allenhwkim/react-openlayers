@@ -7,13 +7,10 @@ import * as ol from 'ol';
 import './style.css';
 import './ol.css';
 import {defaults as defaultControls} from 'ol/control/defaults.js';
-import Point from 'ol/geom/Point';
-import Style from 'ol/style/Style';
-import Icon from 'ol/style/Icon';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 
-const MapContext = createContext<any>(undefined);
+const MapContext = createContext<ol.Map>(undefined);
 
 export const Map = forwardRef( (props:any, ref:any) => {
   const [map, setMap] = useState<ol.Map>();
