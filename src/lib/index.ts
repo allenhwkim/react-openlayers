@@ -15,3 +15,4 @@ export { DragRotateAndZoomInteraction } from './interactions/DragRotateAndZoom';
 export { TranslateInteraction } from './interactions/TranslateInteraction';
 export { PointerInteraction } from './interactions/PointerInteraction';
 export { SelectInteraction } from './interactions/SelectInteraction';
+export { LinkInteraction } from './interactions/LinkInteraction';

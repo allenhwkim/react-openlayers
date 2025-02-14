@@ -1,0 +1,36 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as LinkInteractionStories from './LinkInteraction.stories';
+ 
+<Meta of={LinkInteractionStories} />
+ 
+# {'<LinkInteraction />'}
+
+An interaction that synchronizes the map state with the URL.
+
+A react representative of of `new Link(options)`.  
+https://openlayers.org/en/latest/apidoc/module-ol_interaction_Link-Link.html
+
+To see the url changes, click 
+<a href="/iframe.html?viewMode=docs&id=interactions-linkinteraction--docs" target="_blank">here</a>
+<Story of={LinkInteractionStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import {Map, TileLayer, View, LinkInteraction} from '../../../lib';
+
+export default function(props) => {
+  return (
+    <Map>
+      <TileLayer source={new OSM()} />
+      <View center={[0, 0]} zoom={2}/>
+      <LinkInteraction />
+    </Map>
+  );
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Link-Link.html)

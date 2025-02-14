@@ -36,7 +36,7 @@ Interactions are behaviors that allow users to interact with the map in various 
 * DONE    ol/interaction/DragRotateAndZoom: Allows rotating and zooming the map by dragging.
 * ↑↑↑↑↑↑↑ ol/interaction/DragZoom: Allows zooming to a box drawn by dragging.
 * DONE    ol/interaction/Draw: Allows drawing geometries on the map.
-* ??????? ol/interaction/Extent: Allows modifying the extent of a geometry.
+* USEFUL? ol/interaction/Extent: Allows modifying the extent of a geometry.
 * USEFUL? ol/interaction/KeyboardPan: Allows panning the map using keyboard arrows.
 * USEFUL? ol/interaction/KeyboardZoom: Allows zooming the map using keyboard keys.
 * PLANNED ol/interaction/Link: Synchronizes the map view with the URL.
