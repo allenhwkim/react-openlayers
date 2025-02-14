@@ -7,10 +7,8 @@ export function PointerInteraction(props) {
 
   useEffect(() => {
     if (!map) return;
-    console.log('props', props);
     const interaction = new OlPointerInteraction(props);
     map.addInteraction(interaction);
-    console.log('......', map.getInteractions())
   }, [map]);
 
   return null;

@@ -1,0 +1,58 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as SelectInteractionStories from './SelectInteraction.stories';
+ 
+<Meta of={SelectInteractionStories} />
+ 
+# {'<SelectInteractionControl />'}
+
+Interaction for selecting vector features. By default, selected features are styled differently, 
+so this interaction can be used for visual highlighting, as well as selecting features for other
+actions, such as modification or output. There are three ways of controlling which features 
+are selected: using the browser event as defined by the condition and optionally the toggle, 
+add/remove, and multi options; a layers filter; and a further feature filter using the filter option.
+
+A react representative of of `new Select(options)`.  
+https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
+
+<Story of={SelectInteractionStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import {Map, TileLayer, View, SelectInteraction, VectorLayer} from '../../../lib';
+import Point from 'ol/geom/Point';
+import LineString from 'ol/geom/LineString';
+import Polygon from 'ol/geom/Polygon';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+
+export default function(props) {
+  const pointFeature = new Feature( new Point([0, 0]));
+  const lineFeature = new Feature( new LineString([ [-1e7, 1e6], [-1e6, 3e6] ])) ;
+  const polygonFeature = new Feature(
+    new Polygon([ [ [-3e6, -1e6], [-3e6, 1e6], [-1e6, 1e6], [-1e6, -1e6], [-3e6, -1e6] ] ]),
+  );
+  const source = new VectorSource({
+    features: [pointFeature, lineFeature, polygonFeature],
+  })
+
+  function onSelect(e) {
+    console.log('selected', e.target.getFeatures().getLength());
+    console.log('deselected', e.deselected.length);
+  };
+
+  return (
+    <Map>
+      <TileLayer source={new OSM()} />
+      <VectorLayer source={source} />
+      <View center={[0, 0]} zoom={2}/>
+      <SelectInteraction onSelect={onSelect} />
+    </Map>
+  );
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html)

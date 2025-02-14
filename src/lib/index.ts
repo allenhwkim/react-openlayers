@@ -11,4 +11,6 @@ export { AttributionControl } from './controls/AttributionControl';
 export { MousePositionControl } from './controls/MousePositionControl';
 export { OverviewMapControl } from './controls/OverviewMapControl';
 
+export { TranslateInteraction } from './interactions/TranslateInteraction';
 export { PointerInteraction } from './interactions/PointerInteraction';
+export { SelectInteraction } from './interactions/SelectInteraction';

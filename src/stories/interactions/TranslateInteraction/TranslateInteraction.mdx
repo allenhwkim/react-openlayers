@@ -1,0 +1,55 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as TranslateInteractionStories from './TranslateInteraction.stories';
+ 
+<Meta of={TranslateInteractionStories} />
+ 
+# {'<TranslateInteractionControl />'}
+
+Interaction for translating (moving) features. If you want to translate multiple 
+features in a single action (for example, the collection used by a select interaction), 
+construct the interaction with the features option.
+
+A react representative of of `new Translate(options)`.  
+https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate-Translate.html
+
+<Story of={TranslateInteractionStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import {Map, TileLayer, View, SelectInteraction, VectorLayer, TranslateInteraction} from '../../../lib';
+import Point from 'ol/geom/Point';
+import LineString from 'ol/geom/LineString';
+import Polygon from 'ol/geom/Polygon';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import { useRef } from 'react';
+
+export function default() {
+  const selectRef = useRef();
+
+  const pointFeature = new Feature( new Point([0, 0]));
+  const lineFeature = new Feature( new LineString([ [-1e7, 1e6], [-1e6, 3e6] ])) ;
+  const polygonFeature = new Feature(
+    new Polygon([ [ [-3e6, -1e6], [-3e6, 1e6], [-1e6, 1e6], [-1e6, -1e6], [-3e6, -1e6] ] ]),
+  );
+  const source = new VectorSource({
+    features: [pointFeature, lineFeature, polygonFeature],
+  })
+
+  return (
+    <Map>
+      <TileLayer source={new OSM()} />
+      <VectorLayer source={source} />
+      <View center={[0, 0]} zoom={2}/>
+      <SelectInteraction ref={selectRef} />
+      <TranslateInteraction />
+    </Map>
+  );
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate-Translate.html)

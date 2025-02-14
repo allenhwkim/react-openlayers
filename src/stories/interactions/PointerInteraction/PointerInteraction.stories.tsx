@@ -72,7 +72,7 @@ export const Primary = {
         <TileLayer source={new OSM()} />
         <VectorLayer source={source} style={style} />
         <View center={[0, 0]} zoom={2}/>
-        <PointerInteraction 
+        <PointerInteraction
           handleDownEvent={handleDownEvent}
           handleDragEvent={handleDragEvent}
           handleMoveEvent={handleMoveEvent}
