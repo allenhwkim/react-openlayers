@@ -1,0 +1,39 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as DragRotateAndZoomStories from './DragRotateAndZoomInteraction.stories';
+ 
+<Meta of={DragRotateAndZoomStories} />
+ 
+# {'<DragRotateAndZoomInteraction />'}
+
+Allows the user to zoom and rotate the map by clicking and dragging on the map.  
+By default, this interaction is limited to when the shift key is held down.
+
+This interaction is only supported for mouse devices.
+
+And this interaction is not included in the default interactions.
+
+A react representative of of `new DragRotateAndZoom(options)`.  
+https://openlayers.org/en/latest/apidoc/module-ol_interaction_DragRotateAndZoom-DragRotateAndZoom.html
+
+<Story of={DragRotateAndZoomStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import {Map, TileLayer, View, DragRotateAndZoomInteraction} from '../../../lib';
+
+export default function(props) => {
+  return (
+    <Map>
+      <TileLayer source={new OSM()} />
+      <View center={[0, 0]} zoom={2}/>
+      <DragRotateAndZoomInteraction />
+    </Map>
+  );
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_interaction_DragRotateAndZoom-DragRotateAndZoom.html)

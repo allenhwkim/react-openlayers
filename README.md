@@ -30,24 +30,24 @@ Interactions are behaviors that allow users to interact with the map in various 
 
 * USEFUL? ol/interaction/DoubleClickZoom: Allows zooming by double-clicking on the map.
 * USEFUL? ol/interaction/DragAndDrop: Allows dragging and dropping files onto the map to load data.
-* LATER? ol/interaction/DragBox: Allows drawing a box by clicking and dragging.(It might be useful with Draw control to remove the existing features)
+* LATER?  ol/interaction/DragBox: Allows drawing a box by clicking and dragging.(It might be useful with Draw control to remove the existing features)
 * DEFAULT ol/interaction/DragPan: Allows panning the map by dragging.
 * ↓↓↓↓↓↓↓ ol/interaction/DragRotate: Allows rotating the map by dragging.
-* PLANNED ol/interaction/DragRotateAndZoom: Allows rotating and zooming the map by dragging.
+* DONE    ol/interaction/DragRotateAndZoom: Allows rotating and zooming the map by dragging.
 * ↑↑↑↑↑↑↑ ol/interaction/DragZoom: Allows zooming to a box drawn by dragging.
-* DONE ol/interaction/Draw: Allows drawing geometries on the map.
-* ol/interaction/Extent: Allows modifying the extent of a geometry.
+* DONE    ol/interaction/Draw: Allows drawing geometries on the map.
+* ??????? ol/interaction/Extent: Allows modifying the extent of a geometry.
 * USEFUL? ol/interaction/KeyboardPan: Allows panning the map using keyboard arrows.
 * USEFUL? ol/interaction/KeyboardZoom: Allows zooming the map using keyboard keys.
 * PLANNED ol/interaction/Link: Synchronizes the map view with the URL.
-* DONE ol/interaction/Modify: Allows modifying existing geometries.
+* DONE    ol/interaction/Modify: Allows modifying existing geometries.
 * DEFAULT ol/interaction/MouseWheelZoom: Allows zooming the map using the mouse wheel.
-* LATER? ol/interaction/PinchRotate: Allows rotating the map using pinch gestures.
-* LATER? ol/interaction/PinchZoom: Allows zooming the map using pinch gestures.
-* ol/interaction/Pointer: Base class for pointer interactions.
-* ol/interaction/Select: Allows selecting features on the map.
+* LATER?  ol/interaction/PinchRotate: Allows rotating the map using pinch gestures.
+* LATER?  ol/interaction/PinchZoom: Allows zooming the map using pinch gestures.
+* DONE    ol/interaction/Pointer: Base class for pointer interactions.
+* DONE ol/interaction/Select: Allows selecting features on the map.
 * DONE ol/interaction/Snap: Allows snapping geometries to other geometries.
-* ol/interaction/Translate: Allows translating (moving) features on the map. 
+* DONE ol/interaction/Translate: Allows translating (moving) features on the map. 
 
 ## Layers
 

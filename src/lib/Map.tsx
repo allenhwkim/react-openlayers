@@ -26,12 +26,12 @@ export const Map = forwardRef( (props:any, ref:any) => {
 
   useEffect(() => {
     if (!mapRef.current) return;
-    console.log('defaultControls', defaultControls());
-    setMap(new ol.Map({
+    const mapProps = {...{
       target: mapRef.current,
       layers: [markerLayer],
       controls: defaultControls(),
-    }));
+    }, ...props}
+    setMap(new ol.Map(mapProps));
   }, []);
 
   return (

@@ -5,7 +5,6 @@ import LineString from 'ol/geom/LineString';
 import Polygon from 'ol/geom/Polygon';
 import VectorSource from 'ol/source/Vector';
 import { Coordinate } from 'ol/coordinate';
-import { useState } from 'react';
 import Feature, { FeatureLike } from 'ol/Feature';
 import { getMarkerImage } from '../../../lib/Marker';
 import MapBrowserEvent from 'ol/MapBrowserEvent';

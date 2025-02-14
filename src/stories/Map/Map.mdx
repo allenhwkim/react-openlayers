@@ -20,15 +20,25 @@ export default function(props) {
   setTimeout(() => console.log(olMap.current), 1000));
 
   return ( 
-    <Map ref={mapRef}>
+    <Map ref={mapRef} controls={[]} interactions={[]}>
       <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   );
 }
 ```
+
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
+
 To get or set the Map property, use a Map instance get/set function,
 e.g. [setSize()](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#setSize)
 ```javascript
 mapRef.current.setSize([400, 200]);
 ```
+
+
+
