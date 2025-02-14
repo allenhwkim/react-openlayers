@@ -11,7 +11,7 @@ export const SelectInteraction = forwardRef( (props:any, ref:any) => {
   useEffect(() => {
     if (!map) return;
     const select = new Select(props);
-    props.onSelect && 
+    props.onSelect &&
       select.on('select', props.onSelect);
     setSelectRef(select);
     map.addInteraction(select);
