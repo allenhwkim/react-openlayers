@@ -4,6 +4,7 @@ export { Polygon } from './Polygon';
 export { DrawControl } from './controls/DrawControl';
 export { TileLayer } from './layers/TileLayer';
 export { VectorLayer } from './layers/VectorLayer';
+export { GraticuleLayer } from './layers/GraticuleLayer';
 
 export { FullScreenControl } from './controls/FullScreenControl';
 export { ScaleLineControl } from './controls/ScaleLineControl';

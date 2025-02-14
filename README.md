@@ -39,7 +39,7 @@ Interactions are behaviors that allow users to interact with the map in various 
 * USEFUL? ol/interaction/Extent: Allows modifying the extent of a geometry.
 * USEFUL? ol/interaction/KeyboardPan: Allows panning the map using keyboard arrows.
 * USEFUL? ol/interaction/KeyboardZoom: Allows zooming the map using keyboard keys.
-* PLANNED ol/interaction/Link: Synchronizes the map view with the URL.
+* DONE    ol/interaction/Link: Synchronizes the map view with the URL.
 * DONE    ol/interaction/Modify: Allows modifying existing geometries.
 * DEFAULT ol/interaction/MouseWheelZoom: Allows zooming the map using the mouse wheel.
 * LATER?  ol/interaction/PinchRotate: Allows rotating the map using pinch gestures.
@@ -54,16 +54,16 @@ Interactions are behaviors that allow users to interact with the map in various 
 Layers are used to display various types of map data. They are part of the map’s rendering process and are managed by the map’s layer stack.
 
 * N/A ol/layer/Base: The base class for all layers.
-* ol/layer/BaseImage: Base class for image layers.
+* N/A ol/layer/BaseImage: Base class for image layers.
 * N/A ol/layer/BaseTile: Base class for tile layers.
 * N/A ol/layer/BaseVector: Base class for vector layers.
-* ol/layer/Graticule: Displays a graticule (grid of latitude and longitude lines) on the map.
-* ol/layer/Group: A group of layers that can be treated as a single layer.
+* DONE  ol/layer/Graticule: Displays a graticule (grid of latitude and longitude lines) on the map.
+* LATER ol/layer/Group: A group of layers that can be treated as a single layer.
 * ol/layer/Heatmap: Displays a heatmap based on vector data.
 * ol/layer/Image: Displays single, static images.
 * ol/layer/Layer: The base class for all layers, providing common functionality.
-* DONE ol/layer/Tile: Displays tiled images, such as those from a tile server.
-* DONE ol/layer/Vector: Displays vector data, such as points, lines, and polygons.
+* DONE  ol/layer/Tile: Displays tiled images, such as those from a tile server.
+* DONE  ol/layer/Vector: Displays vector data, such as points, lines, and polygons.
 * ol/layer/VectorImage: Displays vector data as images.
 * ol/layer/VectorTile: Displays vector tiles, which are vector data divided into tiles.
 * ol/layer/WebGLTile: Displays tiled images using WebGL for rendering.

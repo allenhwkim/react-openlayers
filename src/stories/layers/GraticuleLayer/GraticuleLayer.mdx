@@ -1,0 +1,36 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as GraticuleLayerStories from './GraticuleLayer.stories';
+ 
+<Meta of={GraticuleLayerStories} />
+ 
+# {'<GraticuleLayer />'}
+ 
+A react representative of of `new GraticuleLayer(...)`
+https://openlayers.org/en/latest/apidoc/module-ol_layer_Graticule-Graticule.html
+<Story of={GraticuleLayerStories.Primary} />
+
+### Usage
+```typescript
+import OSM from 'ol/source/OSM';
+import { Map, View, TileLayer, GraticuleLayer } from '../../../lib';
+import Stroke from 'ol/style/Stroke';
+
+export default function(props) {
+  const strokeStyle = new Stroke({
+    color: 'rgba(255,120,0,0.9)',
+    width: 2,
+    lineDash: [0.5, 4],
+  })
+
+  return <Map>
+    <TileLayer source={new OSM()} />
+    <GraticuleLayer showLabels={true} strokeStyle={strokeStyle} />
+    <View center={[-10997148, 4569099]} zoom={4}/>
+  </Map>
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_layer_Graticule-Graticule.html)
