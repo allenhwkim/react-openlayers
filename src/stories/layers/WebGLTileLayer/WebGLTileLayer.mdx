@@ -1,0 +1,40 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as WebGLTileLayerStories from './WebGLTileLayer.stories';
+ 
+<Meta of={WebGLTileLayerStories} />
+ 
+# {'<WebGLTileLayer />'}
+ 
+For layer sources that provide pre-rendered, tiled images in grids that are organized
+by zoom levels for specific resolutions.
+
+A react representative of of `new WebGLTileLayer(...)`  
+https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile-WebGLTileLayer.html
+<Story of={WebGLTileLayerStories.Primary} />
+
+### Usage
+```typescript
+import { Map, View, WebGLTileLayer } from '../../../lib';
+import ImageTileSource from 'ol/source/ImageTile';
+
+export default {
+  title: 'Layers/WebGLTileLayer',
+}
+
+export default function(props) {
+  const source = new ImageTileSource({
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attributions: '&#169; OpenStreetMap contributors.',
+  });
+
+  return <Map>
+    <WebGLTileLayer source={source} />
+    <View center={[-10997148, 4569099]} zoom={4}/>
+  </Map>
+}
+```
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile-WebGLTileLayer.html)

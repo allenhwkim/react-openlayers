@@ -1,8 +1,7 @@
 import { OSM } from 'ol/source';
 import { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Map, TileLayer, View } from '../../lib';
-import { Marker } from '../../lib/Marker';
+import { Map, TileLayer, View, Marker } from '../../lib';
 
 export default { title: 'Marker' } as Meta;
 declare let window:any;
