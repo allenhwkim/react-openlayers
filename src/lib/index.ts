@@ -1,6 +1,6 @@
 export { Map } from './Map';
 export { View } from './View';
-export { Marker } from './Marker';
+export { Marker, getMarkerImage } from './Marker';
 export { Overlay } from './Overlay';
 
 export { TileLayer } from './layers/TileLayer';
