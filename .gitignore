@@ -1,20 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
+node_modules
+storybook-static
 build
 dist
-storybook-static
-
-# misc
-.DS_Store
-.eslintcache
-npm-debug.log*
-build-storybook.log

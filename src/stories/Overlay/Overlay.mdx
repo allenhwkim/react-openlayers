@@ -3,18 +3,32 @@ import * as OverlayStories from './Overlay.stories';
  
 <Meta of={OverlayStories} />
  
-# {'<View />'}
+# {'<Overlay />'}
  
 A react representative of of `new Overlay(...)`
-https://openlayers.org/en/latest/apidoc/module-ol_View-View.html
+https://openlayers.org/en/latest/apidoc/module-ol_Overlay-Overlay.html
 <Story of={OverlayStories.Primary} />
 
 ### Usage
 ```typescript
-TODO
+import OSM from 'ol/source/OSM';
+import { Map, View, TileLayer, Overlay } from '../../lib';
+
+export default function(props) {
+  return (
+    <Map>
+      <Overlay  autoPa={{ animation: { duration: 250 }}}>
+        <p>You clicked here.</p>
+        <code>[[coordinate]]</code>
+      </Overlay>
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
 ```
 
 ### props
 
 You can pass any props defined in the 
-[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html)
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_Overlay-Overlay.html)
