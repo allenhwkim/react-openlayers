@@ -5,7 +5,7 @@ import * as VectorLayerStories from './VectorLayer.stories';
  
 # {'<VectorLayer />'}
  
-A react representative of of `new VectorLayer(...)`
+A react representative of of `new VectorLayer(...)`  
 https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html
 
 <Story of={VectorLayerStories.Primary} />
@@ -116,10 +116,7 @@ export default function(props) {
 | properties | Object  | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
 | ...    | ...         | For more, refer to Openlayers documentation |
 
-To update a VectorLayer property after initialization, use a LayerLayer instance set function,
-e.g. [setVisible()](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html#setVisible)
-```javascript
-mapRef.current.getLayers().getArray()[0].setVisible(true)
-// or
-mapRef.current.getLayer.find(el => el.get('key') === 'myLayer')).setVisible(true);
-```
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html)

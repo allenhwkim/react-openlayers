@@ -8,7 +8,7 @@ export default {
 export const Primary = {
   render: (props) => {
     return <Map>
-      <Overlay  autoPa={{ animation: { duration: 250 }}}>
+      <Overlay autoPan={{ animation: { duration: 250 }}}>
         <p>You clicked here.</p>
         <code>[[coordinate]]</code>
       </Overlay>
