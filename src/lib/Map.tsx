@@ -4,8 +4,8 @@ import {
   createContext, useContext,
 } from 'react';
 import * as ol from 'ol';
-import './style.css';
 import './ol.css';
+import './Map.css';
 import {defaults as defaultControls} from 'ol/control/defaults.js';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';

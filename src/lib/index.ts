@@ -1,6 +1,7 @@
 export { Map } from './Map';
 export { View } from './View';
 export { Marker } from './Marker';
+export { Overlay } from './Overlay';
 
 export { TileLayer } from './layers/TileLayer';
 export { VectorLayer } from './layers/VectorLayer';
