@@ -11,8 +11,10 @@
     "build": "npm run build:lib && npm run build:storybook",
     "build:lib": "rm -rf dist && node esbuild.js && ls -al dist",
     "build:storybook": "storybook build",
-    "lint": "eslint src --fix"
+    "lint": "eslint src --fix",
+    "prepublishOnly": "npm run build:lib"
   },
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "https://github.com/allenhwkim/react-openlayers"
@@ -21,7 +23,6 @@
     "url": "https://github.com/allenhwkim/react-openlayers/issues"
   },
   "license": "MIT",
-  "private": true,
   "peerDependencies": {
     "ol": "^10.4.0",
     "react": "^18.2.0",
