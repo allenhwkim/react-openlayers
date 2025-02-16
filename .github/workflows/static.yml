@@ -32,6 +32,11 @@ jobs:
     
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
         
       - name: Build Storybook pages
         run: npx storybook build  #output to ./storybook-static
