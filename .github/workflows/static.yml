@@ -39,7 +39,9 @@ jobs:
           cache: 'npm'
         
       - name: Build Storybook pages
-        run: npx storybook build  #output to ./storybook-static
+        run: |
+          npm install
+          npx storybook build  #output to ./storybook-static
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
