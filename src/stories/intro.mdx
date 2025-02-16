@@ -1,4 +1,7 @@
 import ReadMe from '../../README.md?raw';
 import { Markdown } from '@storybook/blocks';
+import pkg from '../../package.json';
  
+<a href={pkg.repository.url}>version: {pkg.version}</a>
+
 <Markdown>{ReadMe}</Markdown>
