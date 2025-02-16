@@ -19,6 +19,7 @@
     "type": "git",
     "url": "https://github.com/allenhwkim/react-openlayers"
   },
+  "homepage": "https://allenhwkim.github.io/react-openlayers/?path=/docs/intro--docs",
   "bugs": {
     "url": "https://github.com/allenhwkim/react-openlayers/issues"
   },
