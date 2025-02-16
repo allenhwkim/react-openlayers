@@ -1,7 +1,7 @@
 import ReactDOMServer from 'react-dom/server';
 import * as ol from 'ol';
 import {toLonLat} from 'ol/proj';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMap } from './Map';
 import './Overlay.css';
 
