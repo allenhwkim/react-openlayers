@@ -21,3 +21,13 @@ export const circleIcon = `
     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12z" fill="#0D0D0D"/>
   </svg>
 `;
+
+export const moveIcon = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" >
+    <polyline points="5 9 2 12 5 15" />
+    <polyline points="9 5 12 2 15 5" />
+    <polyline points="15 19 12 22 9 19" />
+    <polyline points="19 9 22 12 19 15" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <line x1="12" y1="2" x2="12" y2="22" />
+  </svg>`

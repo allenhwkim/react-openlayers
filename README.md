@@ -3,7 +3,7 @@
 A minimal React wrapper of [OpenLayers 10](https://openlayers.org/)
 written in [TypeScript](https://www.typescriptlang.org/)
 
-![example](http://i.imgur.com/5JQcT8G.png)
+![Image](https://github.com/user-attachments/assets/9dfc9102-4952-4c56-a76b-19699a5a4570)
 
 ## Install
 ```

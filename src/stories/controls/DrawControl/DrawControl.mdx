@@ -7,13 +7,23 @@ import * as DrawControlStories from './DrawControl.stories';
 
 Custom control to draw points, lines, polygons and circles. 
 Press shift key for freehand drawing.
+
+### How it works
+1. Create a VectorLayer with a VectorSource, and applies to Map
+2. Apply a Modify/Snap/Draw interaction with the VectorSource to Map
+
+## How to use
+1. Add `<DrawControl />`.
+2. When click the toggle icon, you are ready draw. 
+3. Pick a shape to draw. Press ESC to cancel draw.
+5. Pick move icon to move the shape
  
 <Story of={DrawControlStories.Primary} />
 
 ### Usage
 ```typescript
 import OSM from 'ol/source/OSM';
-import { Map, TileLayer, View, DrawControl } from 'react-openlayers';
+import { Map, TileLayer, View, DrawControl, SelectInteraction, ModifyInteraction } from 'react-openlayers';
 
 export default function(props) {
   const mapRef = useRef();
@@ -22,6 +32,8 @@ export default function(props) {
       <DrawControl />
       <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
+      <SelectInteraction />
+      <TranslateInteraction />
     </Map>
   )
 }

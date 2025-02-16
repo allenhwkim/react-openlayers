@@ -8,7 +8,7 @@ import Snap from 'ol/interaction/Snap';
 import Draw from 'ol/interaction/Draw';
 import { listen, unlistenByKey } from 'ol/events';
 import { useMap } from '../Map';
-import { drawIcon, lineIcon, pointIcon, polygonIcon, circleIcon} from './icons';
+import { drawIcon, lineIcon, pointIcon, polygonIcon, circleIcon, moveIcon} from './icons';
 import './style.css';
 import GeoJSON from 'ol/format/GeoJSON';
 
@@ -27,12 +27,16 @@ class DrawControlClass extends Control {
     element.className = 'draw-control ol-unselectable ol-control';
     const title = 'Press shift for freehand drawing';
     element.insertAdjacentHTML('beforeend', `
-      <button id="draw-btn">${drawIcon}</button>
-      <div id="draw-btns" class="shapes" title="Shift+S to save as GeoJson" hidden>
-        <button id="point-btn">${pointIcon}</button>
-        <button id="line-btn" title="${title}">${lineIcon}</button>
-        <button id="polygon-btn" title="${title}">${polygonIcon}</button>
-        <button id="circle-btn" title="${title}">${circleIcon}</button>
+      <button id="toggle-btn" 
+        title="Clik here to start drawing. Shift+S to save as GeoJson">
+        ${drawIcon}
+      </button>
+      <div id="shape-btns" class="shapes" hidden>
+        <button value="Point" title="${title}">${pointIcon}</button>
+        <button value="LineString" title="${title}">${lineIcon}</button>
+        <button value="Polygon" title="${title}">${polygonIcon}</button>
+        <button value="Circle" title="${title}">${circleIcon}</button>
+        <button>${moveIcon}</button>
       </div>
     `);
 
@@ -59,25 +63,18 @@ class DrawControlClass extends Control {
       }
     });
 
-    element.querySelector('#draw-btn')
-      .addEventListener('click', this.onDrawBtnClick.bind(this));
-    element.querySelector('#point-btn')
-      .addEventListener('click', e => this.onShapeBtnClick(e, 'Point'));
-    element.querySelector('#line-btn')
-      .addEventListener('click', e => this.onShapeBtnClick(e, 'LineString'));
-    element.querySelector('#circle-btn')
-      .addEventListener('click', e => this.onShapeBtnClick(e, 'Circle'));
-    element.querySelector('#polygon-btn')
-      .addEventListener('click', e => this.onShapeBtnClick(e, 'Polygon'));
-
+    element.querySelector('#toggle-btn')
+      .addEventListener('click', this.onToggleBtnClick.bind(this));
+    element.querySelector('#shape-btns')
+      .addEventListener('click', this.onShapeBtnsClick.bind(this))
   }
   
-  onDrawBtnClick(event) {
+  onToggleBtnClick(event) {
     const drawControl = event.target.closest('.draw-control');
-    const drawBtnsEl = drawControl.querySelector('#draw-btns');
-    drawBtnsEl.toggleAttribute('hidden');
+    const shapeBtnsEl = drawControl.querySelector('#shape-btns');
+    shapeBtnsEl.toggleAttribute('hidden');
 
-    if (drawBtnsEl.hasAttribute('hidden')) {
+    if (shapeBtnsEl.hasAttribute('hidden')) {
       this.getMap().removeInteraction(this.draw);
       this.getMap().removeInteraction(this.snap);
       this.getMap().removeLayer(this.drawLayer);
@@ -104,7 +101,6 @@ class DrawControlClass extends Control {
   }
 
   downloadGeoJson() {
-    const format = new GeoJSON();
     const features = this.drawLayer.getSource().getFeatures();
     const options = {
       dataProjection: 'EPSG:4326', // Desired projection for the output
@@ -120,19 +116,25 @@ class DrawControlClass extends Control {
     a.click();
   }
 
-  onShapeBtnClick(event, type) {
-    const btnContainerEl = event.target.closest('#draw-btns');
+  onShapeBtnsClick(event) {
     const btnEl = event.target.closest('button');
-    Array.from(btnContainerEl.children).forEach((el:any) => el.classList.remove('active'));
+    const type = btnEl.value;
+
+    // Activte only the clicked button
+    const containerEl = event.target.closest('#shape-btns');
+    Array.from(containerEl.children).forEach((el:any) => el.classList.remove('active'));
     btnEl.classList.add('active');
 
+    // Remove the prev. interaction
     this.getMap().removeInteraction(this.draw);
     this.getMap().removeInteraction(this.snap);
 
-    this.draw = new Draw({source: this.vectorSource, type});
-    this.snap = new Snap({source: this.vectorSource});
-    this.getMap().addInteraction(this.draw);
-    this.getMap().addInteraction(this.snap);
+    if (type) { // Add new interaction
+      this.draw = new Draw({source: this.vectorSource, type});
+      this.snap = new Snap({source: this.vectorSource});
+      this.getMap().addInteraction(this.draw);
+      this.getMap().addInteraction(this.snap);
+    }
   }
 }
 
