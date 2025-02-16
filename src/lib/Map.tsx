@@ -31,7 +31,11 @@ export const Map = forwardRef( (props:any, ref:any) => {
       layers: [markerLayer],
       controls: defaultControls(),
     }, ...props}
-    setMap(new ol.Map(mapProps));
+    const notInitialized = mapRef.current?.children?.length === 0;
+    if (notInitialized) { // Do not render twice with <React.StriceMode>
+      const olMap = new ol.Map(mapProps);
+      setMap(olMap);
+    }
   }, []);
 
   return (

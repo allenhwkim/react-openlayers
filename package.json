@@ -4,9 +4,12 @@
   "description": "React + OpenLayers",
   "author": "Allen Kim",
   "type": "module",
+  "main": "dist/index.js",
   "scripts": {
     "start": "storybook dev -p 6006",
-    "build:lib": "vite build",
+    "libtest": "npm run build:lib && vite -c lib-test/vite.config.ts --open",
+    "build": "npm run build:lib && npm run build:storybook",
+    "build:lib": "rm -rf dist && node esbuild.js && ls -al dist",
     "build:storybook": "storybook build",
     "lint": "eslint src --fix"
   },
@@ -39,6 +42,7 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
+    "esbuild-node-externals": "^1.18.0",
     "eslint": "^9.20.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",

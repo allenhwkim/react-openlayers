@@ -1,16 +1,9 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import storybookPlugin from 'eslint-plugin-storybook';
 
 export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended,
-  // reactHooksPlugin.configs ['recommended-latest'],
-  // storybookPlugin.configs['recommended-latest'],
-  // reactPlugin.configs.flat['jsx-runtime'],
-  // { browser: true, es2020: true },
   {
     ignores: ['dist', 'build', 'storybook-static'],
   },

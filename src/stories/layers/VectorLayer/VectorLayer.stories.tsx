@@ -11,8 +11,7 @@ import Cluster from 'ol/source/Cluster';
 import Fill from 'ol/style/Fill';
 import Style from 'ol/style/Style';
 import Text from 'ol/style/Text';
-import { Map, View, VectorLayer, TileLayer } from '../../../lib';
-import { getMarkerImage } from '../../../lib/Marker';
+import { Map, View, VectorLayer, TileLayer, getMarkerImage } from '../../../lib';
 
 export default {
   title: 'Layers/VectorLayer',
