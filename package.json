@@ -6,11 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "storybook dev -p 6006",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "build-storybook": "storybook build",
-    "init-msw": "msw init public/",
+    "build:lib": "vite build",
+    "build:storybook": "storybook build",
     "lint": "eslint src --fix"
   },
   "repository": {
@@ -37,6 +34,8 @@
     "@storybook/react": "^8.3.2",
     "@storybook/react-vite": "^8.3.2",
     "@storybook/test": "^8.3.2",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^22.13.4",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
