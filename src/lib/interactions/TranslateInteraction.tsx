@@ -1,5 +1,5 @@
-import Translate from 'ol/interaction/Translate';
 import { useEffect } from 'react';
+import Translate from 'ol/interaction/Translate';
 import { useMap } from '../Map';
 
 export function TranslateInteraction(props) {

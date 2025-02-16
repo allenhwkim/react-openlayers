@@ -1,8 +1,8 @@
-import Select from 'ol/interaction/Select';
 import { forwardRef, useEffect } from 'react';
+import Select from 'ol/interaction/Select';
 import { useMap } from '../Map';
 
-export const SelectInteraction = forwardRef( (props:any, ref:any) => {
+export function SelectInteraction(props:any) {
   const map = useMap();
 
   useEffect(() => {
@@ -14,4 +14,4 @@ export const SelectInteraction = forwardRef( (props:any, ref:any) => {
   }, [map]);
 
   return null;
-});
+};

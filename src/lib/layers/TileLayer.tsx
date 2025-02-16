@@ -1,5 +1,5 @@
-import OlTileLayer from 'ol/layer/Tile';
 import { useEffect } from 'react';
+import OlTileLayer from 'ol/layer/Tile';
 import { useMap } from '../Map';
 
 export function TileLayer(props) {

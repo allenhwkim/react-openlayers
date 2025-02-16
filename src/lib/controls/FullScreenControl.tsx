@@ -1,7 +1,7 @@
-import * as ol from 'ol';
 import { useEffect } from 'react';
-import { useMap } from '../Map';
+import * as ol from 'ol';
 import FullScreen from 'ol/control/FullScreen';
+import { useMap } from '../Map';
 
 export function FullScreenControl(props) {
   const map: ol.Map = useMap();

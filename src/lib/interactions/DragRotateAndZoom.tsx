@@ -1,5 +1,5 @@
-import DragRotateAndZoom from 'ol/interaction/DragRotateAndZoom';
 import { useEffect } from 'react';
+import DragRotateAndZoom from 'ol/interaction/DragRotateAndZoom';
 import { useMap } from '../Map';
 
 export function DragRotateAndZoomInteraction(props) {

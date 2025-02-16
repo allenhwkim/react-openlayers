@@ -1,7 +1,7 @@
-import * as ol from 'ol';
 import { useEffect } from 'react';
-import { useMap } from '../Map';
+import * as ol from 'ol';
 import MousePosition from 'ol/control/MousePosition';
+import { useMap } from '../Map';
 
 export function MousePositionControl(props) {
   const map: ol.Map = useMap();

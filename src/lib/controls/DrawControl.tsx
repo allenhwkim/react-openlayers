@@ -6,11 +6,11 @@ import VectorLayer from 'ol/layer/Vector';
 import Modify from 'ol/interaction/Modify';
 import Snap from 'ol/interaction/Snap';
 import Draw from 'ol/interaction/Draw';
+import GeoJSON from 'ol/format/GeoJSON';
 import { listen, unlistenByKey } from 'ol/events';
 import { useMap } from '../Map';
 import { drawIcon, lineIcon, pointIcon, polygonIcon, circleIcon, moveIcon} from './icons';
 import './style.css';
-import GeoJSON from 'ol/format/GeoJSON';
 
 class DrawControlClass extends Control {
   vectorSource: VectorSource;

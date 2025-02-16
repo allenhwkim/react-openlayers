@@ -1,11 +1,11 @@
-import * as ol from 'ol';
 import { useEffect } from 'react';
-import { useMap } from './Map';
+import * as ol from 'ol';
 import {fromLonLat} from 'ol/proj';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import Point from 'ol/geom/Point';
 import VectorLayer from 'ol/layer/Vector';
+import { useMap } from './Map';
 
 export function getMarkerImage(color='red') {
   return `data:image/svg+xml,%3Csvg%20width%3D%2232px%22%20height%3D%2232px%22%20` +

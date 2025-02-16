@@ -1,5 +1,5 @@
-import OlView from 'ol/View';
 import { useEffect } from 'react';
+import OlView from 'ol/View';
 import { useMap } from './Map';
 
 export function View(props) {

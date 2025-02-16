@@ -1,7 +1,7 @@
 import * as ol from 'ol';
+import Attribution from 'ol/control/Attribution';
 import { useEffect } from 'react';
 import { useMap } from '../Map';
-import Attribution from 'ol/control/Attribution';
 
 export function AttributionControl(props) {
   const map: ol.Map = useMap();

@@ -1,7 +1,7 @@
-import * as ol from 'ol';
 import { useEffect } from 'react';
-import { useMap } from '../Map';
+import * as ol from 'ol';
 import OverviewMap from 'ol/control/OverviewMap';
+import { useMap } from '../Map';
 
 export function OverviewMapControl(props) {
   const map: ol.Map = useMap();

@@ -1,5 +1,5 @@
-import OlGraticuleLayer from 'ol/layer/Graticule';
 import { useEffect } from 'react';
+import OlGraticuleLayer from 'ol/layer/Graticule';
 import { useMap } from '../Map';
 
 export function GraticuleLayer(props) {

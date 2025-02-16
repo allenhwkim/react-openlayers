@@ -1,5 +1,5 @@
-import OlHeatmapLayer from 'ol/layer/Heatmap';
 import { useEffect } from 'react';
+import OlHeatmapLayer from 'ol/layer/Heatmap';
 import { useMap } from '../Map';
 
 export function HeatmapLayer(props) {

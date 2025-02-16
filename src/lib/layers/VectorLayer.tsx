@@ -1,5 +1,5 @@
-import OlVectorLayer from 'ol/layer/Vector';
 import { useEffect } from 'react';
+import OlVectorLayer from 'ol/layer/Vector';
 import { useMap } from '../Map';
 
 export function VectorLayer(props) {

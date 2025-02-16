@@ -1,5 +1,5 @@
-import OlWebGLTileLayer from 'ol/layer/WebGLTile';
 import { useEffect } from 'react';
+import OlWebGLTileLayer from 'ol/layer/WebGLTile';
 import { useMap } from '../Map';
 
 export function WebGLTileLayer(props) {

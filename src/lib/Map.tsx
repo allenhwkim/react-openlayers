@@ -4,11 +4,11 @@ import {
   createContext, useContext,
 } from 'react';
 import * as ol from 'ol';
-import './ol.css';
-import './Map.css';
 import {defaults as defaultControls} from 'ol/control/defaults.js';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import './ol.css';
+import './Map.css';
 
 const MapContext = createContext<ol.Map>(undefined);
 

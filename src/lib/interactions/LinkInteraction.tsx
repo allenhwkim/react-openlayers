@@ -1,5 +1,5 @@
-import Link from 'ol/interaction/Link';
 import { useEffect } from 'react';
+import Link from 'ol/interaction/Link';
 import { useMap } from '../Map';
 
 export function LinkInteraction(props) {
