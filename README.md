@@ -1,5 +1,34 @@
 # React components for OpenLayers
 
+A minimal React wrapper of [OpenLayers 10](https://openlayers.org/)
+written in [TypeScript](https://www.typescriptlang.org/)
+
+![example](http://i.imgur.com/5JQcT8G.png)
+
+## Install
+```
+npm install react-openlayers --save-dev
+```
+
+## Example
+```typescript
+import * as ol from 'ol';
+import { OSM } from 'ol/source';
+import { Map, View, TileLayer } from 'react-openlayers';
+
+export default function(props) {
+  const mapRef= useRef<ol.Map>();
+  setTimeout(() => console.log(olMap.current), 1000));
+
+  return ( 
+    <Map ref={mapRef} controls={[]} interactions={[]}>
+      <TileLayer source={new OSM()} />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
+```
+
 ### Base
 | Object     | Component    | Description  | 
 | ------     | ---------    | ------------ |
