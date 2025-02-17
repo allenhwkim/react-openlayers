@@ -22,7 +22,7 @@ export default function(props) {
     <Map ref={mapRef}>
       <TileLayer source={new OSM()} />
       <View center={[0,0]} zoom={4}/>
-      <Marker lonLat={[0,0]} color="blue" />
+      <Marker lonLat={[0,0]} char="A" color="blue" addOnClick={true} removeOnClick={true} />
     </Map>
   );
 }
@@ -33,6 +33,9 @@ export default function(props) {
 
 | Prop   | type        | description |
 | ------ | ----------- | ------------|
-| lonLat | number[]    | longitude and latitude that marker to point, e.g. [0,0] | 
-| color  | string      | Fill color of the marker, e.g. 'red' |
+| lonLat        | number[] | longitude and latitude that marker to point, e.g. [0,0] | 
+| color         | string   | Fill color of the marker, e.g. 'red' |
+| char          | char     | A character for the marker. e.g. 'A' |
+| addOnClick    | boolean  | Add a new marker on click |
+| removeOnClick | boolean  | Remove the clicked marker on click |
 

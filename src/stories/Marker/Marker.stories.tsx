@@ -14,7 +14,7 @@ export const Primary: StoryObj<any> = {
       <Map ref={mapRef}>
         <TileLayer source={new OSM()} />
         <View center={[0,0]} zoom={4}/>
-        <Marker lonLat={[0,0]} color="blue" />
+        <Marker lonLat={[0,0]} char="A" color="blue" addOnClick={true} removeOnClick={true} />
       </Map>
     );
   }
