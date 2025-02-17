@@ -30,17 +30,19 @@ export default function(props) {
 }
 ```
 
+## List of components
+
 ### Base
-| Object     | Component    | Description  | 
-| ------     | ---------    | ------------ |
+| OpenLayers Object  | React Component    | Description  | 
+| --------------     | ---------------    | ------------ |
 | ol/Map     | `<Map />`    | It manages layers, controls, interactions, and the overall rendering of the map. |
 | ol/Overlay | `<Overlay />`| It add HTML elements to the map at specific coordinates. |
 | ol/View    | `<View />`   | A View object represents a simple 2D view of the map |
 | ol/Feature | `<Marker />` | ol/Feature customized as a map maker. |
 
 ### Layers
-| Object     | Component     | Description  | 
-| ------     | ---------     | ------------ |
+| OpenLayers Object  | React Component    | Description  | 
+| --------------     | ---------------    | ------------ |
 | ol/layer/Graticule |  `<GraticuleLayer />` | Displays a graticule (grid of latitude and longitude lines) on the map. |
 | ol/layer/Heatmap |  `<HeatmapLayer />` | Displays a heatmap based on vector data. |
 | ol/layer/Tile |  `<TileLayer />` | Displays tiled images, such as those from a tile server. |
@@ -48,8 +50,8 @@ export default function(props) {
 | ol/layer/WebGLTile |  `<WebGLLayer />` | Displays tiled images using WebGL for rendering. |
 
 ### Controls
-| Object     | Component     | Description  | 
-| ------     | ---------     | ------------ |
+| OpenLayers Object  | React Component    | Description  | 
+| --------------     | ---------------    | ------------ |
 | ol/control/Attribution   | `<AttributionControl />`   | Displays attribution information for the map layers |
 | ol/control/FullScreen    | `<FullScreenControl />`    | Adds a button to toggle full-screen mode |
 | ol/control/MousePosition | `<MousePositionControl />` | Displays the current mouse position in coordinates |
@@ -57,8 +59,8 @@ export default function(props) {
 | ol/control/ScaleLine     | `<ScaleLineControl />`     | Displays an overview map of the main map |
 
 ### Interactions
-| Object     | Component     | Description  | 
-| ------     | ---------     | ------------ |
+| OpenLayers Object  | React Component    | Description  | 
+| --------------     | ---------------    | ------------ |
 | ol/interaction/DragRotateAndZoom| `<DragRotateAndZoomInteraction />` | Allows rotating and zooming the map by dragging. |
 | ol/interaction/Draw | `<DrawInteraction />` | Allows drawing geometries on the map.|
 | ol/interaction/Link | `<LinkInteraction />` | Synchronizes the map view with the URL. |
@@ -67,3 +69,23 @@ export default function(props) {
 | ol/interaction/Select | `<SelectInteraction />` | Allows selecting features on the map. |
 | ol/interaction/Snap | `<SnapInteraction />` | Allows snapping geometries to other geometries. |
 | ol/interaction/Translate | `<TranslateInteraction />` | Allows translating (moving) features on the map. |
+
+## For developers
+
+There are two group of sources and corresponding builds.
+
+1. React component library
+
+    Code for component library is in `./src/lib` directory.
+    This is to be published to [npm](https://www.npmjs.com/package/react-openlayers)
+    after build, `$ npm run build:lib`, which produces output to `./dist` directory
+
+2. Storybook documentation. 
+
+    Code for Storybook is in `./src/stories`. Storybook app documents and 
+    demonstrates the usage of each compont. It is deployed to 
+    [Github Pages](https://allenhwkim.github.io/react-openlayers).
+
+    When `main` branch is updated, a Github Action runs the build command, 
+    `$ npm run build:storybook`, which writes to `./storybook-static` directory, 
+    and the Github Action deploys the direcory to the Github Pages.
