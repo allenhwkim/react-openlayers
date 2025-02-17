@@ -3,6 +3,14 @@ import { Meta } from '@storybook/addon-docs';
 import ReadMe from '../../README.md?raw';
 import pkg from '../../package.json';
  
+<style>{`
+  table {
+    width: 100%;
+    tr :is(td,th) { width: 20%; }
+    tr :is(td,th):nth-child(3) { width: 60%; }
+  }
+`}
+</style>
 <Meta title="Intro" />
 
 <a href={pkg.repository.url}>version: {pkg.version}</a>

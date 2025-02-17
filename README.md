@@ -12,17 +12,13 @@ npm install react-openlayers --save-dev
 
 ## Example
 ```typescript
-import * as ol from 'ol';
 import { OSM } from 'ol/source';
 import { Map, View, TileLayer } from 'react-openlayers';
 import 'react-openlayers/dist/index.css'; // for css
 
 export default function(props) {
-  const mapRef= useRef<ol.Map>();
-  setTimeout(() => console.log(olMap.current), 1000));
-
   return ( 
-    <Map ref={mapRef} controls={[]} interactions={[]}>
+    <Map controls={[]} interactions={[]}>
       <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
