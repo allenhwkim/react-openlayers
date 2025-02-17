@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "storybook dev -p 6006",
-    "libtest": "npm run build:lib && vite -c lib-test/vite.config.ts --open",
+    "libtest": "npm run build:lib && vite -c src/lib-test/vite.config.ts --open",
     "build": "npm run build:lib && npm run build:storybook",
     "build:lib": "rm -rf dist && node esbuild.js && ls -al dist",
     "build:storybook": "storybook build",

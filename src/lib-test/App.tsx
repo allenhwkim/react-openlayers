@@ -6,8 +6,8 @@ import Cluster from 'ol/source/Cluster';
 import Fill from 'ol/style/Fill';
 import Style from 'ol/style/Style';
 import Text from 'ol/style/Text';
-import { Map, View, VectorLayer, TileLayer } from '../dist'; // package.json -> ./dis/index.js
-import '../dist/index.css';
+import { Map, View, VectorLayer, TileLayer } from '../../dist'; // package.json -> ./dis/index.js
+import '../../dist/index.css';
 
 export default function App() {
 
