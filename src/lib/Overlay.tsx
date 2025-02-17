@@ -4,6 +4,7 @@ import {toLonLat} from 'ol/proj';
 import { useEffect } from 'react';
 import { useMap } from './Map';
 import './Overlay.css';
+import { getAddress } from './util';
 
 export function Overlay(props) {
   const map = useMap();
@@ -12,7 +13,7 @@ export function Overlay(props) {
   popupEl.classList.add('ol-popup');
   popupEl.insertAdjacentHTML('beforeend', `
      <button class="ol-popup-closer"></button>
-     <div id="popup-content">{{coordinate}}</div>
+     <div id="popup-content"></div>
   `);
 
   const closeBtn = popupEl.querySelector('.ol-popup-closer');
@@ -23,12 +24,21 @@ export function Overlay(props) {
     overlay.setElement(popupEl);
     map.addOverlay(overlay);
 
-    map.on('singleclick', function (evt) {
+    map.on('singleclick', async function(evt) {
       const coordinate = evt.coordinate;
-      const lonLat = toLonLat(coordinate);
+      const [lon, lat] = toLonLat(coordinate);
       const contentEl = popupEl.querySelector('#popup-content');
+      let address;
+      try {
+        address = await getAddress(lon, lat);
+      } catch(e) {
+        address = '';
+        console.error(e);
+      }
+
       const contentHTML = ReactDOMServer.renderToString(props.children)
-        .replace(/\[\[coordinate\]\]/g, ''+lonLat);
+        .replace(/\[\[coordinate\]\]/g, ''+ [lon, lat])
+        .replace(/\[\[address\]\]/g, address);
       contentEl.innerHTML = contentHTML;
       overlay.setPosition(coordinate);
     });

@@ -1,3 +1,5 @@
+export { getAddress, getLonLat } from './util';
+
 export { Map } from './Map';
 export { View } from './View';
 export { Marker, getMarkerImage } from './Marker';

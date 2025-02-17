@@ -6,7 +6,7 @@ import Icon from 'ol/style/Icon';
 import Point from 'ol/geom/Point';
 import VectorLayer from 'ol/layer/Vector';
 import { useMap } from './Map';
-import { P } from 'storybook/internal/components';
+import { getLonLat } from './util';
 
 export function getMarkerImage(color='red', text='A') {
   return `data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E` +
@@ -29,7 +29,8 @@ function getNextChar(char) {
 }
 
 export function Marker({
-  lonLat=[0,0],
+  lonLat=undefined,
+  address=undefined,
   color='red',
   char=' ',
   addOnClick=false,
@@ -53,6 +54,7 @@ export function Marker({
     }));
 
     layer.getSource().addFeature(markerFeature);
+    return markerFeature;
   }
 
   useEffect(() => {
@@ -60,7 +62,19 @@ export function Marker({
 
     const markerLayer = map.getLayers().getArray()
       .find(el => el.get('key') === 'markerLayer') as VectorLayer;
-    addMarker(markerLayer, lonLat, color, markerChar);
+    if (lonLat) {
+      addMarker(markerLayer, lonLat, color, markerChar);
+      map.getView().setCenter(fromLonLat(lonLat))
+    } else if (address) {
+      getLonLat(address).then(resp => {
+        if (resp[0]) {
+          const lonLat = [resp[0].lon, resp[0].lat];
+          const feature = addMarker(markerLayer, lonLat, color, markerChar);
+          feature.set('address', resp[0].display_name)
+          map.getView().setCenter(fromLonLat(lonLat))
+        }
+      });
+    }
 
     map.on('singleclick', function (evt) {
       const feature = map.forEachFeatureAtPixel(evt.pixel, feature => feature);

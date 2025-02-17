@@ -7,35 +7,63 @@ import * as MarkerStories from './Marker.stories';
  
 A react representative of of `new ol.Feature(...)` customized as a marker  
 https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html
+
+## By Lon/Lat
 <Story of={MarkerStories.Primary} />
+<details open>
+  <summary>Source code</summary>
+  ```typescript
+  import { OSM } from 'ol/source';
+  import { Map, TileLayer, View, Marker } from 'react-openlayers';
 
-### Usage
-```typescript
-import { OSM } from 'ol/source';
-import { useRef } from 'react';
-import { Map, TileLayer, View, Marker } from 'react-openlayers';
+  export default function(props) {
+    return (
+      <Map>
+        <TileLayer source={new OSM()} />
+        <View center={[0,0]} zoom={4}/>
+        <Marker 
+          lonLat={[0,0]} char="A" color="blue" 
+          addOnClick={true} 
+          removeOnClick={true} 
+        />
+      </Map>
+    );
+  }
+  ```
+</details>
+<br/><br/>
 
-export default function(props) {
-  const mapRef = useRef();
+## By address
+<Story of={MarkerStories.Address} />
+<details open>
+  <summary>Source code</summary>
+  ```typescript
+  import { OSM } from 'ol/source';
+  import { Map, TileLayer, View, Marker } from 'react-openlayers';
 
-  return (
-    <Map ref={mapRef}>
-      <TileLayer source={new OSM()} />
-      <View center={[0,0]} zoom={4}/>
-      <Marker lonLat={[0,0]} char="A" color="blue" addOnClick={true} removeOnClick={true} />
-    </Map>
-  );
-}
-```
-
+  export default function(rops) {
+    return (
+      <Map>
+        <TileLayer source={new OSM()} />
+        <View center={[0,0]} zoom={10}/>
+        <Marker 
+          address='1600 Pennsylvania Avenue, Washington DC' 
+          char="W" color="red" />
+      </Map>
+    );
+  }
+  ```
+</details>
+<br/><br/>
 
 ### props
 
 | Prop   | type        | description |
 | ------ | ----------- | ------------|
-| lonLat        | number[] | longitude and latitude that marker to point, e.g. [0,0] | 
-| color         | string   | Fill color of the marker, e.g. 'red' |
-| char          | char     | A character for the marker. e.g. 'A' |
-| addOnClick    | boolean  | Add a new marker on click |
-| removeOnClick | boolean  | Remove the clicked marker on click |
+| lonLat        | number[] | Defaults to undefined. Longitude and latitude that marker to point, e.g. [0,0] | 
+| address       | string   | Defaults to undefined. Address to show a marker, e.g. '1600 pennsylvania ave, Washington DC'. Internally it uses OSM nomination to get lon/lat.| 
+| color         | string   | Defaults to 'red'. Fill color of the marker, e.g. 'red' |
+| char          | char     | Defaults to ' '. A character for the marker. e.g. 'A' |
+| addOnClick    | boolean  | Defaults to false. Add a new marker on click with a new character |
+| removeOnClick | boolean  | Defaults to false. Remove the marker on click |
 

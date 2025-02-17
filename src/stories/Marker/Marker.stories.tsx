@@ -19,3 +19,19 @@ export const Primary: StoryObj<any> = {
     );
   }
 }
+
+export const Address: StoryObj<any> = {
+  render: (props) => {
+    const mapRef = useRef();
+
+    return (
+      <Map ref={mapRef}>
+        <TileLayer source={new OSM()} />
+        <View center={[0,0]} zoom={10}/>
+        <Marker
+          address='1600 Pennsylvania Avenue, Washington DC'
+          char="W" color="red" />
+      </Map>
+    );
+  }
+}

@@ -11,6 +11,7 @@ export const Primary = {
       <Overlay autoPan={{ animation: { duration: 250 }}}>
         <p>You clicked here.</p>
         <code>[[coordinate]]</code>
+        <p>[[address]]</p>
       </Overlay>
       <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
