@@ -30,7 +30,8 @@ export function Overlay(props) {
       const contentEl = popupEl.querySelector('#popup-content');
       let address;
       try {
-        address = await getAddress(lon, lat);
+        const zoom = Math.ceil(map.getView().getZoom());
+        address = await getAddress(lon, lat, zoom);
       } catch(e) {
         address = '';
         console.error(e);
