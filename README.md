@@ -15,7 +15,7 @@ npm install react-openlayers --save-dev
 import * as ol from 'ol';
 import { OSM } from 'ol/source';
 import { Map, View, TileLayer } from 'react-openlayers';
-import 'react-openlayers/dist/index,css'; // for css
+import 'react-openlayers/dist/index.css'; // for css
 
 export default function(props) {
   const mapRef= useRef<ol.Map>();
