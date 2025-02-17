@@ -51,45 +51,12 @@ export default function(props) {
     'fill-color': [0, 0, 255, 0.5],
   }
 
-  let coordinate: Coordinate;
-  let feature: FeatureLike;
-
-  function handleDownEvent(evt: MapBrowserEvent<UIEvent>) {
-    const _feature = evt.map.forEachFeatureAtPixel(evt.pixel, feature => feature);
-    _feature && ([coordinate, feature] = [evt.coordinate, _feature]);
-    return !!feature; // `true` to start the drag sequence.
-  }
-
-  function handleDragEvent(evt: MapBrowserEvent<UIEvent>) {
-    const geometry = feature.getGeometry() as Geometry;
-    const deltaX = evt.coordinate[0] - coordinate[0];
-    const deltaY = evt.coordinate[1] - coordinate[1];
-    geometry.translate(deltaX, deltaY);
-    coordinate = evt.coordinate;
-  }
-
-  function handleMoveEvent(evt: MapBrowserEvent<UIEvent>) {
-    const feature = evt.map.forEachFeatureAtPixel(evt.pixel, feature => feature);
-    const element = evt.map.getTargetElement();
-    element.style.cursor = feature ? 'pointer' : '';
-  }
-
-  function handleUpEvent() {
-    coordinate = null;
-    feature = null;
-    return false; // return `false` to stop the drag sequence
-  }
-
   return (
     <Map>
       <TileLayer source={new OSM()} />
       <VectorLayer source={source} style={style} />
       <View center={[0, 0]} zoom={2}/>
-      <PointerInteraction
-        handleDownEvent={handleDownEvent}
-        handleDragEvent={handleDragEvent}
-        handleMoveEvent={handleMoveEvent}
-        handleUpEvent={handleUpEvent} />
+      <PointerInteraction />
     </Map>
   );
 }
