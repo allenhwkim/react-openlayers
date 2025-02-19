@@ -78,8 +78,8 @@ There are two group of sources and corresponding builds.
 
 2. Storybook documentation. 
 
-    Code for Storybook is in `./src/stories`. Storybook app documents and 
-    demonstrates the usage of each compont. It is deployed to 
+    Code for Storybook is in `./src/stories`. Storybook documents and 
+    demonstrates the usage of each component. It is deployed to 
     [Github Pages](https://allenhwkim.github.io/react-openlayers).
 
     When `main` branch is updated, a Github Action runs the build command, 
