@@ -1,15 +1,38 @@
-import { useEffect } from 'react';
+import { Map as OlMap } from 'ol';
+import { useEffect, useRef } from 'react';
 import OlWebGLTileLayer from 'ol/layer/WebGLTile';
 import { useMap } from '../Map';
+import { useGroup } from './LayerGroup';
 
 export function WebGLTileLayer(props) {
   const map = useMap();
+  const group = useGroup();
+  const layerRef = useRef(new OlWebGLTileLayer(props)); // single instance
 
   useEffect(() => {
-    if (!map) return;
-    const layer = new OlWebGLTileLayer(props);
-    map.addLayer(layer);
-  }, [map]);
+    if (!map && !group) return;
+
+    const layer = layerRef.current; // same instance every time
+    const target = group || map;
+
+    if (target) {
+      if (target instanceof OlMap) {
+        target.addLayer(layer);
+      } else {
+        target.getLayers().push(layer);
+      }
+    }
+
+    return () => {
+      if (target) {
+        if (target instanceof OlMap) {
+          target.removeLayer(layer);
+        } else {
+          target.getLayers().remove(layer);
+        }
+      }
+    };
+  }, [map, group]);
 
   return null;
-};
+}

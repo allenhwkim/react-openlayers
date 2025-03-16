@@ -1,0 +1,44 @@
+.layers-control {
+  top: 60px;
+  right: 8px;
+
+  #layers {
+    display: none;
+    text-align: left;
+  }
+  
+  &.active {
+    #toggle-btn { 
+      width: 100%;
+      filter: invert(100%); 
+    }
+    #layers { 
+      display: block;
+      padding: 4px;
+      background: #333;
+    }
+  }
+
+  #layers {
+    display: none;
+    text-align: left;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      background-color: #FFF;
+      color: #333;
+      padding: 0 8px;
+      &.visible {
+        background-color: #333;
+        color: #FFF;
+      }
+      > ul {
+        margin-left: 20px;
+      }
+    }
+  }
+}

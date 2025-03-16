@@ -1,4 +1,4 @@
-import * as ol from 'ol';
+import { Map as OlMap} from 'ol';
 import { useEffect, useRef } from 'react';
 import OlTileLayer from 'ol/layer/Tile';
 import { useMap } from '../Map';
@@ -16,7 +16,7 @@ export function TileLayer(props: any) {
     const target = group || map;
 
     if (target) {
-      if (target instanceof ol.Map) {
+      if (target instanceof OlMap) {
         target.addLayer(layer);
       } else {
         target.getLayers().push(layer);
@@ -25,7 +25,7 @@ export function TileLayer(props: any) {
 
     return () => {
       if (target) {
-        if (target instanceof ol.Map) {
+        if (target instanceof OlMap) {
           target.removeLayer(layer);
         } else {
           target.getLayers().remove(layer);

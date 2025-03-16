@@ -10,9 +10,9 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { listen, unlistenByKey } from 'ol/events';
 import { useMap } from '../Map';
 import { drawIcon, lineIcon, pointIcon, polygonIcon, circleIcon, moveIcon} from './icons';
-import './style.css';
+import './DrawControl.css';
 
-class DrawControlClass extends Control {
+class DrawControl extends Control {
   vectorSource: VectorSource;
   modify: Modify; // modifying vectorSource
   drawLayer: VectorLayer; // layer to hold vectorSource
@@ -138,12 +138,12 @@ class DrawControlClass extends Control {
   }
 }
 
-export function DrawControl(props) {
+export default function(props) {
   const map: ol.Map = useMap();
 
   useEffect(() => {
     if (!map) return;
-    map.addControl(new DrawControlClass());
+    map.addControl(new DrawControl());
   }, [map]);
 
   return null;
