@@ -61,7 +61,7 @@ class LayersControl extends Control {
     const ul = createUL(this.getMap());
     const layersEl = controlEl.querySelector('#layers');
     layersEl.innerHTML = '';
-    layersEl.appendChild(ul); 
+    layersEl.appendChild(ul);
   }
 
 }
