@@ -11,15 +11,12 @@ https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine.html
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
-import { Map, TileLayer, View, ScaleLineControl } from 'react-openlayers';
+import { Map, View, ScaleLineControl } from 'react-openlayers';
 
 export default function(props) {
-  const mapRef = useRef();
   return (
-    <Map ref={mapRef}>
+    <Map controls={[]}>
       <ScaleLineControl units="metric" />
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   )

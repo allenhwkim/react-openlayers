@@ -1,4 +1,3 @@
-import OSM from 'ol/source/OSM';
 import { Map, View, TileLayer, GraticuleLayer } from '../../../lib';
 import Stroke from 'ol/style/Stroke';
 
@@ -16,7 +15,6 @@ export const Primary = {
     })
 
     return <Map>
-      <TileLayer source={new OSM()} />
       <GraticuleLayer showLabels={true} strokeStyle={strokeStyle} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>

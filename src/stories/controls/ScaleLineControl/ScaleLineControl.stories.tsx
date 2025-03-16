@@ -1,5 +1,4 @@
-import OSM from 'ol/source/OSM';
-import {Map, TileLayer, View, ScaleLineControl} from '../../../lib';
+import {Map, View, ScaleLineControl} from '../../../lib';
 
 export default {
   title: 'Controls/ScaleLineControl',
@@ -7,9 +6,8 @@ export default {
 
 export const Primary = {
   render: (props) => {
-    return <Map>
+    return <Map controls={[]}>
       <ScaleLineControl units="us" text={true} steps={4} bar={true} />
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   }

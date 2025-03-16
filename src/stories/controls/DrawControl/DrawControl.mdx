@@ -22,15 +22,12 @@ Press shift key for freehand drawing.
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import { Map, TileLayer, View, DrawControl, SelectInteraction, ModifyInteraction } from 'react-openlayers';
 
 export default function(props) {
-  const mapRef = useRef();
   return (
-    <Map ref={mapRef}>
+    <Map controls={[]}>
       <DrawControl />
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
       <SelectInteraction />
       <TranslateInteraction />

@@ -11,7 +11,6 @@ https://openlayers.org/en/latest/apidoc/module-ol_layer_Heatmap-Heatmap.html
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import KML from 'ol/format/KML';
 import { Map, View, TileLayer, HeatmapLayer } from 'react-openlayers';
 import VectorSource from 'ol/source/Vector';
@@ -28,7 +27,6 @@ export default function(props) {
   };
 
   return <Map>
-    <TileLayer source={new OSM()} />
     <HeatmapLayer {...{source, weight, blur: 9, radius:20 }} />
     <View center={[-10997148, 4569099]} zoom={3}/>
   </Map>

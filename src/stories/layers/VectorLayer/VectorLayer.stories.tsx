@@ -4,7 +4,6 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import LineString from 'ol/geom/LineString';
 import Polygon from 'ol/geom/Polygon';
-import { OSM } from 'ol/source';
 import KML from 'ol/format/KML';
 import CircleStyle from 'ol/style/Circle';
 import Cluster from 'ol/source/Cluster';
@@ -50,7 +49,6 @@ export const Primary = {
 
     return (
       <Map ref={mapRef}>
-        <TileLayer source={new OSM()} />
         <VectorLayer source={source} style={style} />
         <View center={[0,0]} zoom={2}/>
       </Map>
@@ -90,9 +88,7 @@ export const ClusterLayer = {
 
     return (
       <Map>
-        <TileLayer source={new OSM()} />
         <VectorLayer source={source} style={style} />
-        <View center={[0,0]} zoom={2}/>
       </Map>
     );
   }

@@ -18,13 +18,12 @@ https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
+import {Map, SelectInteraction, VectorLayer} from '../../../lib';
 import Point from 'ol/geom/Point';
 import LineString from 'ol/geom/LineString';
 import Polygon from 'ol/geom/Polygon';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
-import {Map, TileLayer, View, SelectInteraction, VectorLayer} from 'react-openlayers';
 
 export default function(props) {
   const pointFeature = new Feature( new Point([0, 0]));
@@ -43,9 +42,7 @@ export default function(props) {
 
   return (
     <Map>
-      <TileLayer source={new OSM()} />
       <VectorLayer source={source} />
-      <View center={[0, 0]} zoom={2}/>
       <SelectInteraction onSelect={onSelect} />
     </Map>
   );

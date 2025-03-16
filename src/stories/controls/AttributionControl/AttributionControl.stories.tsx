@@ -8,9 +8,8 @@ export default {
 export const Primary = {
   render: (props) => {
     return (
-      <Map>
+      <Map controls={[]}>
         <AttributionControl collapsible={true} attributions='Hello Attribution' />
-        <TileLayer source={new OSM()} />
         <View center={[-10997148, 4569099]} zoom={4}/>
       </Map>
     );

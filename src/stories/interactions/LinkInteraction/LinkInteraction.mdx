@@ -16,14 +16,11 @@ To see the url changes, click
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
-import {Map, TileLayer, View, LinkInteraction} from 'react-openlayers';
+import {Map, LinkInteraction} from 'react-openlayers';
 
 export default function(props) => {
   return (
     <Map>
-      <TileLayer source={new OSM()} />
-      <View center={[0, 0]} zoom={2}/>
       <LinkInteraction />
     </Map>
   );

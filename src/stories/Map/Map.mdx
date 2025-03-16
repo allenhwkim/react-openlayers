@@ -11,20 +11,8 @@ https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
 
 ### Usage
 ```typescript
-import * as ol from 'ol';
-import { OSM } from 'ol/source';
-import { Map, View, TileLayer } from 'react-openlayers';
-
-export default function(props) {
-  const mapRef= useRef<ol.Map>();
-  setTimeout(() => console.log(olMap.current), 1000));
-
-  return ( 
-    <Map ref={mapRef} controls={[]} interactions={[]}>
-      <TileLayer source={new OSM()} />
-      <View center={[-10997148, 4569099]} zoom={4}/>
-    </Map>
-  );
+export default function() {
+  return <Map />;
 }
 ```
 

@@ -1,4 +1,3 @@
-import OSM from 'ol/source/OSM';
 import { createStringXY } from 'ol/coordinate';
 import { Map, TileLayer, View, MousePositionControl } from '../../../lib';
 
@@ -10,9 +9,8 @@ export const Primary = {
   render: (props) => {
     const format = createStringXY(4);
     return (
-      <Map>
+      <Map controls={[]}>
         <MousePositionControl coordinateFormat={format} projection='EPSG:4326' />
-        <TileLayer source={new OSM()} />
         <View center={[-10997148, 4569099]} zoom={4}/>
       </Map>
     );

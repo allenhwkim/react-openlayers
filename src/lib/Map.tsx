@@ -1,41 +1,62 @@
 import {
-  forwardRef, useImperativeHandle,
-  useRef, useEffect, useState,
-  createContext, useContext,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+  useState,
+  createContext,
+  useContext,
 } from 'react';
-import * as ol from 'ol';
 import {defaults as defaultControls} from 'ol/control/defaults.js';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
+import { Map as OlMap } from 'ol';
+import View from 'ol/View'; 
 import './ol.css';
 import './Map.css';
+import TileLayer from 'ol/layer/Tile';
+import { OSM } from 'ol/source';
 
-const MapContext = createContext<ol.Map>(undefined);
+interface MapProps {
+  children?: React.ReactNode;
+  [key: string]: any; // Allow other OpenLayers Map options
+}
 
-export const Map = forwardRef( (props:any, ref:any) => {
-  const [map, setMap] = useState<ol.Map>();
-  const mapRef = useRef<any>();
+const MapContext = createContext<OlMap | undefined>(undefined);
+
+export const useMap = () => {
+  const map = useContext(MapContext);
+  // if (!map) throw new Error('useMap must be used within a Map component');
+  return map;
+};
+
+export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
+  const [map, setMap] = useState<OlMap>();
+  const mapRef = useRef<HTMLDivElement>(null); // Type the DOM ref
 
   useImperativeHandle(ref, () => map, [map]);
 
-  const markerLayer = new VectorLayer({
-    source: new VectorSource({ features: [] }),
-    properties: {key: 'markerLayer'},
-    zIndex: 1,
-  });
+  const mounted = useRef(false);
+  const defaultLayer = new TileLayer({ source: new OSM() }); 
 
   useEffect(() => {
-    if (!mapRef.current) return;
-    const mapProps = {...{
-      target: mapRef.current,
-      layers: [markerLayer],
-      controls: defaultControls(),
-    }, ...props}
-    const notInitialized = mapRef.current?.children?.length === 0;
-    if (notInitialized) { // Do not render twice with <React.StriceMode>
-      const olMap = new ol.Map(mapProps);
-      setMap(olMap);
-    }
+    if (!mapRef.current || mounted.current) return;
+    const mapProps = {
+      ...{
+        target: mapRef.current,
+        layers: [defaultLayer],
+        controls: defaultControls(),
+        view: new View({
+          center: [0, 0], // Default to [lon, lat]
+          zoom: 2, // Default zoom level
+        }),
+      },
+      ...props, // Override with props.view if provided
+    };
+    const olMap = new OlMap(mapProps);
+    setMap(olMap);
+    mounted.current = true;
+    return () => {
+      olMap.setTarget(null);
+    };
   }, []);
 
   return (
@@ -45,7 +66,4 @@ export const Map = forwardRef( (props:any, ref:any) => {
       </div>
     </MapContext.Provider>
   );
-}
-);
-
-export const useMap = () => useContext(MapContext);
+});

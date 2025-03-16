@@ -17,16 +17,14 @@ https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition-MousePos
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import { createStringXY } from 'ol/coordinate';
 import { Map, TileLayer, View, MousePositionControl } from 'react-openlayers';
 
 export default function(props) {
   const format = createStringXY(4);
   return (
-    <Map>
+    <Map controls={[]}>
       <MousePositionControl coordinateFormat={format} projection='ESPG:4326' />
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   );

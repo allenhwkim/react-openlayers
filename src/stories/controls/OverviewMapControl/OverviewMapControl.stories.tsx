@@ -12,9 +12,8 @@ export const Primary = {
       new OlTileLayer({source: new OSM()})
     ];
     return (
-      <Map>
+      <Map controls={[]}>
         <OverviewMapControl layers={overviewLayers} collapsed={false} />
-        <TileLayer source={new OSM()} />
         <View center={[-10997148, 4569099]} zoom={4}/>
       </Map>
     );

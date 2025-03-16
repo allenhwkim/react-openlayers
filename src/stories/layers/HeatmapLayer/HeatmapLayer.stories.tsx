@@ -1,4 +1,3 @@
-import OSM from 'ol/source/OSM';
 import KML from 'ol/format/KML';
 import { Map, View, TileLayer, HeatmapLayer } from '../../../lib';
 import VectorSource from 'ol/source/Vector';
@@ -8,7 +7,7 @@ export default {
 }
 
 export const Primary = {
-  render: (props) => {
+  render: () => {
 
     const source = new VectorSource({
       url: 'https://openlayers.org/en/latest/examples/data/kml/2012_Earthquakes_Mag5.kml',
@@ -24,7 +23,6 @@ export const Primary = {
     };
 
     return <Map>
-      <TileLayer source={new OSM()} />
       <HeatmapLayer {...{source, weight, blur: 20, radius:20 }} />
       <View center={[-10997148, 4569099]} zoom={3}/>
     </Map>

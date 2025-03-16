@@ -23,9 +23,8 @@ export default function(props) {
     new OlTileLayer({source: new OSM()})
   ];
   return (
-    <Map>
+    <Map controls={[]}>
       <OverviewMapControl layers={overviewLayers} />
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   );

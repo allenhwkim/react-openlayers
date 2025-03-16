@@ -1,4 +1,3 @@
-import OSM from 'ol/source/OSM';
 import {Map, TileLayer, View, FullScreenControl} from '../../../lib';
 
 export default {
@@ -7,9 +6,8 @@ export default {
 
 export const Primary = {
   render: (props) => {
-    return <Map>
+    return <Map controls={[]}>
       <FullScreenControl label="F"/>
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   }

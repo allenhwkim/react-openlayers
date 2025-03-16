@@ -11,7 +11,6 @@ https://openlayers.org/en/latest/apidoc/module-ol_layer_Graticule-Graticule.html
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import { Map, View, TileLayer, GraticuleLayer } from 'react-openlayers';
 import Stroke from 'ol/style/Stroke';
 
@@ -23,7 +22,6 @@ export default function(props) {
   })
 
   return <Map>
-    <TileLayer source={new OSM()} />
     <GraticuleLayer showLabels={true} strokeStyle={strokeStyle} />
     <View center={[-10997148, 4569099]} zoom={4}/>
   </Map>

@@ -15,15 +15,12 @@ https://openlayers.org/en/latest/apidoc/module-ol_control_Attribution-Attributio
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import { Map, TileLayer, View, AttributionControl } from 'react-openlayers';
 
 export default function(props) {
-  const mapRef = useRef();
   return (
-    <Map ref={mapRef}>
+    <Map controls={[]}>
       <AttributionControl attributions="Hello me"/>
-      <TileLayer source={new OSM()} />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   )

@@ -11,15 +11,12 @@ https://openlayers.org/en/latest/apidoc/module-ol_control_FullScreen-FullScreen.
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import { Map, TileLayer, View, FullScreenControl } from 'react-openlayers';
 
 export default function(props) {
-  const mapRef = useRef();
   return (
-    <Map ref={mapRef}>
+    <Map controls={[]}>
       <FullScreenControl />
-      <TileLayer source={new OSM()} label="F" />
       <View center={[-10997148, 4569099]} zoom={4}/>
     </Map>
   )

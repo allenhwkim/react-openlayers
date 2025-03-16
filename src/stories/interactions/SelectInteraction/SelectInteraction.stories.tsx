@@ -1,5 +1,4 @@
-import OSM from 'ol/source/OSM';
-import {Map, TileLayer, View, SelectInteraction, VectorLayer} from '../../../lib';
+import {Map, SelectInteraction, VectorLayer} from '../../../lib';
 import Point from 'ol/geom/Point';
 import LineString from 'ol/geom/LineString';
 import Polygon from 'ol/geom/Polygon';
@@ -29,9 +28,7 @@ export const Primary = {
 
     return (
       <Map>
-        <TileLayer source={new OSM()} />
         <VectorLayer source={source} />
-        <View center={[0, 0]} zoom={2}/>
         <SelectInteraction onSelect={onSelect} />
       </Map>
     );

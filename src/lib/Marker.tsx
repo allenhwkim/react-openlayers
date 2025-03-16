@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import * as ol from 'ol';
-import {fromLonLat, toLonLat} from 'ol/proj';
+import { Feature as OlFeature } from 'ol';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import Point from 'ol/geom/Point';
 import VectorLayer from 'ol/layer/Vector';
 import { useMap } from './Map';
 import { getLonLat } from './util';
+import VectorSource from 'ol/source/Vector';
 
 export function getMarkerImage(color='red', text='A') {
   return `data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E` +
@@ -28,6 +29,43 @@ function getNextChar(char) {
   }
 }
 
+
+function addMarker(markerLayer, lonLat, color, char) {
+  const markerFeature = new OlFeature({
+    geometry: new Point(fromLonLat(lonLat))
+  });
+  markerFeature.setStyle(new Style({
+    image: new Icon({
+      scale: 1,
+      anchor: [0.5,40],
+      anchorXUnits: 'fraction',
+      anchorYUnits: 'pixels',
+      src: getMarkerImage(color, char)
+    }),
+  }));
+
+  markerLayer.getSource().addFeature(markerFeature);
+  return markerFeature;
+}
+
+function getMarkerLayer(map) {
+  const markerLayer = map.getLayers().getArray()
+    .find(el => el.get('key') === 'markerLayer') as VectorLayer;
+  if (markerLayer) {
+    return markerLayer;
+  }
+
+  // container of markers, this can be set when marker is added, so that I can remove it here.
+  const newMarkerLayer = new VectorLayer({
+    source: new VectorSource({ features: [] }),
+    properties: {key: 'markerLayer'},
+    zIndex: 1,
+  });
+
+  map.addLayer(newMarkerLayer);
+  return newMarkerLayer;
+}
+
 export function Marker({
   lonLat=undefined,
   address=undefined,
@@ -39,29 +77,11 @@ export function Marker({
   const map = useMap();
   let markerChar = char;
 
-  function addMarker(layer, lonLat, color, char) {
-    const markerFeature = new ol.Feature({
-      geometry: new Point(fromLonLat(lonLat))
-    });
-    markerFeature.setStyle(new Style({
-      image: new Icon({
-        scale: 1,
-        anchor: [0.5,40],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'pixels',
-        src: getMarkerImage(color, char)
-      }),
-    }));
-
-    layer.getSource().addFeature(markerFeature);
-    return markerFeature;
-  }
-
   useEffect(() => {
     if (!map) return;
 
-    const markerLayer = map.getLayers().getArray()
-      .find(el => el.get('key') === 'markerLayer') as VectorLayer;
+    const markerLayer = getMarkerLayer(map);
+
     if (lonLat) {
       addMarker(markerLayer, lonLat, color, markerChar);
       map.getView().setCenter(fromLonLat(lonLat))

@@ -1,4 +1,3 @@
-import OSM from 'ol/source/OSM';
 import {Map, TileLayer, View, DrawControl, SelectInteraction, TranslateInteraction} from '../../../lib';
 
 export default {
@@ -8,9 +7,8 @@ export default {
 export const Primary = {
   render: (props) => {
     return (
-      <Map>
+      <Map controls={[]}>
         <DrawControl />
-        <TileLayer source={new OSM()} />
         <View center={[-10997148, 4569099]} zoom={4}/>
         <SelectInteraction />
         <TranslateInteraction />

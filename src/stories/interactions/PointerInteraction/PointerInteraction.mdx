@@ -19,16 +19,12 @@ https://openlayers.org/en/latest/apidoc/module-ol_interaction_Pointer-PointerInt
 
 ### Usage
 ```typescript
-import OSM from 'ol/source/OSM';
 import Point from 'ol/geom/Point';
 import LineString from 'ol/geom/LineString';
 import Polygon from 'ol/geom/Polygon';
 import VectorSource from 'ol/source/Vector';
-import { Coordinate } from 'ol/coordinate';
-import Feature, { FeatureLike } from 'ol/Feature';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import {Map, TileLayer, View, PointerInteraction, VectorLayer, getMarkerImage} from 'react-openlayers';
-import { Geometry } from 'ol/geom';
+import Feature from 'ol/Feature';
+import {Map, PointerInteraction, VectorLayer, getMarkerImage} from '../../../lib';
 
 export default function(props) {
   const pointFeature = new Feature( new Point([0, 0]));
@@ -53,9 +49,7 @@ export default function(props) {
 
   return (
     <Map>
-      <TileLayer source={new OSM()} />
       <VectorLayer source={source} style={style} />
-      <View center={[0, 0]} zoom={2}/>
       <PointerInteraction />
     </Map>
   );
