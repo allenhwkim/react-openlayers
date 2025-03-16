@@ -9,7 +9,7 @@ import {
 } from 'react';
 import {defaults as defaultControls} from 'ol/control/defaults.js';
 import { Map as OlMap } from 'ol';
-import View from 'ol/View'; 
+import View from 'ol/View';
 import './ol.css';
 import './Map.css';
 import TileLayer from 'ol/layer/Tile';
@@ -35,7 +35,7 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
   useImperativeHandle(ref, () => map, [map]);
 
   const mounted = useRef(false);
-  const defaultLayer = new TileLayer({ source: new OSM() }); 
+  const defaultLayer = new TileLayer({ source: new OSM() });
 
   useEffect(() => {
     if (!mapRef.current || mounted.current) return;
