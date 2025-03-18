@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useMap } from '../Map';
 import { searchIcon } from './icons';
 import './SearchControl.css';
-import { addMarker } from '../add-marker';
+import { addMarker } from '../marker-func';
 import { fromLonLat } from 'ol/proj';
 
 declare let google: any;

@@ -2,8 +2,9 @@ export { getAddress, getLonLat } from './util';
 
 export { Map } from './Map';
 export { View } from './View';
-export { Marker, getMarkerImage } from './Marker';
+export { Marker } from './Marker';
 export { Overlay } from './Overlay';
+export { addMarker, removeMarker, getMarkerImage } from './marker-func';
 
 export { LayerGroup } from './layers/LayerGroup';
 export { TileLayer } from './layers/TileLayer';
