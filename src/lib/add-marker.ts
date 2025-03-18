@@ -1,11 +1,11 @@
-import Feature from "ol/Feature";
-import { Point } from "ol/geom";
-import VectorLayer from "ol/layer/Vector";
-import { fromLonLat } from "ol/proj";
-import VectorSource from "ol/source/Vector";
-import Icon from "ol/style/Icon";
-import Style from "ol/style/Style";
-import { getMarkerImage } from "./Marker";
+import Feature from 'ol/Feature';
+import { Point } from 'ol/geom';
+import VectorLayer from 'ol/layer/Vector';
+import { fromLonLat } from 'ol/proj';
+import VectorSource from 'ol/source/Vector';
+import Icon from 'ol/style/Icon';
+import Style from 'ol/style/Style';
+import { getMarkerImage } from './Marker';
 
 export function addMarker(map, lonLat, color='red', char='') {
   let markerLayer = map.getLayers().getArray()

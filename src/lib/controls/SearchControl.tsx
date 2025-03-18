@@ -7,7 +7,7 @@ import './SearchControl.css';
 import { addMarker } from '../add-marker';
 import { fromLonLat } from 'ol/proj';
 
-declare var google: any;
+declare let google: any;
 
 class SearchControl extends Control {
 
@@ -26,11 +26,11 @@ class SearchControl extends Control {
       .addEventListener('click', this.onToggleBtnClick.bind(this));
     
     const inputEl = element.querySelector('input#search');
-    var autocomplete = new google.maps.places.Autocomplete(inputEl);
-    autocomplete.addListener("place_changed", () => {
+    const autocomplete = new google.maps.places.Autocomplete(inputEl);
+    autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
-      var latitude = place.geometry.location.lat();
-      var longitude = place.geometry.location.lng();
+      const latitude = place.geometry.location.lat();
+      const longitude = place.geometry.location.lng();
       const map = this.getMap();
       addMarker(map, [longitude, latitude], 'blue');
       map.getView().setCenter(fromLonLat([longitude, latitude]));

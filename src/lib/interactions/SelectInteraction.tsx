@@ -74,7 +74,9 @@ const defaultStyle = function (feature) {
           })
         );
       }
-    } catch {} // getArea(geometry) may fail
+    } catch(e) { // getArea(geometry) may fail
+      console.error(e);
+    }
   }
   return style;
 }
