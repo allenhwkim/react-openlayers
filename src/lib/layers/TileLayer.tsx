@@ -13,6 +13,7 @@ export function TileLayer(props: any) {
     if (!map && !group) return;
 
     const layer = layerRef.current; // same instance every time
+    props.name && layer.set('name', props.name);
     const target = group || map;
 
     if (target) {

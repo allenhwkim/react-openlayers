@@ -14,6 +14,7 @@ export const LayerGroup = (props: any) => {
 
   useEffect(() => {
     const layerGroup = layerGroupRef.current;
+    props.name && layerGroup.set('name', props.name);
     const target = parentGroup || map; // Prefer parent LayerGroup, else Map
 
     if (target) {

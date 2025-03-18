@@ -24,10 +24,10 @@ export const Primary = {
     return (
       <Map controls={[]}>
         <LayersControl />
-        <LayerGroup>
+        <LayerGroup name="My Group">
           <GraticuleLayer showLabels={true} />
-          <TileLayer source={tileSrc} extent={[-13884991, 2870341, -7455066, 6338219]} />
-          <HeatmapLayer {...{source: heatMapSrc, weight, blur: 20, radius:20, zIndex:1 }} />
+          <TileLayer name="Cities/Highways" source={tileSrc} extent={[-13884991, 2870341, -7455066, 6338219]} />
+          <HeatmapLayer name="Earthquakes" {...{source: heatMapSrc, weight, blur: 20, radius:20, zIndex:1 }} />
         </LayerGroup>
         <View center={[-10997148, 4569099]} zoom={4}/>
       </Map>

@@ -51,6 +51,9 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
       },
       ...props, // Override with props.view if provided
     };
+    if (props.darkMode) {
+      mapRef.current.style.filter = 'invert(1)'
+    }
     const olMap = new OlMap(mapProps);
     setMap(olMap);
     mounted.current = true;

@@ -1,0 +1,20 @@
+.search-control {
+  top: .5rem;
+  left: .5rem;
+  display: flex;
+
+  &.active {
+    #toggle-btn { 
+      width: 100%;
+      filter: invert(100%); 
+    }
+    #search { 
+      display: block;
+      padding: 4px;
+    }
+  }
+
+  #search {
+    display: none;
+  }
+}

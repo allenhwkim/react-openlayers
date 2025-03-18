@@ -19,6 +19,7 @@ export { MousePositionControl } from './controls/MousePositionControl';
 export { OverviewMapControl } from './controls/OverviewMapControl';
 export { default as DrawControl } from './controls/DrawControl';
 export { default as LayersControl } from './controls/LayersControl';
+export { default as SearchControl } from './controls/SearchControl';
 
 export { DragRotateAndZoomInteraction } from './interactions/DragRotateAndZoom';
 export { TranslateInteraction } from './interactions/TranslateInteraction';

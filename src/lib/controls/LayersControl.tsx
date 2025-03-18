@@ -40,13 +40,18 @@ class LayersControl extends Control {
       
       layer.getLayers().forEach(layer => {
         const li = document.createElement('li');
-        li.innerHTML = layer.get('name') || layer.constructor.name;
-        layer.getVisible() && li.classList.add('visible');
-        li.addEventListener('click', (event) => {
+        const labelEl = document.createElement('label');
+        const chkbox = document.createElement('input');
+        chkbox.setAttribute('type', 'checkbox');
+        chkbox.checked = layer.getVisible();
+        chkbox.addEventListener('click', (e: any) => {
           event.stopPropagation();
-          li.classList.toggle('visible');
-          layer.setVisible(li.classList.contains('visible'));
+          layer.setVisible(e.target.checked);
         });
+        labelEl.appendChild(chkbox);
+        const name = layer.get('name') || layer.constructor.name;
+        labelEl.insertAdjacentText('beforeend', name);
+        li.appendChild(labelEl);
         
         if (layer instanceof LayerGroup) {
           li.appendChild(createUL(layer));

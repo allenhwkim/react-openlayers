@@ -8,11 +8,13 @@ export function GraticuleLayer(props) {
   const map = useMap();
   const group = useGroup();
   const layerRef = useRef(new OlGraticuleLayer(props)); // single instance
+  
 
   useEffect(() => {
     if (!map && !group) return;
 
     const layer = layerRef.current; // same instance every time
+    props.name && layer.set('name', props.name);
     const target = group || map;
 
     if (target) {

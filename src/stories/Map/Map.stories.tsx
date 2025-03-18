@@ -8,6 +8,6 @@ declare let window:any;
 
 export const Primary: StoryObj<any> = {
   render: () => {
-    return <Map />;
+    return <Map darkMode={true} />;
   }
 }

@@ -20,11 +20,14 @@ class DrawControl extends Control {
   snap: Snap;
   keyboardListener;
 
-  constructor(options={}) {
+  constructor(options={} as any) {
     const {target} = options as any;
 
     const element = document.createElement('div');
     element.className = 'draw-control ol-unselectable ol-control';
+    if (options.style) {
+      Object.assign(element.style, options.style);
+    }
     const title = 'Press shift for freehand drawing';
     element.insertAdjacentHTML('beforeend', `
       <button id="toggle-btn" 
@@ -143,7 +146,7 @@ export default function(props) {
 
   useEffect(() => {
     if (!map) return;
-    map.addControl(new DrawControl());
+    map.addControl(new DrawControl(props));
   }, [map]);
 
   return null;
