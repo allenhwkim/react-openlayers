@@ -53,17 +53,17 @@ export default function(props) {
 | ol/control/MousePosition | `<MousePositionControl />` | Displays the current mouse position in coordinates |
 | ol/control/OverviewMap   | `<OverviewMapControl />`   | Displays an overview map of the main map |
 | ol/control/ScaleLine     | `<ScaleLineControl />`     | Displays an overview map of the main map |
+| custom                   | `<LayersControl />`        | Layer switcher |
+| custom                   | `<DrawControl />`          | Shape Drawing shapes; point, rectangle, circle, ploygon |
+| custom                   | `<SearchControl />`        | Search an address and set a marker |
 
 ### Interactions
 | OpenLayers Object  | React Component    | Description  | 
 | --------------     | ---------------    | ------------ |
 | ol/interaction/DragRotateAndZoom| `<DragRotateAndZoomInteraction />` | Allows rotating and zooming the map by dragging. |
-| ol/interaction/Draw | `<DrawInteraction />` | Allows drawing geometries on the map.|
-| ol/interaction/Link | `<LinkInteraction />` | Synchronizes the map view with the URL. |
-| ol/interaction/Modify | `<ModifyInteraction />` | Allows modifying existing geometries. |
-| ol/interaction/Pointer | `<PointerInteraction />` | Base class for pointer interactions. |
-| ol/interaction/Select | `<SelectInteraction />` | Allows selecting features on the map. |
-| ol/interaction/Snap | `<SnapInteraction />` | Allows snapping geometries to other geometries. |
+| ol/interaction/Link      | `<LinkInteraction />`      | Synchronizes the map view with the URL. |
+| ol/interaction/Pointer   | `<PointerInteraction />`   | Base class for pointer interactions. |
+| ol/interaction/Select    | `<SelectInteraction />`    | Allows selecting features on the map. |
 | ol/interaction/Translate | `<TranslateInteraction />` | Allows translating (moving) features on the map. |
 
 ## For developers

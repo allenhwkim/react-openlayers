@@ -10,6 +10,18 @@ Search address and locate
 <Story of={SearchControlStories.Primary} />
 
 ### Usage
+This demo. uses Google Maps Places api.
+e.g., `<script src="https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places&loading=async"></script>` 
+
 ```typescript
-TODO
+import {Map, View, SearchControl} from '../../../lib';
+
+export default function(props) {
+  return (
+    <Map controls={[]}>
+      <SearchControl />
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
 ```

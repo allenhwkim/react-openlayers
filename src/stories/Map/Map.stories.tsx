@@ -8,6 +8,6 @@ declare let window:any;
 
 export const Primary: StoryObj<any> = {
   render: () => {
-    return <Map darkMode={true} />;
+    return <Map style={{filter:'invert(1)'}} />;
   }
 }

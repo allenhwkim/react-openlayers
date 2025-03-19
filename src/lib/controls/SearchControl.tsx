@@ -25,7 +25,13 @@ class SearchControl extends Control {
     element.querySelector('.search-control #toggle-btn')
       .addEventListener('click', this.onToggleBtnClick.bind(this));
     
-    const inputEl = element.querySelector('input#search');
+    // Google maps api is loaded manually by each user using own api key
+    // e.g., <script src="https://maps.googleapis.com/maps/api/js?key=xxx&libraries=places"></script>
+    this.initGoogleAutoComplete();
+  }
+
+  initGoogleAutoComplete() {
+    const inputEl = this.element.querySelector('input#search');
     const autocomplete = new google.maps.places.Autocomplete(inputEl);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();

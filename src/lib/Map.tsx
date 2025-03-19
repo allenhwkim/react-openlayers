@@ -51,9 +51,6 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
       },
       ...props, // Override with props.view if provided
     };
-    if (props.darkMode) {
-      mapRef.current.style.filter = 'invert(1)'
-    }
     const olMap = new OlMap(mapProps);
     setMap(olMap);
     mounted.current = true;
@@ -64,7 +61,7 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
 
   return (
     <MapContext.Provider value={map}>
-      <div ref={mapRef} className="ol-map" tabIndex={0}>
+      <div ref={mapRef} style={props.style} className="ol-map" tabIndex={0}>
         {props.children}
       </div>
     </MapContext.Provider>

@@ -1,1 +1,7 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwE-ajIJZ9sOohSf-QFOBbVFn9_OqGRAQ&libraries=places"></script>
+ <script>
+  const encoded = 'a2NQS3lTbl1vB0tAY2BwE1llRUJ5TAd7bGVoSHxsRBN1ZVtteGt7';
+  const key = atob(encoded).split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 42)).join('');
+  const script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places&loading=async`;
+  document.head.appendChild(script);
+ </script>
