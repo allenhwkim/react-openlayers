@@ -7,7 +7,7 @@ written in [TypeScript](https://www.typescriptlang.org/)
 
 ## Install
 ```
-npm install react-openlayers --save-dev
+npm install react-openlayers 
 ```
 
 ## Example
