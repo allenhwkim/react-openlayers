@@ -1,0 +1,49 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as ImageStories from './ImageLayer.stories';
+ 
+<Meta of={ImageStories} />
+ 
+# {'<ImageLayer />'}
+ 
+A react representative of `new ImageLayer(...)`  
+https://openlayers.org/en/latest/apidoc/module-ol_layer_Image-ImageLayer.html
+<Story of={ImageStories.Primary} />
+
+### Usage
+```typescript
+import {useRef} from 'react';
+import ImageWMS from 'ol/source/ImageWMS';
+import OSM from 'ol/source/OSM';
+import {Map, ImageLayer, View} from 'react-openlayers';
+
+export default function(props) {
+  const mapRef = useRef();
+  const source = new ImageWMS({
+      url: 'https://ahocevar.com/geoserver/wms',
+      params: {'LAYERS': 'topp:states'},
+      ratio: 1,
+      serverType: 'geoserver',
+    })
+  return (
+    <Map ref={mapRef}>
+      <ImageLayer source={source} extent={[-13884991, 2870341, -7455066, 6338219]} properties={{key: 'myLayer'}}/>
+      <View center={[-10997148, 4569099]} zoom={4}/>
+    </Map>
+  );
+}
+```
+
+### props
+
+| Prop   | type         | description |
+| ------ | -----------  | ------------|
+| source | ImageSource  | Source for this layer. | 
+| extent | Extent       | The bounding extent for layer rendering. The layer will not be rendered outside of this extent. |
+| zIndex | number       | The z-index for layer rendering. At rendering time, the layers will be ordered, first by Z-index and then by position. |
+| properties | Object   | Arbitrary observable properties. Can be accessed with `#get()` and `#set()` |
+| ...    | ...          | For more, refer to Openlayers documentation |
+
+### props
+
+You can pass any props defined in the 
+[Openlayers documentation](https://openlayers.org/en/latest/apidoc/module-ol_layer_Image-ImageLayer.html)

@@ -37,13 +37,14 @@ export default function(props) {
 | ol/Feature | `<Marker />` | ol/Feature customized as a map maker. |
 
 ### Layers
-| OpenLayers Object  | React Component    | Description  | 
-| --------------     | ---------------    | ------------ |
+| OpenLayers Object  | React Component       | Description  | 
+| --------------     | ---------------       | ------------ |
 | ol/layer/Graticule |  `<GraticuleLayer />` | Displays a graticule (grid of latitude and longitude lines) on the map. |
-| ol/layer/Heatmap |  `<HeatmapLayer />` | Displays a heatmap based on vector data. |
-| ol/layer/Tile |  `<TileLayer />` | Displays tiled images, such as those from a tile server. |
-| ol/layer/Vector |  `<VectorLayer />` | Displays vector data, such as points, lines, and polygons. |
-| ol/layer/WebGLTile |  `<WebGLLayer />` | Displays tiled images using WebGL for rendering. |
+| ol/layer/Heatmap   |  `<HeatmapLayer />`   | Displays a heatmap based on vector data. |
+| ol/layer/Tile      |  `<TileLayer />`      | Displays tiled images, such as those from a tile server. |
+| ol/layer/Image     |  `<ImageLayer />`     | Displays full image, such as those from a pure wms server. |
+| ol/layer/Vector    |  `<VectorLayer />`    | Displays vector data, such as points, lines, and polygons. |
+| ol/layer/WebGLTile |  `<WebGLLayer />`     | Displays tiled images using WebGL for rendering. |
 
 ### Controls
 | OpenLayers Object  | React Component    | Description  | 
