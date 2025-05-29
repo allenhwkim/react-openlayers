@@ -8,6 +8,7 @@ export { addMarker, removeMarker, getMarkerImage } from './marker-func';
 
 export { LayerGroup } from './layers/LayerGroup';
 export { TileLayer } from './layers/TileLayer';
+export { ImageLayer } from './layers/ImageLayer';
 export { VectorLayer } from './layers/VectorLayer';
 export { GraticuleLayer } from './layers/GraticuleLayer';
 export { HeatmapLayer } from './layers/HeatmapLayer';
