@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import * as ol from 'ol';
-import FullScreen from 'ol/control/FullScreen';
+import FullScreen, { Options } from 'ol/control/FullScreen';
 import { useMap } from '../Map';
 
-export function FullScreenControl(props) {
-  const map: ol.Map = useMap();
+export function FullScreenControl(props: Options) {
+  const map = useMap();
 
   useEffect(() => {
     if (!map) return;

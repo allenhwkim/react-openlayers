@@ -1,13 +1,17 @@
 import * as ol from 'ol';
-import { createContext, useContext, useEffect, useRef } from 'react';
-import olLayerGroup from 'ol/layer/Group';
+import { createContext, PropsWithChildren, useContext, useEffect, useRef } from 'react';
+import olLayerGroup, { Options } from 'ol/layer/Group';
 import { useMap } from '../Map';
+
+interface LayerGroupOptions extends Options, PropsWithChildren {
+  name?: string
+}
 
 const LayerGroupContext = createContext<olLayerGroup | undefined>(undefined);
 
 export const useGroup = () => useContext(LayerGroupContext);
 
-export const LayerGroup = (props: any) => {
+export const LayerGroup = (props: LayerGroupOptions) => {
   const map = useMap();
   const parentGroup = useContext(LayerGroupContext); // Check for a parent LayerGroup
   const layerGroupRef = useRef(new olLayerGroup(props));

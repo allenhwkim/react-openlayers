@@ -6,6 +6,7 @@ import {
   useState,
   createContext,
   useContext,
+  PropsWithChildren,
 } from 'react';
 import { defaults as defaultControls } from 'ol/control/defaults.js';
 import { Map as OlMap } from 'ol';
@@ -14,11 +15,11 @@ import './ol.css';
 import './Map.css';
 import TileLayer from 'ol/layer/Tile';
 import { OSM } from 'ol/source';
+import { MapOptions } from 'ol/Map';
 
-interface MapProps {
-  children?: React.ReactNode;
-  [key: string]: any; // Allow other OpenLayers Map options
-}
+interface MapProps extends MapOptions, PropsWithChildren {
+  style?: React.CSSProperties;
+};
 
 const MapContext = createContext<OlMap | undefined>(undefined);
 

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import Link from 'ol/interaction/Link';
+import Link, { Options } from 'ol/interaction/Link';
 import { useMap } from '../Map';
 
-export function LinkInteraction(props) {
+export function LinkInteraction(props: Options) {
   const map = useMap();
 
   useEffect(() => {
