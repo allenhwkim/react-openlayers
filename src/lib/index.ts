@@ -1,6 +1,6 @@
 export { getAddress, getLonLat } from './util';
 
-export { Map } from './Map';
+export { Map, useMap } from './Map';
 export { View } from './View';
 export { Marker } from './Marker';
 export { Overlay } from './Overlay';
