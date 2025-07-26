@@ -7,7 +7,7 @@ import {
   createContext,
   useContext,
 } from 'react';
-import {defaults as defaultControls} from 'ol/control/defaults.js';
+import { defaults as defaultControls } from 'ol/control/defaults.js';
 import { Map as OlMap } from 'ol';
 import View from 'ol/View';
 import './ol.css';
@@ -55,7 +55,7 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
     setMap(olMap);
     mounted.current = true;
     return () => {
-      olMap.setTarget(null);
+      olMap.setTarget(undefined);
     };
   }, []);
 

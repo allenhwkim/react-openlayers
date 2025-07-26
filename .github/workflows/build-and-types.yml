@@ -1,0 +1,29 @@
+name: Build and Type Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build library
+        run: npm run build:lib
+      - name: Check type declarations
+        run: |
+          if [ ! -f dist/index.d.ts ]; then
+            echo "Type declarations not found!" && exit 1
+          fi
+      - name: Check npm pack contents
+        run: |
+          npm pack --dry-run > pack.log
+          grep 'dist/index.d.ts' pack.log || (echo 'dist/index.d.ts not in npm package!' && exit 1) 

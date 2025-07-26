@@ -12,13 +12,13 @@ export function PointerInteraction(props) {
   let coordinate: Coordinate;
   let feature: FeatureLike;
 
-  function handleDownEvent(evt: MapBrowserEvent<UIEvent>) {
+  function handleDownEvent(evt: MapBrowserEvent<PointerEvent>) {
     const _feature = evt.map.forEachFeatureAtPixel(evt.pixel, feature => feature);
     _feature && ([coordinate, feature] = [evt.coordinate, _feature]);
     return !!feature; // `true` to start the drag sequence.
   }
 
-  function handleDragEvent(evt: MapBrowserEvent<UIEvent>) {
+  function handleDragEvent(evt: MapBrowserEvent<PointerEvent>) {
     const geometry = feature.getGeometry() as Geometry;
     const deltaX = evt.coordinate[0] - coordinate[0];
     const deltaY = evt.coordinate[1] - coordinate[1];
@@ -26,7 +26,7 @@ export function PointerInteraction(props) {
     coordinate = evt.coordinate;
   }
 
-  function handleMoveEvent(evt: MapBrowserEvent<UIEvent>) {
+  function handleMoveEvent(evt: MapBrowserEvent<PointerEvent>) {
     const feature = evt.map.forEachFeatureAtPixel(evt.pixel, feature => feature);
     const element = evt.map.getTargetElement();
     element.style.cursor = feature ? 'pointer' : '';

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import OlView from 'ol/View';
+import OlView, { ViewOptions } from 'ol/View';
 import { useMap } from './Map';
 
-export function View(props) {
+export function View(props: ViewOptions) {
   const map = useMap();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ export function View(props) {
   }, [map]);
 
   return null;
-};
+}
