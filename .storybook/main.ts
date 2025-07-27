@@ -1,5 +1,5 @@
 import remarkGfm from 'remark-gfm';
-import {StorybookConfig} from '@storybook/react-vite';
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   stories: ['../src/stories/**/*.mdx', '../src/stories/**/*.stories.@(js|jsx|ts|tsx)'],
