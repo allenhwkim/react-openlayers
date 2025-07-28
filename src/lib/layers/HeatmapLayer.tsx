@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { Map as OlMap } from 'ol';
-import OlHeatmapLayer from 'ol/layer/Heatmap';
+import OlHeatmapLayer, { Options } from 'ol/layer/Heatmap';
 import { useMap } from '../Map';
 import { useGroup } from './LayerGroup';
 
-export function HeatmapLayer(props) {
+export function HeatmapLayer(props: Options & { name?: string }) {
   const map = useMap();
   const group = useGroup();
   const layerRef = useRef(new OlHeatmapLayer(props)); // single instance

@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import * as ol from 'ol';
-import OverviewMap from 'ol/control/OverviewMap';
+import OverviewMap, { Options } from 'ol/control/OverviewMap';
 import { useMap } from '../Map';
 
-export function OverviewMapControl(props) {
-  const map: ol.Map = useMap();
+export function OverviewMapControl(props: Options) {
+  const map = useMap();
 
   useEffect(() => {
     if (!map) return;

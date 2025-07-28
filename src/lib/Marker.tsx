@@ -4,7 +4,7 @@ import { useMap } from './Map';
 import { getLonLat } from './util';
 import { addMarker, removeMarker } from './marker-func';
 
-function getNextChar(char) {
+function getNextChar(char: string) {
   const ascii = char.charCodeAt(0);
   const nextChar = String.fromCharCode(ascii > 127 ? 0 : ascii+1);
   if (nextChar.match(/^[0-9A-Z]$/)) {

@@ -3,8 +3,10 @@ import { useEffect, useRef } from 'react';
 import OlImageLayer from 'ol/layer/Image';
 import { useMap } from '../Map';
 import { useGroup } from './LayerGroup';
+import { Options } from 'ol/layer/BaseImage';
+import ImageSource from 'ol/source/Image';
 
-export function ImageLayer(props: any) {
+export function ImageLayer(props: Options<ImageSource> & { name?: string }) {
   const map = useMap();
   const group = useGroup();
   const layerRef = useRef(new OlImageLayer(props)); // single instance

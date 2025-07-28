@@ -1,10 +1,10 @@
 import { Map as OlMap } from 'ol';
 import { useEffect, useRef } from 'react';
-import OlWebGLTileLayer from 'ol/layer/WebGLTile';
+import OlWebGLTileLayer, { Options } from 'ol/layer/WebGLTile';
 import { useMap } from '../Map';
 import { useGroup } from './LayerGroup';
 
-export function WebGLTileLayer(props) {
+export function WebGLTileLayer(props: Options & { name?: string }) {
   const map = useMap();
   const group = useGroup();
   const layerRef = useRef(new OlWebGLTileLayer(props)); // single instance
