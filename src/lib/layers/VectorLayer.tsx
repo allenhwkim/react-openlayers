@@ -1,10 +1,10 @@
 import { Map as OlMap } from 'ol';
 import { useEffect, useRef } from 'react';
-import OlVectorLayer from 'ol/layer/Vector';
+import OlVectorLayer, { Options } from 'ol/layer/Vector';
 import { useMap } from '../Map';
 import { useGroup } from './LayerGroup';
 
-export function VectorLayer(props) {
+export function VectorLayer(props: Options & { name?: string }) {
   const map = useMap();
   const group = useGroup();
   const layerRef = useRef(new OlVectorLayer(props)); // single instance

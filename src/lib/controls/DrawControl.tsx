@@ -1,27 +1,31 @@
-import * as ol from 'ol';
-import Control from 'ol/control/Control';
-import { useEffect } from 'react';
+import Control, { Options } from 'ol/control/Control';
+import { useEffect, CSSProperties } from 'react';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Modify from 'ol/interaction/Modify';
 import Snap from 'ol/interaction/Snap';
 import Draw from 'ol/interaction/Draw';
 import GeoJSON from 'ol/format/GeoJSON';
-import { listen, unlistenByKey } from 'ol/events';
+import { EventsKey, listen, unlistenByKey } from 'ol/events';
 import { useMap } from '../Map';
 import { drawIcon, lineIcon, pointIcon, polygonIcon, circleIcon, moveIcon} from './icons';
 import './DrawControl.css';
+import BaseEvent from 'ol/events/Event';
+
+interface DrawControlOptions extends Options {
+  style?: CSSProperties;
+}
 
 class DrawControl extends Control {
   vectorSource: VectorSource;
   modify: Modify; // modifying vectorSource
   drawLayer: VectorLayer; // layer to hold vectorSource
-  draw: Draw;
-  snap: Snap;
-  keyboardListener;
+  draw?: Draw;
+  snap?: Snap;
+  keyboardListener?: EventsKey;
 
-  constructor(options={} as any) {
-    const {target} = options as any;
+  constructor(options: DrawControlOptions = {}) {
+    const { target } = options;
 
     const element = document.createElement('div');
     element.className = 'draw-control ol-unselectable ol-control';
@@ -31,7 +35,7 @@ class DrawControl extends Control {
     const title = 'Press shift for freehand drawing';
     element.insertAdjacentHTML('beforeend', `
       <button id="toggle-btn" 
-        title="Clik here to start drawing. Shift+S to save as GeoJson">
+        title="Click here to start drawing. Shift+S to save as GeoJson">
         ${drawIcon}
       </button>
       <div id="shape-btns" class="shapes" hidden>
@@ -66,45 +70,66 @@ class DrawControl extends Control {
       }
     });
 
-    element.querySelector('#toggle-btn')
-      .addEventListener('click', this.onToggleBtnClick.bind(this));
-    element.querySelector('#shape-btns')
-      .addEventListener('click', this.onShapeBtnsClick.bind(this))
+    const toggleBtn = element.querySelector('#toggle-btn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', this.onToggleBtnClick.bind(this));
+    }
+    const shapeBtns = element.querySelector('#shape-btns');
+    if (shapeBtns) {
+      shapeBtns.addEventListener('click', this.onShapeBtnsClick.bind(this));
+    }
   }
   
-  onToggleBtnClick(event) {
-    const drawControl = event.target.closest('.draw-control');
+  onToggleBtnClick(event: Event) {
+    const drawControl = (event.target as HTMLElement).closest('.draw-control');
+    if (!drawControl) return;
     const shapeBtnsEl = drawControl.querySelector('#shape-btns');
+    if (!shapeBtnsEl) return;
     shapeBtnsEl.toggleAttribute('hidden');
 
     if (shapeBtnsEl.hasAttribute('hidden')) {
-      this.getMap().removeInteraction(this.draw);
-      this.getMap().removeInteraction(this.snap);
-      this.getMap().removeLayer(this.drawLayer);
-      this.getMap().removeInteraction(this.modify);
-
-      unlistenByKey(this.keyboardListener);
+      const map = this.getMap();
+      if (map) {
+        if (this.draw) map.removeInteraction(this.draw);
+        if (this.snap) map.removeInteraction(this.snap);
+        map.removeLayer(this.drawLayer);
+        map.removeInteraction(this.modify);
+      }
+      if (this.keyboardListener) {
+        unlistenByKey(this.keyboardListener);
+      }
     } else {
-      this.getMap().addLayer(this.drawLayer);
-      this.getMap().addInteraction(this.modify);
-      this.keyboardListener = listen(
-        this.getMap().getTargetElement(),
-        'keydown',
-        this.onKeyPressed.bind(this)
-      );
+      const map = this.getMap();
+      if (map) {
+        map.addLayer(this.drawLayer);
+        map.addInteraction(this.modify);
+        const targetElement = map.getTargetElement();
+        if (targetElement) {
+          this.keyboardListener = listen(
+            targetElement,
+            'keydown',
+            this.onKeyPressed
+          );
+        }
+      }
     }
   }
 
-  onKeyPressed(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      this.draw.abortDrawing();
-    } else if (event.shiftKey && event.key === 'S') {
-      this.downloadGeoJson();
+  onKeyPressed(arg0: Event | BaseEvent) {
+    if (typeof arg0 === 'object' && 'key' in arg0) {
+      const event = arg0 as KeyboardEvent;
+      if (event.key === 'Escape') {
+        this.draw?.abortDrawing();
+      } else if (event.shiftKey && event.key === 'S') {
+        this.downloadGeoJson();
+      }
     }
   }
 
   downloadGeoJson() {
-    const features = this.drawLayer.getSource().getFeatures();
+    const source = this.drawLayer.getSource();
+    if (!source) return;
+    const features = source.getFeatures();
     const options = {
       dataProjection: 'EPSG:4326', // Desired projection for the output
       featureProjection: 'EPSG:3857' // Projection of the features in the source
@@ -119,30 +144,35 @@ class DrawControl extends Control {
     a.click();
   }
 
-  onShapeBtnsClick(event) {
-    const btnEl = event.target.closest('button');
+  onShapeBtnsClick(event: Event) {
+    const btnEl = (event.target as HTMLElement).closest('button');
+    if (!btnEl) return;
     const type = btnEl.value;
 
     // Activte only the clicked button
-    const containerEl = event.target.closest('#shape-btns');
+    const containerEl = (event.target as HTMLElement).closest('#shape-btns');
+    if (!containerEl) return;
     Array.from(containerEl.children).forEach((el:any) => el.classList.remove('active'));
     btnEl.classList.add('active');
 
     // Remove the prev. interaction
-    this.getMap().removeInteraction(this.draw);
-    this.getMap().removeInteraction(this.snap);
+    const map = this.getMap();
+    if (map) {
+      if (this.draw) map.removeInteraction(this.draw);
+      if (this.snap) map.removeInteraction(this.snap);
+    }
 
-    if (type) { // Add new interaction
-      this.draw = new Draw({source: this.vectorSource, type});
+    if (type && map) { // Add new interaction
+      this.draw = new Draw({source: this.vectorSource, type: type as any});
       this.snap = new Snap({source: this.vectorSource});
-      this.getMap().addInteraction(this.draw);
-      this.getMap().addInteraction(this.snap);
+      map.addInteraction(this.draw);
+      map.addInteraction(this.snap);
     }
   }
 }
 
-export default function(props) {
-  const map: ol.Map = useMap();
+export default function(props: DrawControlOptions) {
+  const map = useMap();
 
   useEffect(() => {
     if (!map) return;

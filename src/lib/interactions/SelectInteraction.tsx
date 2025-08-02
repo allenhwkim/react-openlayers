@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Select from 'ol/interaction/Select';
+import Select, { Options, SelectEvent } from 'ol/interaction/Select';
 import { useMap } from '../Map';
 import VectorLayer from 'ol/layer/Vector';
 import Style from 'ol/style/Style';
@@ -8,17 +8,24 @@ import Stroke from 'ol/style/Stroke';
 import Text from 'ol/style/Text'; // Add this import
 import Circle from 'ol/style/Circle'; // Add this import for point styling
 import { getArea, getLength } from 'ol/sphere'; // Add this import for geodesic area calculation
+import { FeatureLike } from 'ol/Feature';
+import Geometry from 'ol/geom/Geometry'; // Import Geometry type
 
-interface SelectInteractionProps {
-  onSelect?: (event: any) => void; // Replace 'any' with ol.SelectEvent if importing types
+interface SelectInteractionProps extends Options {
+  onSelect?: (event: SelectEvent) => void;
   layers?: VectorLayer[]; // Example: restrict to specific layers
-  [key: string]: any;
 }
-const defaultStyle = function (feature) {
-  const type = feature.getGeometry().getType();
+
+const defaultStyle = function (feature: FeatureLike) {
   const geometry = feature.getGeometry();
 
-  let style;
+  let style: Style | undefined; // Initialize style as undefined
+  if (!geometry) {
+    return undefined; // If no geometry, no style
+  }
+
+  const type = geometry.getType();
+
   if (type === 'Point') {
     style = new Style({
       image: new Circle({
@@ -35,7 +42,7 @@ const defaultStyle = function (feature) {
       }),
     });
     // Calculate geodesic length in meters
-    const lengthInMeters = getLength(geometry);
+    const lengthInMeters = getLength(geometry as Geometry);
     // Convert to kilometers
     const lengthInKm = lengthInMeters / 1000;
     if (lengthInKm > 0) {
@@ -61,7 +68,7 @@ const defaultStyle = function (feature) {
       stroke: new Stroke({ color: '#ff0000', width: 2 }),
     });
     try {
-      const areaInMeters = getArea(geometry);
+      const areaInMeters = getArea(geometry as Geometry);
       const areaInKm2 = areaInMeters / 1_000_000;
       if (areaInKm2 > 0) {
         style.setText(
@@ -74,16 +81,17 @@ const defaultStyle = function (feature) {
           })
         );
       }
-    } catch(e) { // getArea(geometry) may fail
+    } catch (e) {
+      // getArea(geometry) may fail
       console.error(e);
     }
   }
   return style;
-}
+};
 
-export function SelectInteraction(props:SelectInteractionProps) {
+export function SelectInteraction(props: SelectInteractionProps) {
   const map = useMap();
-  props = { ...{style: defaultStyle}, ...props };
+  props = { ...{ style: defaultStyle }, ...props };
 
   useEffect(() => {
     if (!map) return;
@@ -102,19 +110,19 @@ export function SelectInteraction(props:SelectInteractionProps) {
 
       // when deselected
       const deselectedFeatures = event.deselected;
-      deselectedFeatures.forEach(feature => {
-        feature.setStyle(null);  // Reset to base style without text
+      deselectedFeatures.forEach((feature) => {
+        feature.setStyle(undefined); // Reset to base style without text
       });
     });
 
-    const onKeyPressed = (event) => {
+    const onKeyPressed = (event: KeyboardEvent) => {
       if (event.key === 'Backspace') {
         const selectedFeatures = select.getFeatures();
-        selectedFeatures.forEach(feature => {
+        selectedFeatures.forEach((feature) => {
           const layer = select.getLayer(feature); // Get layer for each feature
           if (layer) {
             const source = layer.getSource();
-            source.removeFeature(feature);
+            source && source.removeFeature(feature);
           }
         });
         selectedFeatures.clear();
@@ -122,7 +130,7 @@ export function SelectInteraction(props:SelectInteractionProps) {
     };
 
     map.getTargetElement().addEventListener('keydown', onKeyPressed);
-      
+
     return () => {
       map.getTargetElement().removeEventListener('keydown', onKeyPressed);
     }

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import Translate from 'ol/interaction/Translate';
+import Translate, { Options } from 'ol/interaction/Translate';
 import { useMap } from '../Map';
 
-export function TranslateInteraction(props) {
+export function TranslateInteraction(props: Options) {
   const map = useMap();
 
   useEffect(() => {

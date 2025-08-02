@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import * as ol from 'ol';
-import ScaleLine from 'ol/control/ScaleLine';
+import ScaleLine, { Options } from 'ol/control/ScaleLine';
 import { useMap } from '../Map';
 
-export function ScaleLineControl(props) {
-  const map: ol.Map = useMap();
+export function ScaleLineControl(props: Options) {
+  const map = useMap();
 
   useEffect(() => {
     if (!map) return;

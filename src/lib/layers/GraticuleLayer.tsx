@@ -1,10 +1,10 @@
 import { Map as OlMap } from 'ol';
 import { useEffect, useRef } from 'react';
-import OlGraticuleLayer from 'ol/layer/Graticule';
+import OlGraticuleLayer, { Options } from 'ol/layer/Graticule';
 import { useMap } from '../Map';
 import { useGroup } from './LayerGroup';
 
-export function GraticuleLayer(props) {
+export function GraticuleLayer(props: Options & { name?: string }) {
   const map = useMap();
   const group = useGroup();
   const layerRef = useRef(new OlGraticuleLayer(props)); // single instance

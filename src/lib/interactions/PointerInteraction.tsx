@@ -1,35 +1,45 @@
-import OlPointerInteraction from 'ol/interaction/Pointer';
+import OlPointerInteraction, { Options } from 'ol/interaction/Pointer';
 import { useEffect } from 'react';
 import { Coordinate } from 'ol/coordinate';
 import { FeatureLike } from 'ol/Feature';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { Geometry } from 'ol/geom'
+import { Geometry } from 'ol/geom';
 import { useMap } from '../Map';
 
-export function PointerInteraction(props) {
+export function PointerInteraction(props: Options) {
   const map = useMap();
 
-  let coordinate: Coordinate;
-  let feature: FeatureLike;
+  let coordinate: Coordinate | null = null;
+  let feature: FeatureLike | null = null;
 
-  function handleDownEvent(evt: MapBrowserEvent<UIEvent>) {
-    const _feature = evt.map.forEachFeatureAtPixel(evt.pixel, feature => feature);
-    _feature && ([coordinate, feature] = [evt.coordinate, _feature]);
+  function handleDownEvent(evt: MapBrowserEvent<PointerEvent>) {
+    const _feature = evt.map.forEachFeatureAtPixel(
+      evt.pixel,
+      (feature) => feature,
+    );
+    if (_feature) {
+      [coordinate, feature] = [evt.coordinate, _feature];
+    }
     return !!feature; // `true` to start the drag sequence.
   }
 
-  function handleDragEvent(evt: MapBrowserEvent<UIEvent>) {
-    const geometry = feature.getGeometry() as Geometry;
-    const deltaX = evt.coordinate[0] - coordinate[0];
-    const deltaY = evt.coordinate[1] - coordinate[1];
-    geometry.translate(deltaX, deltaY);
-    coordinate = evt.coordinate;
+  function handleDragEvent(evt: MapBrowserEvent<PointerEvent>) {
+    if (feature && coordinate) {
+      const geometry = feature.getGeometry() as Geometry;
+      const deltaX = evt.coordinate[0] - coordinate[0];
+      const deltaY = evt.coordinate[1] - coordinate[1];
+      geometry.translate(deltaX, deltaY);
+      coordinate = evt.coordinate;
+    }
   }
 
-  function handleMoveEvent(evt: MapBrowserEvent<UIEvent>) {
-    const feature = evt.map.forEachFeatureAtPixel(evt.pixel, feature => feature);
+  function handleMoveEvent(evt: MapBrowserEvent<PointerEvent>) {
+    const featureAtPixel = evt.map.forEachFeatureAtPixel(
+      evt.pixel,
+      (feature) => feature,
+    );
     const element = evt.map.getTargetElement();
-    element.style.cursor = feature ? 'pointer' : '';
+    element.style.cursor = featureAtPixel ? 'pointer' : '';
   }
 
   function handleUpEvent() {
@@ -40,10 +50,27 @@ export function PointerInteraction(props) {
 
   useEffect(() => {
     if (!map) return;
-    props = {...{handleDownEvent, handleMoveEvent, handleUpEvent, handleDragEvent}, ...props };
-    const interaction = new OlPointerInteraction(props);
+    const interaction = new OlPointerInteraction({
+      handleDownEvent:
+        handleDownEvent as (
+          arg0: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>,
+        ) => boolean,
+      handleMoveEvent:
+        handleMoveEvent as (
+          arg0: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>,
+        ) => void,
+      handleUpEvent,
+      handleDragEvent:
+        handleDragEvent as (
+          arg0: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>,
+        ) => void,
+      ...props,
+    });
     map.addInteraction(interaction);
-  }, [map]);
+    return () => {
+      map.removeInteraction(interaction);
+    };
+  }, [map, props]);
 
   return null;
-};
+}
