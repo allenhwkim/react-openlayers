@@ -35,11 +35,11 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
 
   useImperativeHandle(ref, () => map, [map]);
 
-  const mounted = useRef(false);
   const defaultLayer = new TileLayer({ source: new OSM() });
 
   useEffect(() => {
-    if (!mapRef.current || mounted.current) return;
+    if (!mapRef.current) return;
+    // Always create a new map instance on mount
     const mapProps = {
       ...{
         target: mapRef.current,
@@ -50,15 +50,16 @@ export const Map = forwardRef<OlMap | undefined, MapProps>((props, ref) => {
           zoom: 2, // Default zoom level
         }),
       },
-      ...props, // Override with props.view if provided
+      ...props, // Override with props if provided
     };
     const olMap = new OlMap(mapProps);
     setMap(olMap);
-    mounted.current = true;
     return () => {
       olMap.setTarget(undefined);
+      setMap(undefined);
+      console.log('Map unmounted');
     };
-  }, []);
+  }, [mapRef]);
 
   return (
     <MapContext.Provider value={map}>
